@@ -27,7 +27,7 @@ void IgnoreBlank();
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = MARK */
 
-void STARTWORD(char* filename);
+void STARTWORD();
 /* I.S. : CC sembarang 
    F.S. : EndKata = true, dan CC = MARK; 
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
@@ -45,6 +45,34 @@ void CopyWord();
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi; 
           CC = BLANK atau CC = MARK; 
+          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+          Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
+/* *** ADT untuk baca commands *** */
+
+void IgnoreDot();
+/* Mengabaikan satu atau beberapa BLANK dan MARK
+   I.S. : CC sembarang 
+   F.S. : CC ≠ BLANK atau CC = ENTER */
+
+void STARTCOMMAND();
+/* I.S. : CC sembarang 
+   F.S. : EndKata = true, dan CC = ENTER; 
+          atau EndKata = false, CCommand adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
+
+void ADVCOMMAND();
+/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
+   F.S. : CComand adalah kata terakhir yang sudah diakuisisi, 
+          CC adalah karakter pertama dari kata berikutnya, mungkin ENTER
+          Jika CC = ENTER, EndKata = true.		  
+   Proses : Akuisisi kata menggunakan procedure SalinCommand */
+
+void SalinCommand();
+/* Mengakuisisi kata, menyimpan dalam CComand
+   I.S. : CC adalah karakter pertama dari kata
+   F.S. : CComand berisi kata yang sudah diakuisisi; 
+          CC = BLANK atau CC = ENTER; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
