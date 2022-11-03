@@ -4,14 +4,14 @@
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
 
-#include "boolean.h"
+#include "../../boolean.h"
 #include "../mesinkarakter/mesinkarakter.h"
 
 #define NMax 100
 #define BLANK ' '
 
 typedef struct {
-	char TabKata[NMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
+	char TabWord[NMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
     int Length;
 } Kata;
 
