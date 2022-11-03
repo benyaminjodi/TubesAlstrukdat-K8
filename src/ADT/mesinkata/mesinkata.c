@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include "mesinkata.h"
 
-boolean EndWord;
+boolean endWord;
 Kata CurrentWord;
 Kata CurrentCommand;
 
@@ -10,74 +10,44 @@ void IgnoreBlank()
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = MARK */
 {
-    while (CC == BLANK){
+    while (CC == ' ' || CC == ENTER){
         ADV();
     }
 }
 
-void STARTWORD(char * filename)
+void StartWord(char * filename)
 /* I.S. : CC sembarang 
-   F.S. : EndWord = true, dan CC = MARK; 
-          atau EndWord = false, CurrentWord adalah kata yang sudah diakuisisi,
+   F.S. : endWord = true, dan CC = MARK; 
+          atau endWord = false, CurrentWord adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
     START(filename);
     IgnoreBlank();
-    if (CC != MARK){
-        EndWord = false;
-        ADVWORD();
+    if (CC == ENTER)
+    {
+        endWord = true;
     } else {
-        EndWord = true;
-    }
-}
-
-void StartFile(char * filename)
-/* I.S. : CC sembarang 
-   F.S. : EndWord = true, dan CC = MARK; 
-          atau EndWord = false, CurrentWord adalah kata yang sudah diakuisisi,
-          CC karakter pertama sesudah karakter terakhir kata */
-{
-    START(filename);
-    IgnoreBlank();
-    if (CC != ENTER){
-        EndWord = false;
-        ADVWORD();
-    } else {
-        EndWord = true;
-    }
-}
-
-void ADVWORD()
-/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
-   F.S. : CurrentWord adalah kata terakhir yang sudah diakuisisi, 
-          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndWord = true.		  
-   Proses : Akuisisi kata menggunakan procedure CopyWord */
-{
-    IgnoreBlank();
-    if (CC == MARK && !EndWord){
-        EndWord = true;
-    } else{
+        endWord = false;
         CopyWord();
     }
 }
 
-void ADVRow()
-/* I.S. : CC adalah karakter pertama kata yang akan di      akuisisi 
+
+void ADVWord()
+/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S. : CurrentWord adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndWord = true.		  
+          Jika CC = MARK, endWord = true.		  
    Proses : Akuisisi kata menggunakan procedure CopyWord */
 {
     IgnoreBlank();
-    if (CC == ENTER && !EndWord){
-        EndWord = true;
+    if (CC == ENTER){
+        endWord = true;
     } else{
         CopyWord();
         IgnoreBlank();
     }
 }
-
 
 void CopyWord()
 /* Mengakuisisi kata, menyimpan dalam CurrentWord
@@ -88,12 +58,12 @@ void CopyWord()
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
     int i = 0;
-    while ((CC != MARK) && (CC != BLANK) && i != NMax) {
+    while (CC != ENTER && !feof(pita)) {
         CurrentWord.TabWord[i] = CC;
         ADV();
         i++;
     }
-    if (i < NMax)
+    if (i <= NMax)
     {
         CurrentWord.Length = i;
     }
@@ -112,44 +82,44 @@ void IgnoreDot()
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = ENTER */
 {
-    while ((CC == BLANK) || (CC == '.')) {
-        ADV();
+    while (CC == ' ')
+    {
+        ADVC();
     }
 }
 
-void STARTCOMMAND()
+void StartCommand()
 /* I.S. : CC sembarang 
-   F.S. : EndWord = true, dan CC = ENTER; 
-          atau EndWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
+   F.S. : endWord = true, dan CC = ENTER; 
+          atau endWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
-    inputCommand();
+    StartC();
     IgnoreDot();
-    if (CC == ENTER){
-        EndWord = true;
+    if (CC == ENTER || CC == MARK){
+        endWord = true;
     } else {
-        EndWord = false;
-        ADVCOMMAND();
+        endWord = false;
+        CopyCommand();
     }
 }
 
-void ADVCOMMAND()
+void ADVCommand()
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S      . : CurrentCommand adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin ENTER
-          Jika CC = ENTER, EndWord = true.		  
+          Jika CC = ENTER, endWord = true.		  
    Proses : Akuisisi kata menggunakan procedure SalinCommand */
 {
-    IgnoreDot();
-    if (CC == ENTER && !EndWord){
-        EndWord = true;
+    ADVC();
+    if (CC == ENTER || CC == MARK){
+        endWord = true;
     } else{
-        SalinCommand();
-        IgnoreDot();
+        CopyCommand();
     }
 }
 
-void SalinCommand()
+void CopyCommand()
 /* Mengakuisisi kata, menyimpan dalam CurrentCommand
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CurrentCommand berisi kata yang sudah diakuisisi; 
@@ -158,12 +128,13 @@ void SalinCommand()
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
     int i = 0;
-    while ((CC != MARK) && (CC != BLANK) && i != NMax) {
+    while ((CC != MARK) && (CC != ENTER)) 
+    {
         CurrentCommand.TabWord[i] = CC;
-        ADV();
+        ADVC();
         i++;
     }
-    if (i < NMax)
+    if (i <= NMax)
     {
         CurrentCommand.Length = i;
     }

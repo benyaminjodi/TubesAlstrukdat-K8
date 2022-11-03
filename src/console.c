@@ -46,9 +46,11 @@ void STARTBNMO(ArrayDin *GameBNMO)
     char string[50];
     char *temp;
     int i,x;
-    STARTWORD("./data/config.txt");
+    StartWord("./data/config.txt");
     x = wordtoInt(CurrentWord);
-    ADVRow();
+    //printf("%s\n", CurrentWord);
+    ADVWord();
+    //printf("%s\n", CurrentWord);
     for (int j = 0; j < x; j++)
     {
         wordtoString(CurrentWord, string);
@@ -57,10 +59,13 @@ void STARTBNMO(ArrayDin *GameBNMO)
         while (i <= CurrentWord.Length)
         {
             temp[i] = string[i];
-            i++;
+            
+            i += 1;
         }
+        // printf("%s\n", temp);
+
         InsertLast(GameBNMO, *temp);
-        ADVWORD();
+        ADVWord();
     }
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }

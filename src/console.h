@@ -3,6 +3,7 @@
 #include "ADT/arraydinamis/arraydin.h"
 
 
+
 boolean compareWord (char *kata1, char * kata2);
 
 int wordtoInt (Kata Word);

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "mesinkarakter.h"
 
-static FILE * pita;
+FILE * pita;
 static FILE * command;
 static int retval;
 
@@ -43,7 +43,7 @@ Jika CC = MARK maka EOP akan menyala (true) */
 
 /* *** ADT untuk baca file eksternal *** */
 
-void COMMAND() 
+void StartC() 
 /*  Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
     Karakter pertama yang ada pada pita posisinya adalah pada jendela.
     filename merupakan nama file yang berisi pita karakter
@@ -53,7 +53,22 @@ void COMMAND()
     Jika CC = ENTER maka EOP akan menyala (true) */
 {
     pita = stdin;
-    ADV();
+    ADVC();
+}
+
+void ADVC()
+/* Pita dimajukan satu karakter.
+I.S. : Karakter pada jendela = CC, CC != MARK
+F.S. : CC adalah karakter berikutnya dari CC yang lama,
+
+CC mungkin = MARK
+Jika CC = MARK maka EOP akan menyala (true) */
+{
+    retval = fscanf(pita,"%c",&CC);
+    EOP = (CC == ENTER);
+    if (EOP) {
+        fclose(pita);
+    }
 }
 
 

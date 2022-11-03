@@ -9,7 +9,7 @@
 /* State Mesin */
 extern char CC;
 extern boolean EOP;
-
+extern FILE * pita;
 
 /* *** Membaca dari File *** */
 void START(char * filename);
@@ -31,7 +31,7 @@ CC mungkin = MARK
 Jika CC = MARK maka EOP akan menyala (true) */
 
 //Membaca command pada terminal
-void inputCommand();
+void StartC();
 /*  Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
     Karakter pertama yang ada pada pita posisinya adalah pada jendela.
     filename merupakan nama file yang berisi pita karakter
@@ -40,4 +40,5 @@ void inputCommand();
     Jika CC != ENTER maka EOP akan padam (false)
     Jika CC = ENTER maka EOP akan menyala (true) */
 
+void ADVC();
 #endif

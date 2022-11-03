@@ -27,13 +27,13 @@ void IgnoreBlank();
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = MARK */
 
-void STARTWORD();
+void StartWord();
 /* I.S. : CC sembarang 
    F.S. : EndKata = true, dan CC = MARK; 
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 
-void ADVWORD();
+void ADVWord();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
@@ -55,26 +55,25 @@ void IgnoreDot();
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = ENTER */
 
-void STARTCOMMAND();
+void StartCommand();
 /* I.S. : CC sembarang 
    F.S. : EndKata = true, dan CC = ENTER; 
           atau EndKata = false, CCommand adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 
-void ADVCOMMAND();
+void ADVCommand();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
-   F.S. : CComand adalah kata terakhir yang sudah diakuisisi, 
+   F.S. : CopyCommand adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin ENTER
           Jika CC = ENTER, EndKata = true.		  
    Proses : Akuisisi kata menggunakan procedure SalinCommand */
 
-void SalinCommand();
-/* Mengakuisisi kata, menyimpan dalam CComand
+void CopyCommand();
+/* Mengakuisisi kata, menyimpan dalam CopyCommand
    I.S. : CC adalah karakter pertama dari kata
-   F.S. : CComand berisi kata yang sudah diakuisisi; 
+   F.S. : CopyCommand berisi kata yang sudah diakuisisi; 
           CC = BLANK atau CC = ENTER; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
-
 
 #endif
