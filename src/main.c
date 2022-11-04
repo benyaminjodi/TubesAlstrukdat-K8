@@ -25,11 +25,25 @@ int main()
             {
                 STARTBNMO(&ArrayGame);
             }
+            else if (compareWord(CurrentCommand, "LOAD") == true)
+            {
+                ADVCommand();
+            }
+            else
+            {
+               printf("Program belum memiliki file konfigurasi\n");
+               printf("Silakan load file dengan command LOAD <filename>\n"); 
+
+            }
         }
         else{
             if (compareWord(CurrentCommand, "LIST GAME") == true)
             {
                 LISTGAME(ArrayGame);
+            }
+            if (compareWord(CurrentCommand, "CREATE GAME") == true)
+            {
+                CREATEGAME (&ArrayGame);
             }
             if (compareWord(CurrentCommand, "DELETE GAME") == true)
             {
