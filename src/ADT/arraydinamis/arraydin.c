@@ -72,44 +72,29 @@ int GetCapacity(ArrayDin array)
  */
 void InsertAt(ArrayDin *array, ElType el, IdxType i)
 {
-    int j ;
-    if (array->Neff < array->Capacity)
+    if (array->Neff == array->Capacity)
     {
-        for(j = (array->Neff)-1 ; j >= i ; j--)
-        {
-            array->A[j+1] = array->A[j];
-        }
-        array->A[i] = el ;
-        array->Neff++;
-    }
-    else 
-    {
-        array->A = (ElType*) realloc(array->A, (InitialSize * 2 * sizeof(ElType)));
-        for(j = (array->Neff)-1 ; j >= i ; j--)
-        {
-            array->A[j+1] = array->A[j];
-        }
-        array->A[i] = el ;
-        array->Neff++;
         array->Capacity *= 2;
+        array->A = (ElType *) realloc (array->A, array->Capacity * sizeof(ElType));
     }
-}
-/**
- * Fungsi untuk menambahkan elemen baru di akhir array.
- * Prekondisi: array terdefinisi
- */
-void InsertLast(ArrayDin *array, ElType el)
-{
-	InsertAt(array,el,Length(*array));
+    IdxType temp = array->Neff;
+    while (temp > i)
+    {
+        array->A[temp] = array->A[temp - 1];
+        temp--;
+    }
+    array->A[i] = el;
+    array->Neff++;
 }
 
-/**
- * Fungsi untuk menambahkan elemen baru di awal array.
- * Prekondisi: array terdefinisi
- */
+void InsertLast(ArrayDin *array, ElType el)
+{
+    InsertAt(array, el, array->Neff);
+}
+
 void InsertFirst(ArrayDin *array, ElType el)
 {
-	InsertAt(array,el,0);
+    InsertAt(array, el, 0);
 }
 
 /**
@@ -156,21 +141,21 @@ void DeleteFirst(ArrayDin *array)
  */
 void PrintArrayDin(ArrayDin array)
 {
-	if (IsEmpty(array))
-	{
-		printf("Game Kosong\n");
-	}
-	else
-	{
-		int j;
-		
-		for (j = 0 ; j < (array.Neff)-1 ; j++)
-		{
-			printf("%d. %s\n", (j+1), array.A[j]);
-		}
-	}
+    if (array.Neff == 0)
+    {
+        printf("[]\n");
+    }
+    else
+    {
+        IdxType i;
+        printf("[");
+        for (i = 0; i < array.Neff - 1; i++)
+        {
+            printf("%s, ", array.A[i]);
+        }
+        printf("%s]\n", array.A[array.Neff - 1]);
+    }
 }
-
 /**
  * Fungsi untuk melakukan reverse suatu ArrayDin.
  * Prekondisi: array terdefinisi
