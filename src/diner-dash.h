@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "boolean.h"
-#include "queueDD.h"
+#include "ADT/queue/queueDD.h"
 
 
 void displayData(int saldo, Queue Qpesanan, Queue Qmasak, Queue Qsaji);
