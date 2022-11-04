@@ -23,12 +23,18 @@ int main()
             {
                 STARTBNMO(&ArrayGame);
             }
-            else
+        }
+        else
+        {
+            if (compareWord(command, "LISTGAME") == true)
             {
-                (compareWord(command, "START") == false);
-                endProgram = true;
+                LISTGAME(ArrayGame);
             }
         }
+        if (compareWord(command, "EXIT") == true)
+            {
+                endProgram = true;
+            }
         
     }
 }
