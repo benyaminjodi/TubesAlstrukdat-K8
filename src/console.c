@@ -69,6 +69,15 @@ void STARTBNMO(ArrayDin *GameBNMO)
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }
 
+void CREATEGAME (ArrayDin *GameBNMO) {
+    printf("Masukkan nama game yang akan ditambahkan: ");
+    char *namaGame;
+    namaGame = (char *) malloc (50 * sizeof(char));
+    scanf("%s", namaGame);
+    InsertLast(GameBNMO, namaGame);
+    printf("Game berhasil ditambahkan\n");
+}
+
 void LISTGAME (ArrayDin GameBNMO)
 {
     int i;
