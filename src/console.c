@@ -76,3 +76,62 @@ void LISTGAME (ArrayDin GameBNMO)
         printf("%d. %s\n", (1+i), GameBNMO.A[i]);
     }
 }
+
+void DELETEGAME (ArrayDin *GameBNMO, Queue Q) {
+    LISTGAME(*GameBNMO);
+    printf("Masukkan nomor game yang akan dihapus: ");
+    StartCommand();
+    printf("\n");
+    int input;
+    input = wordtoInt(CurrentCommand);
+    if (input<1 || input==1 || input==2 || input==3 || input==4 || input==5 || input>(*GameBNMO).Neff) {
+        printf("Game gagal dihapus\n");
+    } else {
+        boolean found;
+        found = false;
+        int j;
+        j = 0;
+        while (j<length(Q)) {
+            if (Q.buffer[j]==(*GameBNMO).A[input-1]) {
+                found = true;
+                break;
+            } j++;
+        }
+        if (found) {
+            printf("Game gagal dihapus\n");
+        } else {
+            int i;
+            i = input-1;
+            while (i<(*GameBNMO).Neff) {
+                (*GameBNMO).A[i] = (*GameBNMO).A[i+1];
+                i++;  
+            } 
+            (*GameBNMO).Neff--;
+            printf("Game berhasil dihapus\n");
+        }
+    }
+    printf("\n");
+}
+
+void HELP() {
+    printf("DAFTAR COMMAND \n");
+    printf("\n");
+    printf("START       : memulai permainan BNMO dan menampilkan list game yang dapat dimainkan\n");
+    printf("LOAD        : membuka file yang berisi game yang dapat dimainkan dan histori bermain\n");
+    printf("SAVE        : menyimpan nama file yang akan disimpan di disk\n");
+    printf("CREATEGAME  : menampilkan daftar game yang disediakan oleh sistem\n ");
+    printf("DELETEGAME  : menghapus sebuah game dari daftar game tanpa menghapus 5 game awal pada konfigurasi atau yang sedang diqueue\n");
+    printf("QUEUEGAME   : menambahkan permainan ke list game yang akan dimainkan\n");
+    printf("PLAYGAME    : memainkan game yang ada di list game yang akan dimainkan\n");
+    printf("SKIPGAME    : melewati permainan ke-n\n");
+    printf("QUIT        : keluar dari permainan\n");
+    printf("HELP        : menampilkan daftar-daftar command\n");
+    
+} 
+
+void QUIT() {
+    printf("Anda keluar dari game BNMO. \n");
+    printf("Bye bye ... \n");
+    exit(0);
+}
+

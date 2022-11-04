@@ -1,7 +1,7 @@
 #include "ADT/mesinkarakter/mesinkarakter.h"
 #include "ADT/mesinkata/mesinkata.h"
 #include "ADT/arraydinamis/arraydin.h"
-
+#include "ADT/queue/queue.h"
 
 
 boolean compareWord (char *kata1, char * kata2);
@@ -13,3 +13,9 @@ void wordtoString(Kata CurrentWord, char *string);
 void STARTBNMO();
 
 void LISTGAME(ArrayDin GameBNMO);
+
+void DELETEGAME (ArrayDin *GameBNMO, Queue Q);
+
+void HELP();
+
+void QUIT();
