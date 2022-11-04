@@ -23,12 +23,14 @@ void StartWord(char * filename)
 {
     START(filename);
     IgnoreBlank();
-    if (CC == ENTER)
+    if (CC != MARK)
     {
-        endWord = true;
-    } else {
         endWord = false;
         CopyWord();
+    }
+    else
+    {
+        endWord = true;
     }
 }
 
@@ -77,7 +79,7 @@ void CopyWord()
 
 /* *** ADT untuk baca commands *** */
 
-void IgnoreDot()
+void IgnoreBlankC()
 /* Mengabaikan satu atau beberapa BLANK dan MARK
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = ENTER */
@@ -95,8 +97,8 @@ void StartCommand()
           CC karakter pertama sesudah karakter terakhir kata */
 {
     StartC();
-    IgnoreDot();
-    if (CC == ENTER || CC == MARK){
+    IgnoreBlankC();
+    if (CC == ENTER){
         endWord = true;
     } else {
         endWord = false;
@@ -111,11 +113,12 @@ void ADVCommand()
           Jika CC = ENTER, endWord = true.		  
    Proses : Akuisisi kata menggunakan procedure SalinCommand */
 {
-    ADVC();
-    if (CC == ENTER || CC == MARK){
+    IgnoreBlankC();
+    if (CC == ENTER && !endWord){
         endWord = true;
     } else{
         CopyCommand();
+        IgnoreBlankC();
     }
 }
 
@@ -128,7 +131,7 @@ void CopyCommand()
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
     int i = 0;
-    while ((CC != MARK) && (CC != ENTER)) 
+    while ((CC != BLANK) && (CC != ENTER) && i != NMax)
     {
         CurrentCommand.TabWord[i] = CC;
         ADVC();

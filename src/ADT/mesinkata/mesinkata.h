@@ -10,6 +10,7 @@
 #define NMax 100
 #define BLANK ' '
 
+
 typedef struct {
 	char TabWord[NMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
     int Length;
@@ -18,6 +19,7 @@ typedef struct {
 /* State Mesin Kata */
 extern boolean EndWord;
 extern Kata CurrentWord;
+extern Kata CurrentCommand;
 
 
 /* *** ADT untuk baca file eksternal *** */
