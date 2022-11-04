@@ -158,18 +158,16 @@ void PrintArrayDin(ArrayDin array)
 {
 	if (IsEmpty(array))
 	{
-		printf("[]\n");
+		printf("Game Kosong\n");
 	}
 	else
 	{
 		int j;
-		printf("[");
+		
 		for (j = 0 ; j < (array.Neff)-1 ; j++)
 		{
-			printf("%d, ",array.A[j]);
+			printf("%d. %s\n", (j+1), array.A[j]);
 		}
-		printf("%d",array.A[(array.Neff)-1]);
-		printf("]\n");
 	}
 }
 
