@@ -7,34 +7,38 @@
 int main()
 {
     ArrayDin ArrayGame;
+    Queue QueueGame;
     ArrayGame = MakeArrayDin();
+    CreateQueue(&QueueGame);
 
     boolean endProgram = false;
-    char *command;
     printf("Welcome to BNMO\n");
     printf("START/LOAD(?)\n");
     while (endProgram == false)
     {
         printf("\nENTER COMMAND: ");
-        scanf("%s", command);
+        StartCommand();
+        printf("%s\n", CurrentCommand);
         if (IsEmpty(ArrayGame))
         {
-            if (compareWord(command, "START") == true)
+            if (compareWord(CurrentCommand, "START") == true)
             {
                 STARTBNMO(&ArrayGame);
             }
         }
-        else
-        {
-            if (compareWord(command, "LISTGAME") == true)
+        else{
+            if (compareWord(CurrentCommand, "LISTGAME") == true)
             {
                 LISTGAME(ArrayGame);
             }
-        }
-        if (compareWord(command, "EXIT") == true)
+            if (compareWord(CurrentCommand, "DELETEGAME") == true)
             {
-                endProgram = true;
+                DELETEGAME (&ArrayGame, QueueGame);
             }
-        
+            if (compareWord(CurrentCommand, "EXIT") == true)
+                {
+                    endProgram = true;
+                }
+        }
     }
 }
