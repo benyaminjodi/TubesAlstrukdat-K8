@@ -82,26 +82,22 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q) {
     printf("Masukkan nomor game yang akan dihapus: ");
     StartCommand();
     printf("\n");
-    int input;
-    input = wordtoInt(CurrentCommand);
-    if (input<1 || input==1 || input==2 || input==3 || input==4 || input==5 || input>(*GameBNMO).Neff) {
+    int x;
+    x = wordtoInt(CurrentCommand);
+    if ((x<=5 && x >=1) || x>(*GameBNMO).Neff) {
         printf("Game gagal dihapus\n");
     } else {
-        boolean found;
-        found = false;
-        int j;
-        j = 0;
-        while (j<length(Q)) {
-            if (Q.buffer[j]==(*GameBNMO).A[input-1]) {
+        boolean found = false;
+        int j = 0 ;
+        while (j<length(Q) && found == false) {
+            if (Q.buffer[j]==(*GameBNMO).A[x-1]) {
                 found = true;
-                break;
             } j++;
         }
         if (found) {
             printf("Game gagal dihapus\n");
         } else {
-            int i;
-            i = input-1;
+            int i = x-1;
             while (i<(*GameBNMO).Neff) {
                 (*GameBNMO).A[i] = (*GameBNMO).A[i+1];
                 i++;  
