@@ -109,19 +109,20 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q) {
     printf("\n");
 }
 
-void HELP() {
+void HELP() 
+{
     printf("DAFTAR COMMAND \n");
     printf("\n");
-    printf("START       : memulai permainan BNMO dan menampilkan list game yang dapat dimainkan\n");
-    printf("LOAD        : membuka file yang berisi game yang dapat dimainkan dan histori bermain\n");
-    printf("SAVE        : menyimpan nama file yang akan disimpan di disk\n");
-    printf("CREATEGAME  : menampilkan daftar game yang disediakan oleh sistem\n ");
-    printf("DELETEGAME  : menghapus sebuah game dari daftar game tanpa menghapus 5 game awal pada konfigurasi atau yang sedang diqueue\n");
-    printf("QUEUEGAME   : menambahkan permainan ke list game yang akan dimainkan\n");
-    printf("PLAYGAME    : memainkan game yang ada di list game yang akan dimainkan\n");
-    printf("SKIPGAME    : melewati permainan ke-n\n");
-    printf("QUIT        : keluar dari permainan\n");
-    printf("HELP        : menampilkan daftar-daftar command\n");
+    printf("START           : Command untuk memulai permainan BNMO dan menampilkan list game yang dapat dimainkan\n");
+    printf("LOAD            : Command untuk membuka file yang berisi game yang dapat dimainkan dan histori bermain\n");
+    printf("SAVE            : Command untuk menyimpan nama file yang akan disimpan di disk\n");
+    printf("CREATE GAME     : Command untuk menampilkan daftar game yang disediakan oleh sistem\n");
+    printf("DELETE GAME     : Command untuk menghapus sebuah game dari daftar game tanpa menghapus 5 game awal pada konfigurasi atau yang sedang diqueue\n");
+    printf("QUEUE GAME      : Command untuk menambahkan permainan ke list game yang akan dimainkan\n");
+    printf("PLAY GAME       : Command untuk memainkan game yang ada di list game yang akan dimainkan\n");
+    printf("SKIPGAME        : Command untuk melewati permainan ke-n\n");
+    printf("QUIT            : Command untuk keluar dari permainan\n");
+    printf("HELP            : Command untuk menampilkan daftar-daftar command\n");
     
 } 
 

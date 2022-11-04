@@ -18,7 +18,7 @@ int main()
     {
         printf("\nENTER COMMAND: ");
         StartCommand();
-        printf("%s\n", CurrentCommand);
+        // printf("%s\n", CurrentCommand);
         if (IsEmpty(ArrayGame))
         {
             if (compareWord(CurrentCommand, "START") == true)
@@ -35,9 +35,13 @@ int main()
             {
                 DELETEGAME (&ArrayGame, QueueGame);
             }
-            if (compareWord(CurrentCommand, "EXIT") == true)
+            if (compareWord(CurrentCommand, "HELP") == true)
+            {
+                HELP();
+            }
+            if (compareWord(CurrentCommand, "QUIT") == true)
                 {
-                    endProgram = true;
+                    QUIT();
                 }
         }
     }

@@ -65,7 +65,6 @@ CC mungkin = MARK
 Jika CC = MARK maka EOP akan menyala (true) */
 {
     retval = fscanf(pita,"%c",&CC);
-   
 }
 
 
