@@ -10,5 +10,6 @@ int wordtoInt (Kata Word);
 
 void wordtoString(Kata CurrentWord, char *string);
 
-
 void STARTBNMO();
+
+void LISTGAME(ArrayDin GameBNMO);

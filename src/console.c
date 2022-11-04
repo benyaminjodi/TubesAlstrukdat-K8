@@ -62,10 +62,17 @@ void STARTBNMO(ArrayDin *GameBNMO)
             
             i += 1;
         }
-        // printf("%s\n", temp);
-
-        InsertLast(GameBNMO, *temp);
+        InsertLast(GameBNMO, temp);
         ADVWord();
     }
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
+}
+
+void LISTGAME (ArrayDin GameBNMO)
+{
+    int i;
+    printf("Berikut adalah daftar game yang tersedia\n");
+    for (i=0; i < GameBNMO.Neff; i++){
+        printf("%d. %s\n", (1+i), GameBNMO.A[i]);
+    }
 }
