@@ -27,11 +27,11 @@ int main()
             }
         }
         else{
-            if (compareWord(CurrentCommand, "LISTGAME") == true)
+            if (compareWord(CurrentCommand, "LIST GAME") == true)
             {
                 LISTGAME(ArrayGame);
             }
-            if (compareWord(CurrentCommand, "DELETEGAME") == true)
+            if (compareWord(CurrentCommand, "DELETE GAME") == true)
             {
                 DELETEGAME (&ArrayGame, QueueGame);
             }
