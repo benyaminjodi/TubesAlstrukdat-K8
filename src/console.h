@@ -12,6 +12,8 @@ void wordtoString(Kata CurrentWord, char *string);
 
 void STARTBNMO();
 
+void CREATEGAME (ArrayDin *GameBNMO);
+
 void LISTGAME(ArrayDin GameBNMO);
 
 void DELETEGAME (ArrayDin *GameBNMO, Queue Q);
