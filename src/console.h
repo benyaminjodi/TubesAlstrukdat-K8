@@ -4,7 +4,7 @@
 #include "ADT/queue/queue.h"
 
 
-boolean compareWord (char *kata1, char * kata2);
+boolean compareWord(Kata kata1, char *kata2);
 
 int wordtoInt (Kata Word);
 

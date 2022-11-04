@@ -3,16 +3,16 @@
 #include "console.h"
 
 
-boolean compareWord(char *kata1, char *kata2)
+boolean compareWord(Kata kata1, char *kata2)
 {
     boolean same = true;
-    while (*kata1 != '\0' && *kata2 != '\0')
+    int i = 0;
+    for (i=0 ; i<kata1.Length;i++)
     {
-        if (*kata1 != *kata2)
+        if (kata1.TabWord[i] != *kata2)
         {
             same = false;
         }
-        kata1++;
         kata2++;
     }
     return same;
@@ -64,6 +64,7 @@ void STARTBNMO(ArrayDin *GameBNMO)
         }
         InsertLast(GameBNMO, temp);
         ADVWord();
+        
     }
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }
@@ -81,7 +82,6 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q) {
     LISTGAME(*GameBNMO);
     printf("Masukkan nomor game yang akan dihapus: ");
     StartCommand();
-    printf("\n");
     int x;
     x = wordtoInt(CurrentCommand);
     if ((x<=5 && x >=1) || x>(*GameBNMO).Neff) {
