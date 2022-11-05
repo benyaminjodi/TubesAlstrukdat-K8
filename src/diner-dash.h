@@ -6,22 +6,24 @@
 #include <time.h>
 #include "boolean.h"
 #include "ADT/queue/queueDD.h"
+#include "ADT/mesinkata/mesinkata.h"
+#include "console.h"
 
 
-void displayData(int saldo, Queue Qpesanan, Queue Qmasak, Queue Qsaji);
+void displayData(int saldo, QueueDD Qpesanan, QueueDD Qmasak, QueueDD Qsaji);
 // I.S. saldo, Qpesanan, Qmasak, dan Qsaji terdefinisi. Qpesanan pasti sudah terisi. Qmasak dan Qsaji mungkin kosong
 // F.S. Menampilkan nilai saldo, Qpesanan, Qmasak, dan Qsaji dalam bentuk tabel
 
 int rng(int lower, int upper);
 // Menghasilkan bilangan random antara [lower..upper]
 
-void initPesanan(Queue *Qpesanan);
-// I.S. Queue pesanan terdefinisi dan merupakan queue kosong
-// F.S. Queue pesanan terisi 3 elemen yang bernilai random 
+void initPesanan(QueueDD *Qpesanan);
+// I.S. QueueDD pesanan terdefinisi dan merupakan QueueDD kosong
+// F.S. QueueDD pesanan terisi 3 elemen yang bernilai random 
 
-void copyElemen(int processID, Queue *Qin, Queue Qout);
+void copyElemen(int processID, QueueDD *Qin, QueueDD Qout);
 // I.S. Qin, Qout, dan idx terdefinisi. Elemen dengan indeks idx terdapat pada Qout
-// F.S. Menyalin sebuah elemen queue berindeks idx ke queue lain (Qin) tanpa menghapus elemen dari Qout
+// F.S. Menyalin sebuah elemen QueueDD berindeks idx ke QueueDD lain (Qin) tanpa menghapus elemen dari Qout
 
 boolean isCook(char* command);
 // Mengecek apakah masukan berupa 'cook', akan mengembalikan true jika iya
@@ -29,46 +31,46 @@ boolean isCook(char* command);
 boolean isServe(char* command);
 // Mengecek apakah masukan berupa 'serve', akan mengembalikan true jika iya
 
-void sortDurasi(Queue *Qin);
+void sortDurasi(QueueDD *Qin);
 // I.S. Qin terdefinisi, mungkin terurut
 // F.S. Qin terurut membesar berdasarkan durasi memasak
 
-void sortID(Queue *Qin); 
+void sortID(QueueDD *Qin); 
 // I.S. Qin terdefinisi, mungkin terurut
 // F.S. Qin terurut membesar berdasarkan id
 
-void sortKetahanan(Queue *Qin);
+void sortKetahanan(QueueDD *Qin);
 // I.S. Qin terdefinisi, mungkin terurut
 // F.S. Qin terurut membesar berdasarkan id
 
-boolean isMemberID(Queue Qcek, int processID);
-// Mengecek apakah sebuah ID makanan terdapat pada suatu queue. Jika ada, akan mengembalikan true
+boolean isMemberID(QueueDD Qcek, int processID);
+// Mengecek apakah sebuah ID makanan terdapat pada suatu QueueDD. Jika ada, akan mengembalikan true
 
-void displayStatusCook(int processID, Queue Qpesanan, Queue *Qmasak, Queue Qsaji);
+void displayStatusCook(int processID, QueueDD Qpesanan, QueueDD *Qmasak, QueueDD Qsaji);
 // I.S. processID, Qpesanan, Qmasak, dan Qsaji terdefinisi. Qpesanan tidak mungkin kosong
 // F.S. Memproses command jika panjang Qmasak tidak lebih dari 5. Jika memenuhi, maka akan menyalin elemen dengan processID dari Qpesanan ke Qmasak
 
-void displayStatusServe(int processID, int *saldo, int *countTerlayani, Queue *Qpesanan, Queue *Qsaji, Queue *Qmasak);
+void displayStatusServe(int processID, int *saldo, int *countTerlayani, QueueDD *Qpesanan, QueueDD *Qsaji, QueueDD *Qmasak);
 // I.S. processID, saldo, countTerlayani, Qpesanan, dan Qsaji terdefinisi. Qpesaanan tidak mungkin kosong
-// F.S. Makanan pada Qsaji dan Qpesanan didequeue
+// F.S. Makanan pada Qsaji dan Qpesanan dideQueueDD
 // Proses:  menghilangkan pesanan dari Qpesanan dan Qsaji, menambahkan saldo sesuai harga pesanan, dan menambah jumlah pelanggan terlayani 
 
-void newRound(Queue *Qmasak, Queue *Qsaji);
+void newRound(QueueDD *Qmasak, QueueDD *Qsaji);
 // I.S. Qmasak dan Qsaji terdefinisi. 
 // F.S. Mengurangi durasi dari setiap elemen pada Qmasak dan mengurangi ketahanan pada setiap elemen pada Qsaji
 
-void pindahElemenQmasak(Queue *Qmasak, Queue *Qsaji);
+void pindahElemenQmasak(QueueDD *Qmasak, QueueDD *Qsaji);
 // I.S. Qmasak dan Qsaji terdefinisi 
 // F.S. Elemen pada Qmasak tidak ada yang berdurasi 0
-// Proses: mengurut Qmasak berdasarkan durasi sehingga lebih mudah untuk didequeue
+// Proses: mengurut Qmasak berdasarkan durasi sehingga lebih mudah untuk dideQueueDD
 
-void pindahElemenQsaji(Queue *Qsaji, Queue *Qpesanan);
+void pindahElemenQsaji(QueueDD *Qsaji, QueueDD *Qpesanan);
 // I.S. Qsaji dan Qpesanan terdefinisi 
 // F.S. Elemen pada Qsaji tidak ada yang memiliki ketahanan 0
 
-boolean validasiCommand(char *command, int processID, Queue Qpesanan, Queue Qmasak, Queue Qsaji);
+boolean validasiCommand(char *command, int processID, QueueDD Qpesanan, QueueDD Qmasak, QueueDD Qsaji);
 
-void addPesanan(Queue *Qpesanan, int *IDpesanan);
+void addPesanan(QueueDD *Qpesanan, int *IDpesanan);
 // I.S. Qpesanan dan IDPesanan terdefinisi
 // F.S. Menambahkan elemen ke Qpesanan 
 

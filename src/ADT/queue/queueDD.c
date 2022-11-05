@@ -2,7 +2,7 @@
 #include "queueDD.h"
 
 /* *** Kreator *** */
-void CreateQueue(Queue *q)
+void CreateQueueDD(QueueDD *q)
 /* I.S. sembarang */
 /* F.S. Sebuah q kosong terbentuk dengan kondisi sbb: */
 /* - Index head bernilai IDX_UNDEF */
@@ -14,22 +14,22 @@ void CreateQueue(Queue *q)
 }
 
 /* ********* Prototype ********* */
-boolean isEmpty(Queue q)
+boolean isEmptyDD(QueueDD q)
 /* Mengirim true jika q kosong */
 {
   return IDX_HEAD(q) == IDX_UNDEF && IDX_TAIL(q) == IDX_UNDEF;
 }
 
-boolean isFull(Queue q)
+boolean isFullDD(QueueDD q)
 /* Mengirim true jika tabel penampung elemen q sudah penuh */
 {
-  return IDX_HEAD(q) == 0 && IDX_TAIL(q) == CAPACITY-1;
+  return IDX_HEAD(q) == 0 && IDX_TAIL(q) == CAPACITYDD-1;
 }
 
-int length(Queue q)
-/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
+int lengthDD(QueueDD q)
+/* Mengirimkan banyaknya elemen QueueDD. Mengirimkan 0 jika q kosong. */
 {
-  if (isEmpty(q)) {
+  if (isEmptyDD(q)) {
     return 0;
   } else {
     return IDX_TAIL(q) - IDX_HEAD(q) + 1;
@@ -37,13 +37,13 @@ int length(Queue q)
 }
 
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, ElType val)
+void enqueueDD(QueueDD *q, ElTypeDD val)
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur". */
 {
-  if (!isFull(*q)) {
-    if (isEmpty(*q)) {
+  if (!isFullDD(*q)) {
+    if (isEmptyDD(*q)) {
       IDX_HEAD(*q) = 0;
       IDX_TAIL(*q) = 0;
     } else {
@@ -57,22 +57,22 @@ void enqueue(Queue *q, ElType val)
   }
 }
 
-void dequeue(Queue *q, ElType *val)
+void dequeueDD(QueueDD *q, ElTypeDD *val)
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., setiap elemen melakukan pergeseran ke kiri; q mungkin kosong */
 {
-  if (!isEmpty(*q)) {
+  if (!isEmptyDD(*q)) {
     (*val).id = HEAD_ID(*q);
     (*val).durasiMasak = HEAD_DURASI(*q);
     (*val).ketahanan = HEAD_KETAHANAN(*q);
     (*val).harga = HEAD_HARGA(*q);
-    if (length(*q) == 1) {
+    if (lengthDD(*q) == 1) {
       IDX_HEAD(*q) = IDX_UNDEF;
       IDX_TAIL(*q) = IDX_UNDEF;
     } else {
       IDX_TAIL(*q)--;
-      for (int i = 0; i < length(*q); i++) {
+      for (int i = 0; i < lengthDD(*q); i++) {
         (*q).buffer[i] = (*q).buffer[i+1];
       }
     }

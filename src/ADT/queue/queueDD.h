@@ -1,11 +1,11 @@
-/* File : queue.h */
-/* Definisi ADT Queue dengan representasi array secara eksplisit dan alokasi statik */
+/* File : QueueDD.h */
+/* Definisi ADT QueueDD dengan representasi array secara eksplisit dan alokasi statik */
 
-#ifndef QUEUEPESANAN_H
-#define QUEUEPESANAN_H
-#include "boolean.h"
+#ifndef QueueDDPESANAN_H
+#define QueueDDPESANAN_H
+#include "../../boolean.h"
 #define IDX_UNDEF -1
-#define CAPACITY 20
+#define CAPACITYDD 20
 
 /* Definisi elemen dan address */
 typedef struct {
@@ -13,15 +13,15 @@ typedef struct {
         int durasiMasak;
         int ketahanan;
         int harga;
-} ElType;
+} ElTypeDD;
 typedef struct {
-	ElType buffer[CAPACITY]; 
+	ElTypeDD buffer[CAPACITYDD]; 
 	int idxHead;
 	int idxTail;
-} Queue;
+} QueueDD;
 
 /* ********* AKSES (Selektor) ********* */
-/* Jika q adalah Queue, maka akses elemen : */
+/* Jika q adalah QueueDD, maka akses elemen : */
 #define IDX_HEAD(q) (q).idxHead
 #define IDX_TAIL(q) (q).idxTail
 
@@ -41,7 +41,7 @@ typedef struct {
 #define TAIL_HARGA(q) (q).buffer[(q).idxTail].harga
 
 /* *** Kreator *** */
-void CreateQueue(Queue *q);
+void CreateQueueDD(QueueDD *q);
 /* I.S. sembarang */
 /* F.S. Sebuah q kosong terbentuk dengan kondisi sbb: */
 /* - Index head bernilai IDX_UNDEF */
@@ -49,21 +49,21 @@ void CreateQueue(Queue *q);
 /* Proses : Melakukan alokasi, membuat sebuah q kosong */
 
 /* ********* Prototype ********* */
-boolean isEmpty(Queue q);
+boolean isEmptyDD(QueueDD q);
 /* Mengirim true jika q kosong */
-boolean isFull(Queue q);
+boolean isFullDD(QueueDD q);
 /* Mengirim true jika tabel penampung elemen q sudah penuh */
 
-int length(Queue q);
-/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
+int lengthDD(QueueDD q);
+/* Mengirimkan banyaknya elemen QueueDD. Mengirimkan 0 jika q kosong. */
 
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, ElType val);
+void enqueueDD(QueueDD *q, ElTypeDD val);
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur". */
 
-void dequeue(Queue *q, ElType *val);
+void dequeueDD(QueueDD *q, ElTypeDD *val);
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., setiap elemen melakukan pergeseran ke kiri; q mungkin kosong */
