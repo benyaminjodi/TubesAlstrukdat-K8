@@ -244,6 +244,8 @@ void pindahElemenQsaji(QueueDD *Qsaji, QueueDD *Qpesanan) {
 }
 
 void validasiCommandCook(QueueDD Qpesanan, QueueDD Qsaji, int processID, boolean *isValid) {
+// I.S. Qpesanan, Qsaji, processID, dan boolean isValid terdefinisi 
+// F.S. Mengubah nilai boolean isValid menjadi true jika processID terdapat di Qpesanan. Jika tidak, akan diberi pesan eror.
   if (isMemberID(Qpesanan, processID)) {
       *isValid = true;
   } else {
@@ -256,6 +258,8 @@ void validasiCommandCook(QueueDD Qpesanan, QueueDD Qsaji, int processID, boolean
 }
 
 void validasiCommandServe(QueueDD Qpesanan, QueueDD Qmasak, QueueDD Qsaji, int processID, boolean *isValid) {
+// I.S. Qpesanan, Qmasak, Qsaji, processID, dan boolean isValid terdefinisi 
+// F.S. Mengubah nilai boolean isValid menjadi true jika processID terdapat di Qsaji dan processID merupakan head ID makanan dari Qpesanan. Jika tidak, akan diberi pesan eror.
   if (isMemberID(Qsaji, processID)) {
     if (processID == HEAD_ID(Qpesanan)) {
       printf("Berhasil mengantar M%d\n", processID);
@@ -331,6 +335,8 @@ int main() {
           processID = processID*10 + x;
         }
         validasiCommandServe(Qpesanan, Qmasak, Qsaji, processID, &isValid);
+      } else {
+        printf("Anda melakukan typo. Silakan ketik ulang.\n");
       }
     }
 

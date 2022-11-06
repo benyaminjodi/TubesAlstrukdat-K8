@@ -68,7 +68,13 @@ void pindahElemenQsaji(QueueDD *Qsaji, QueueDD *Qpesanan);
 // I.S. Qsaji dan Qpesanan terdefinisi 
 // F.S. Elemen pada Qsaji tidak ada yang memiliki ketahanan 0
 
-boolean validasiCommand(char *command, int processID, QueueDD Qpesanan, QueueDD Qmasak, QueueDD Qsaji);
+void validasiCommandCook(QueueDD Qpesanan, QueueDD Qsaji, int processID, boolean *isValid);
+// I.S. Qpesanan, Qsaji, processID, dan boolean isValid terdefinisi 
+// F.S. Mengubah nilai boolean isValid menjadi true jika processID terdapat di Qpesanan. Jika tidak, akan diberi pesan eror.
+
+void validasiCommandServe(QueueDD Qpesanan, QueueDD Qmasak, QueueDD Qsaji, int processID, boolean *isValid);
+// I.S. Qpesanan, Qmasak, Qsaji, processID, dan boolean isValid terdefinisi 
+// F.S. Mengubah nilai boolean isValid menjadi true jika processID terdapat di Qsaji dan processID merupakan head ID makanan dari Qpesanan. Jika tidak, akan diberi pesan eror.
 
 void addPesanan(QueueDD *Qpesanan, int *IDpesanan);
 // I.S. Qpesanan dan IDPesanan terdefinisi
