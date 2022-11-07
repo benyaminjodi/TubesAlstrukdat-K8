@@ -131,7 +131,7 @@ void CopyCommand()
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
     int i = 0;
-    while ((CC != ENTER) && i != NMax)
+    while ((CC != ENTER) && i != NMax && (CC != BLANK))
     {
         CurrentCommand.TabWord[i] = CC;
         ADVC();
