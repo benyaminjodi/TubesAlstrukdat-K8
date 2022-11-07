@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "mesinkarakter.h"
+#include "ADT/mesinkarakter/mesinkarakter.h"
 
 void rng(){
     srand(time(NULL));

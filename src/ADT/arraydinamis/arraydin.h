@@ -1,13 +1,7 @@
 #ifndef __ARRAY_DINAMIK__
 #define __ARRAY_DINAMIK__
-
-// Boolean
-#define boolean unsigned char
-#define true 1
-#define false 0
-
 #define InitialSize 10
-
+#include "../../boolean.h"
 typedef int IdxType;
 typedef char* ElType;
 typedef struct {
