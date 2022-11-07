@@ -115,6 +115,31 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename)
     printf("File %s berhasil dibaca. BNMO berhasil dijalankan.\n", filename);
 }
 
+void SAVE(ArrayDin *GameBNMO, char *filename)
+{
+    char temp[50];
+    printf("%s\n",filename);
+    concat("./data/", filename, temp);
+    printf("%s\n",temp);
+    FILE *fpita;
+    fpita = fopen(temp, "w");
+    fprintf(fpita, "%d", GameBNMO->Neff);
+    printf("%d\n", (*GameBNMO).Neff);
+    int i=0;
+    // for (i = 0;i < (*GameBNMO).Neff; i++)
+    // {
+    //     fprintf(fpita, "\n%s",(*GameBNMO).A[i]);
+    // }
+    while (i < (*GameBNMO).Neff)
+    {
+        fprintf(fpita, "\n%s",(*GameBNMO).A[i]);
+        i++;
+    }
+    printf("%s file berhasil disimpan.\n", filename);        
+    
+    fclose(fpita);   
+
+}
 
 void CREATEGAME (ArrayDin *GameBNMO) {
     printf("Masukkan nama game yang akan ditambahkan: ");

@@ -14,6 +14,8 @@ void STARTBNMO(ArrayDin *GameBNMO);
 
 void LOADBNMO(ArrayDin *GameBNMO, char *filename);
 
+void SAVE(ArrayDin *GameBNMO, char *filename);
+
 void CREATEGAME (ArrayDin *GameBNMO);
 
 void LISTGAME(ArrayDin GameBNMO);
