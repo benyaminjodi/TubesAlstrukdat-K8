@@ -12,13 +12,24 @@ int main()
     CreateQueue(&QueueGame);
 
     boolean endProgram = false;
-    printf("Welcome to BNMO\n");
+    printf(" _    _         _ _         _      \n");
+    printf("| |  | |       | | |       | |     \n");
+    printf("| |__| |  ___  | | |  ___  | |     \n");
+    printf("|  __  | / _ . | | | / _ . | |     \n");
+    printf("| |  | | . __/ | | |  (_)  |_|     \n");
+    printf("|_|  |_| '___  |_|_| .___/ (_)     \n");
+                          
+                        
+    printf("Welcome to BNMO\n");                          
+     
     printf("START/LOAD(?)\n");
     while (endProgram == false)
     {
         printf("\nENTER COMMAND: ");
         StartCommand();
-        // printf("%s\n", CurrentCommand);
+        //printf("%s\n", CurrentCommand);
+        //ADVCommand();
+        //printf("%s\n", CurrentCommand);
         if (IsEmpty(ArrayGame))
         {
             if (compareWord(CurrentCommand, "START") == true)
@@ -28,6 +39,16 @@ int main()
             else if (compareWord(CurrentCommand, "LOAD") == true)
             {
                 ADVCommand();
+                // printf("%s", CurrentCommand);
+                char filename[50];
+                wordtoString(CurrentCommand, filename);
+                //printf("%s", filename);
+                LOADBNMO(&ArrayGame, filename);
+                
+            }
+            else if (compareWord(CurrentCommand, "HELP") == true)
+            {
+                HELP();
             }
             else
             {
@@ -37,18 +58,31 @@ int main()
             }
         }
         else{
-            if (compareWord(CurrentCommand, "LIST GAME") == true)
+            if (compareWord(CurrentCommand, "LIST") == true)
             {
-                LISTGAME(ArrayGame);
+                ADVCommand();
+                if (compareWord(CurrentCommand, "GAME") == true)
+                {
+                    LISTGAME(ArrayGame);
+                }
             }
-            if (compareWord(CurrentCommand, "CREATE GAME") == true)
+            if (compareWord(CurrentCommand, "CREATE") == true)
             {
-                CREATEGAME (&ArrayGame);
+                ADVCommand();   
+                if (compareWord(CurrentCommand, "GAME") == true)
+                {
+                    CREATEGAME(&ArrayGame);
+                }
             }
-            if (compareWord(CurrentCommand, "DELETE GAME") == true)
+            if (compareWord(CurrentCommand, "DELETE") == true)
             {
-                DELETEGAME (&ArrayGame, QueueGame);
+                ADVCommand();
+                if (compareWord(CurrentCommand, "GAME") == true)
+                {
+                    DELETEGAME (&ArrayGame, QueueGame);
+                }
             }
+
             if (compareWord(CurrentCommand, "HELP") == true)
             {
                 HELP();
