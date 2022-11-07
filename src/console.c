@@ -30,6 +30,23 @@ int wordtoInt(Kata Word) {
     return x;
 }
 
+void concat(char *s1, char *s2, char *soutput)
+{
+    int i,j = 0;
+    while (s1[i] != '\0') {
+        soutput[j] = s1[i];
+        i++;
+        j++;
+    }
+    i = 0;
+    while (s2[i] != '\0') {
+        soutput[j] = s2[i];
+        i++;
+        j++;
+    }
+    soutput[j] = '\0';
+}
+
 void wordtoString(Kata CurrentWord, char *string)
 {
     int i = 0;
@@ -68,6 +85,36 @@ void STARTBNMO(ArrayDin *GameBNMO)
     }
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }
+
+void LOADBNMO(ArrayDin *GameBNMO, char *filename)
+{
+    char string[50];
+    char *temp; 
+    char temp2[50];
+    int i,x;
+    concat("./data/",filename, temp2);
+    printf("%s", temp2);
+    StartWord(temp2);
+    x = wordtoInt(CurrentWord);
+    ADVWord();
+    for (int j = 0; j < x; j++)
+    {
+        wordtoString(CurrentWord, string);
+        temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+        i = 0;
+        while (i <= CurrentWord.Length)
+        {
+            temp[i] = string[i];
+            
+            i += 1;
+        }
+        InsertLast(GameBNMO, temp);
+        ADVWord();
+        
+    }
+    printf("File %s berhasil dibaca. BNMO berhasil dijalankan.\n", filename);
+}
+
 
 void CREATEGAME (ArrayDin *GameBNMO) {
     printf("Masukkan nama game yang akan ditambahkan: ");

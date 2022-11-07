@@ -10,7 +10,9 @@ int wordtoInt (Kata Word);
 
 void wordtoString(Kata CurrentWord, char *string);
 
-void STARTBNMO();
+void STARTBNMO(ArrayDin *GameBNMO);
+
+void LOADBNMO(ArrayDin *GameBNMO, char *filename);
 
 void CREATEGAME (ArrayDin *GameBNMO);
 
