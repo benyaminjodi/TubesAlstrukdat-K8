@@ -82,6 +82,15 @@ int main()
                     DELETEGAME (&ArrayGame, QueueGame);
                 }
             }
+            if (compareWord(CurrentCommand, "SAVE") == true)
+            {
+                ADVCommand();
+                // printf("%s\n",CurrentCommand);
+                char filename[50];
+                wordtoString(CurrentCommand, filename);   
+                // printf("%s",filename);            
+                SAVE(&ArrayGame, filename);
+            }
 
             if (compareWord(CurrentCommand, "HELP") == true)
             {
