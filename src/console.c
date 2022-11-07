@@ -93,7 +93,7 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename)
     char temp2[50];
     int i,x;
     concat("./data/",filename, temp2);
-    printf("%s", temp2);
+    // printf("%s", temp2);
     StartWord(temp2);
     x = wordtoInt(CurrentWord);
     ADVWord();
