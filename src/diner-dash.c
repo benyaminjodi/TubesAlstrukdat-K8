@@ -122,6 +122,20 @@ boolean isServe(char* command) {
   return false;
 }
 
+boolean isSkip(char* command) {
+  // Mengecek apakah masukan berupa 'skip', akan mengembalikan true jika iya
+  if (*command == 's' || *command == 'S') {
+    if (*(command+1) == 'k' || *(command+1) == 'K') {
+      if (*(command+2) == 'i' || *(command+2) == 'I') {
+        if (*(command+3) == 'p' || *(command+3) == 'P') {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 void sortDurasi(QueueDD *Qin) {
   // I.S. Qin terdefinisi, mungkin terurut
   // F.S. Qin terurut membesar berdasarkan durasi memasak
@@ -335,6 +349,9 @@ int main() {
           processID = processID*10 + x;
         }
         validasiCommandServe(Qpesanan, Qmasak, Qsaji, processID, &isValid);
+      } else if (isSkip(command)) {
+        isValid = true;
+        printf("Berhasil melewati 1 putaran\n");
       } else {
         printf("Anda melakukan typo. Silakan ketik ulang.\n");
       }
@@ -367,7 +384,16 @@ int main() {
     displayData(saldo, Qpesanan, Qmasak, Qsaji);
     newRound(&Qmasak, &Qsaji);
   }
-  printf("GAME OVER\n");
-  printf("Skor Anda: %d\n", saldo);
+
+  // GAME SELESAI
+  if (lengthDD(Qpesanan) > 7) {
+    printf("GAME OVER\n");
+    printf("Anda kalah\n");
+    printf("Skor Anda: %d\n", saldo);
+  } else { //countTerlayani > 15
+    printf("GAME OVER\n");
+    printf("Selamat, Anda menang!\n");
+    printf("Skor Anda: %d\n", saldo);
+  }
   return 0;
 }

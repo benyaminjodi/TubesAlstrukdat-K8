@@ -31,6 +31,9 @@ boolean isCook(char* command);
 boolean isServe(char* command);
 // Mengecek apakah masukan berupa 'serve', akan mengembalikan true jika iya
 
+boolean isSkip(char* command);
+// Mengecek apakah masukan berupa 'skip', akan mengembalikan true jika iya
+
 void sortDurasi(QueueDD *Qin);
 // I.S. Qin terdefinisi, mungkin terurut
 // F.S. Qin terurut membesar berdasarkan durasi memasak
