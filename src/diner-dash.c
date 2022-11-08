@@ -304,7 +304,8 @@ void addPesanan(QueueDD *Qpesanan, int *IDpesanan) {
   enqueueDD(Qpesanan, inpt);
 }
 
-int main() {
+void dinerDash() {
+// Program utama diner-dash
   printf("Selamat Datang di Diner Dash!\n");
   int saldo = 0;
   QueueDD Qpesanan, Qmasak, Qsaji;
@@ -395,5 +396,4 @@ int main() {
     printf("Selamat, Anda menang!\n");
     printf("Skor Anda: %d\n", saldo);
   }
-  return 0;
 }
