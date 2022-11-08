@@ -124,7 +124,7 @@ void SAVE(ArrayDin *GameBNMO, char *filename)
     FILE *fpita;
     fpita = fopen(temp, "w");
     fprintf(fpita, "%d", GameBNMO->Neff);
-    printf("%d\n", (*GameBNMO).Neff);
+    // printf("%d\n", (*GameBNMO).Neff);
     int i=0;
     // for (i = 0;i < (*GameBNMO).Neff; i++)
     // {
@@ -145,7 +145,7 @@ void CREATEGAME (ArrayDin *GameBNMO) {
     printf("Masukkan nama game yang akan ditambahkan: ");
     char *namaGame;
     namaGame = (char *) malloc (50 * sizeof(char));
-    StartCommand();
+    StartGame();
     wordtoString(CurrentCommand, namaGame);
     InsertLast(GameBNMO, namaGame);
     printf("Game berhasil ditambahkan\n");
@@ -189,6 +189,16 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q) {
         }
     }
     printf("\n");
+}
+
+void PLAYGAME (Queue QueueBNMO)
+{
+
+}
+
+void COMMANDLAIN()
+{
+    printf("Command tidak dikenali, silahkan masukkan command yang valid.");
 }
 
 void HELP() 
