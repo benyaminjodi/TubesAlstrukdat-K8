@@ -65,8 +65,17 @@ int main()
                 {
                     LISTGAME(ArrayGame);
                 }
+                
             }
-            if (compareWord(CurrentCommand, "CREATE") == true)
+            if (compareWord(CurrentCommand, "QUEUE") == true)
+            {
+                ADVCommand();
+                if (compareWord(CurrentCommand, "GAME") == true)
+                {
+                    QUEUEGAME(&QueueGame, ArrayGame);
+                }
+            }
+            else if (compareWord(CurrentCommand, "CREATE") == true)
             {
                 ADVCommand();   
                 if (compareWord(CurrentCommand, "GAME") == true)
@@ -74,7 +83,15 @@ int main()
                     CREATEGAME(&ArrayGame);
                 }
             }
-            if (compareWord(CurrentCommand, "DELETE") == true)
+            else if (compareWord(CurrentCommand, "QUEUE") == true)
+            {
+                ADVCommand();   
+                if (compareWord(CurrentCommand, "GAME") == true)
+                {
+                    CREATEGAME(&ArrayGame);
+                }
+            }
+            else if (compareWord(CurrentCommand, "DELETE") == true)
             {
                 ADVCommand();
                 if (compareWord(CurrentCommand, "GAME") == true)
@@ -82,7 +99,7 @@ int main()
                     DELETEGAME (&ArrayGame, QueueGame);
                 }
             }
-            if (compareWord(CurrentCommand, "SAVE") == true)
+            else if (compareWord(CurrentCommand, "SAVE") == true)
             {
                 ADVCommand();
                 // printf("%s\n",CurrentCommand);
@@ -92,14 +109,19 @@ int main()
                 SAVE(&ArrayGame, filename);
             }
 
-            if (compareWord(CurrentCommand, "HELP") == true)
+            else if (compareWord(CurrentCommand, "HELP") == true)
             {
                 HELP();
             }
-            if (compareWord(CurrentCommand, "QUIT") == true)
+            else if (compareWord(CurrentCommand, "QUIT") == true)
                 {
                     QUIT();
                 }
+            else
+            {
+                COMMANDLAIN();
+            }
+            
         }
     }
 }
