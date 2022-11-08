@@ -191,6 +191,42 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q) {
     printf("\n");
 }
 
+void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameBNMO) 
+{
+    printf("Berikut adalah daftar antrian game-mu");
+    printf("\n");
+    if (isEmpty(*QueueBNMO)) {
+        printf("0. -\n");
+    } else {
+        int i;
+        i =0;
+        while (i< length(*QueueBNMO))
+        {
+            printf("%d. %s\n", (i+1), (*QueueBNMO).buffer[i]);
+            i++;
+        }
+    }
+    printf("\n");
+
+    LISTGAME(GameBNMO);
+
+    int x;
+    printf("Nomor Game yang mau ditambahkan ke antrian: ");
+    StartGame();
+    x = wordtoInt(CurrentCommand);
+    printf("\n");
+
+    if (x>=1 && x<=Length(GameBNMO)) 
+    {
+        enqueue(QueueBNMO, GameBNMO.A[x-1]);
+        printf("Game berhasil ditambahkan ke dalam daftar antrian.\n");   
+    } 
+    else 
+    {
+        printf("Nomor permainan tidak valid, silahkan masukkan nomor game pada list.\n");
+    }
+}
+
 void PLAYGAME (Queue QueueBNMO)
 {
 

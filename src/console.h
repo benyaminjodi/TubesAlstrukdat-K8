@@ -18,6 +18,8 @@ void SAVE(ArrayDin *GameBNMO, char *filename);
 
 void CREATEGAME (ArrayDin *GameBNMO);
 
+void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameList);
+
 void LISTGAME(ArrayDin GameBNMO);
 
 void DELETEGAME (ArrayDin *GameBNMO, Queue Q);
