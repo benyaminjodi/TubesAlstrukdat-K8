@@ -54,17 +54,12 @@ void enqueue(Queue *q, ElType val)
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur" dalam buffer melingkar. */
 
 {
-    if(isEmpty(*q))
+    if (isEmpty(*q))
     {
         IDX_HEAD(*q) = 0;
-        IDX_TAIL(*q) = 0;
-        q->buffer[0] = val;
     }
-    else
-    {
-       IDX_TAIL(*q) = (IDX_HEAD(*q) + length(*q)) % CAPACITY;;
-       TAIL(*q) = val;
-    }
+    IDX_TAIL(*q) = (IDX_TAIL(*q) + 1) % CAPACITY;
+    TAIL(*q) = val;
 }
 
 void dequeue(Queue *q, ElType *val)
@@ -74,14 +69,19 @@ void dequeue(Queue *q, ElType *val)
         q mungkin kosong */
 {
     *val = HEAD(*q);
-    if (IDX_HEAD(*q) == IDX_TAIL(*q)) 
+    if (IDX_HEAD(*q) == IDX_TAIL(*q))
     {
         IDX_HEAD(*q) = IDX_UNDEF;
         IDX_TAIL(*q) = IDX_UNDEF;
     }
-    else 
+    else
     {
-        IDX_HEAD(*q) = ((IDX_HEAD(*q) + 1) % CAPACITY);
+        int i=0;
+        for (i=0; i < length(*q); i++)
+        {
+            (*q).buffer[i]= (*q).buffer[i+1];
+        }
+        IDX_TAIL(*q)-- ;
     }
 }
 
