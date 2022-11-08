@@ -147,3 +147,47 @@ void CopyCommand()
     }
     
 }
+
+void StartGame()
+/* I.S. : CC sembarang 
+   F.S. : endWord = true, dan CC = ENTER; 
+          atau endWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
+{
+    StartC();
+    IgnoreBlankC();
+    if (CC == ENTER){
+        endWord = true;
+    } else {
+        endWord = false;
+        CopyGame();
+    }
+}
+
+
+
+void CopyGame()
+/* Mengakuisisi kata, menyimpan dalam CurrentCommand
+   I.S. : CC adalah karakter pertama dari kata
+   F.S. : CurrentCommand berisi kata yang sudah diakuisisi; 
+          CC = BLANK atau CC = ENTER; 
+          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+          Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+{
+    int i = 0;
+    while ((CC != ENTER) && i != NMax )
+    {
+        CurrentCommand.TabWord[i] = CC;
+        ADVC();
+        i++;
+    }
+    if (i <= NMax)
+    {
+        CurrentCommand.Length = i;
+    }
+    else
+    {
+        CurrentCommand.Length = NMax;
+    }
+    
+}
