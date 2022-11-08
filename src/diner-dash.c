@@ -94,9 +94,7 @@ boolean isCook(char* command) {
     if (*(command+1) == 'o' || *(command+1) == 'O') {
       if (*(command+2) == 'o' || *(command+2) == 'O') {
         if (*(command+3) == 'k' || *(command+3) == 'K') {
-          if (*(command+4) == ' ' || *(command+4) == ' ') {
-            return true;
-          }
+          return true;
         }
       }
     }
@@ -111,9 +109,7 @@ boolean isServe(char* command) {
       if (*(command+2) == 'r' || *(command+2) == 'R') {
         if (*(command+3) == 'v' || *(command+3) == 'V') {
           if (*(command+4) == 'e' || *(command+4) == 'E') {
-            if (*(command+5) == ' ' || *(command+5) == ' ') {
-              return true;
-            }
+            return true;
           }
         }
       }
@@ -325,30 +321,26 @@ void dinerDash() {
   while (lengthDD(Qpesanan) <= 7 && countTerlayani <= 15) {
     // Menerima dan memvalidasi command
     char *command;
-    command = (char *) malloc (10 * sizeof(char));
+    command = (char *) malloc (5 * sizeof(char));
+    char *commandID;
+    commandID = (char *) malloc (3 * sizeof(char));
     boolean isValid = false;
     int processID;
     while (!isValid) {
       printf("MASUKKAN COMMAND: ");
       StartCommand();
       wordtoString(CurrentCommand, command);
+      ADVCommand();
+      wordtoString(CurrentCommand, commandID);
+      processID = *(commandID+1) - '0';
+      commandID++;
+      if (CurrentCommand.Length > 2) {
+        int x = *commandID - '0';
+        processID = processID*10 + x;
+      }
       if (isCook(command)) {
-        char a = *(command+6); 
-        processID = a - '0';
-        char b = *(command+7);
-        if (b != '\0') {
-          int x = b - '0';
-          processID = processID*10 + x;
-        }
         validasiCommandCook(Qpesanan, Qsaji, processID, &isValid);
       } else if (isServe(command)) {
-        char a = *(command+7); 
-        processID = a - '0';
-        char b = *(command+8);
-        if (b != '\0') {
-          int x = b - '0';
-          processID = processID*10 + x;
-        }
         validasiCommandServe(Qpesanan, Qmasak, Qsaji, processID, &isValid);
       } else if (isSkip(command)) {
         isValid = true;
