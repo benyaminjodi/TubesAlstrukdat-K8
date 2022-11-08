@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include "console.h"
 
 
@@ -8,9 +9,10 @@ int main()
 {
     ArrayDin ArrayGame;
     Queue QueueGame;
+    Queue QueuePlay;
     ArrayGame = MakeArrayDin();
     CreateQueue(&QueueGame);
-
+    CreateQueue(&QueuePlay);
     boolean endProgram = false;
     printf(" _    _         _ _         _      \n");
     printf("| |  | |       | | |       | |     \n");
@@ -88,7 +90,15 @@ int main()
                 ADVCommand();   
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
-                    CREATEGAME(&ArrayGame);
+                    QUEUEGAME(&QueueGame, ArrayGame);
+                }
+            }
+            else if (compareWord(CurrentCommand, "PLAY") == true)
+            {
+                ADVCommand();   
+                if (compareWord(CurrentCommand, "GAME") == true)
+                {
+                    PLAYGAME(&QueueGame);
                 }
             }
             else if (compareWord(CurrentCommand, "DELETE") == true)
