@@ -2,6 +2,8 @@
 #include "ADT/mesinkata/mesinkata.h"
 #include "ADT/arraydinamis/arraydin.h"
 #include "ADT/queue/queue.h"
+#include "ADT/queue/queueDD.h"
+
 
 
 boolean compareWord(Kata kata1, char *kata2);
@@ -25,6 +27,8 @@ void LISTGAME(ArrayDin GameBNMO);
 void DELETEGAME (ArrayDin *GameBNMO, Queue Q);
 
 void PLAYGAME(Queue *QueueBNMO);
+
+void SKIPGAME(Queue *QueueBNMO, int n);
 
 void COMMANDLAIN ();
 
