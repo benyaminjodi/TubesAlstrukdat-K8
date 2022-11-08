@@ -5,14 +5,15 @@
 #include "console.h"
 
 
+
 int main()
 {
     ArrayDin ArrayGame;
     Queue QueueGame;
-    Queue QueuePlay;
+
     ArrayGame = MakeArrayDin();
     CreateQueue(&QueueGame);
-    CreateQueue(&QueuePlay);
+
     boolean endProgram = false;
     printf(" _    _         _ _         _      \n");
     printf("| |  | |       | | |       | |     \n");
@@ -67,9 +68,8 @@ int main()
                 {
                     LISTGAME(ArrayGame);
                 }
-                
             }
-            if (compareWord(CurrentCommand, "QUEUE") == true)
+            else if (compareWord(CurrentCommand, "QUEUE") == true)
             {
                 ADVCommand();
                 if (compareWord(CurrentCommand, "GAME") == true)
@@ -108,6 +108,13 @@ int main()
                 {
                     DELETEGAME (&ArrayGame, QueueGame);
                 }
+            }
+            else if (compareWord(CurrentCommand, "SKIPGAME") == true)
+            {
+                ADVCommand();
+                int x;
+                x = wordtoInt(CurrentCommand);
+                SKIPGAME(&QueueGame, x);
             }
             else if (compareWord(CurrentCommand, "SAVE") == true)
             {
