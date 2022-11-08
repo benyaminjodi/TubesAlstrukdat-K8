@@ -24,9 +24,11 @@ void LISTGAME(ArrayDin GameBNMO);
 
 void DELETEGAME (ArrayDin *GameBNMO, Queue Q);
 
-void PLAYGAME (Queue QueueBNMO);
+void PLAYGAME(Queue *QueueBNMO);
 
 void COMMANDLAIN ();
+
+void RNG();
 
 void HELP();
 

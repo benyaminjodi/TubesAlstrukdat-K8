@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "console.h"
 
-
+//Fungsi dan Prosedur 
 boolean compareWord(Kata kata1, char *kata2)
 {
     boolean same = true;
@@ -13,6 +14,21 @@ boolean compareWord(Kata kata1, char *kata2)
         {
             same = false;
         }
+        kata2++;
+    }
+    return same;
+}
+boolean compareString(char* kata1, char *kata2)
+{
+    boolean same = true;
+    int i = 0;
+    while (*kata1 != '\0' && *kata2 != '\0')
+    {
+        if (*kata1 != *kata2)
+        {
+            same = false;
+        }
+        kata1++;
         kata2++;
     }
     return same;
@@ -58,6 +74,7 @@ void wordtoString(Kata CurrentWord, char *string)
     string[i] = '\0';
 }
 
+// Command untuk Spesifikasi
 void STARTBNMO(ArrayDin *GameBNMO)
 {
     char string[50];
@@ -227,9 +244,52 @@ void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameBNMO)
     }
 }
 
-void PLAYGAME (Queue QueueBNMO)
+void PLAYGAME(Queue *QueueBNMO)
 {
+    char game[50];
 
+    printf("Berikut adalah daftar Game-mu : \n");
+    int i= 0 ;
+    while (i< length(*QueueBNMO))
+    {
+        printf("%d. %s\n", (i+1), (*QueueBNMO).buffer[i]);
+        i++;
+    }
+
+    if (compareString((*QueueBNMO).buffer[i], "RNG"))
+    {
+        printf("\n");
+        RNG();                
+    }
+    printf("\n");
+    
+
+    
+}
+
+void RNG(){
+    srand(time(NULL));
+    int r = rand()%101;
+    int masukan;
+
+    printf("RNG Telah dimulai. Uji keberuntungan Anda dengan menebak X.\n");
+    printf("Tebakan: ");
+    StartCommand();
+    masukan = wordtoInt(CurrentCommand);
+    // scanf("%d", &masukan);
+    while (masukan != r){
+        if (masukan < r){
+            printf("Lebih besar\n");
+        }
+        else{
+            printf("Lebih kecil\n");
+        }
+        printf("Tebakan: ");
+        StartCommand();
+        masukan = wordtoInt(CurrentCommand);
+    }
+    printf("Ya, X adalah ");
+    printf("%d.", masukan);
 }
 
 void COMMANDLAIN()
