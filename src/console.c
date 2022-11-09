@@ -85,9 +85,7 @@ void STARTBNMO(ArrayDin *GameBNMO)
     int i,x;
     StartWord("./data/config.txt");
     x = wordtoInt(CurrentWord);
-    //printf("%s\n", CurrentWord);
     ADVWord();
-    //printf("%s\n", CurrentWord);
     for (int j = 0; j < x; j++)
     {
         wordtoString(CurrentWord, string);
@@ -113,7 +111,6 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename)
     char temp2[50];
     int i,x;
     concat("./data/",filename, temp2);
-    // printf("%s", temp2);
     StartWord(temp2);
     x = wordtoInt(CurrentWord);
     ADVWord();
@@ -138,18 +135,11 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename)
 void SAVE(ArrayDin *GameBNMO, char *filename)
 {
     char temp[50];
-    //printf("%s\n",filename);
     concat("./data/", filename, temp);
-    //printf("%s\n",temp);
     FILE *fpita;
     fpita = fopen(temp, "w");
     fprintf(fpita, "%d", GameBNMO->Neff);
-    // printf("%d\n", (*GameBNMO).Neff);
     int i=0;
-    // for (i = 0;i < (*GameBNMO).Neff; i++)
-    // {
-    //     fprintf(fpita, "\n%s",(*GameBNMO).A[i]);
-    // }
     while (i < (*GameBNMO).Neff)
     {
         fprintf(fpita, "\n%s",(*GameBNMO).A[i]);
@@ -268,8 +258,6 @@ void PLAYGAME(Queue *QueueBNMO)
             i++;
         }
         printf("\n");
-        // printf("%s", (*QueueBNMO).buffer[0] );
-
         if (compareString((*QueueBNMO).buffer[0], "RNG"))
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
@@ -404,7 +392,6 @@ void RNG(){
     printf("Tebakan: ");
     StartCommand();
     masukan = wordtoInt(CurrentCommand);
-    // scanf("%d", &masukan);
     while (masukan != r){
         if (masukan < r){
             printf("Lebih besar\n");
