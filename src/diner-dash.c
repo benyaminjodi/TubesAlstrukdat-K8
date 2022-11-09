@@ -328,8 +328,7 @@ void dinerDash() {
     int processID;
     while (!isValid) {
       printf("MASUKKAN COMMAND: ");
-      StartGame();
-      printf("%s\n", CurrentCommand);
+      StartCommand();
       wordtoString(CurrentCommand, command);
       ADVCommand();
       wordtoString(CurrentCommand, commandID);
