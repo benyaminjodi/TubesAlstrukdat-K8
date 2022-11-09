@@ -337,7 +337,7 @@ void SKIPGAME(Queue *QueueBNMO, int n)
     if (n >= length(*QueueBNMO))
     {
         printf("Tidak ada permainan lagi dalam daftar game-mu\n");
-
+        CreateQueue(QueueBNMO);
     }
     else
     {
