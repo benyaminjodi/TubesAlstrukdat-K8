@@ -419,7 +419,8 @@ void HELP()
     printf("START           : Command untuk memulai permainan BNMO dan menampilkan list game yang dapat dimainkan\n");
     printf("LOAD            : Command untuk membuka file yang berisi game yang dapat dimainkan dan histori bermain\n");
     printf("SAVE            : Command untuk menyimpan nama file yang akan disimpan di disk\n");
-    printf("CREATE GAME     : Command untuk menampilkan daftar game yang disediakan oleh sistem\n");
+    printf("CREATE GAME     : Command untuk menambahkan game ke dalam list game yang tersedia\n");
+    printf("LIST GAME       : Command untuk menampilkan daftar game yang disediakan oleh sistem\n");
     printf("DELETE GAME     : Command untuk menghapus sebuah game dari daftar game tanpa menghapus 5 game awal pada konfigurasi atau yang sedang diqueue\n");
     printf("QUEUE GAME      : Command untuk menambahkan permainan ke list game yang akan dimainkan\n");
     printf("PLAY GAME       : Command untuk memainkan game yang ada di list game yang akan dimainkan\n");
