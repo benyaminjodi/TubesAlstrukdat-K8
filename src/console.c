@@ -318,74 +318,80 @@ void PLAYGAME(Queue *QueueBNMO)
 void SKIPGAME(Queue *QueueBNMO, int n)
 {
     ElType val;
-
-    printf("Berikut adalah daftar Game-mu : \n");
-        int i= 0 ;
-        while (i< length(*QueueBNMO))
-        {
-            printf("%d. %s\n", (i+1), (*QueueBNMO).buffer[i]);
-            i++;
-        }
-    printf("\n");
-
-    if (n >= length(*QueueBNMO))
+    if (n<1)
     {
-        printf("Tidak ada permainan lagi dalam daftar game-mu\n");
-        CreateQueue(QueueBNMO);
+        printf("Input yang diberikan tidak valid");
     }
     else
     {
-        int i;
-        for (i=0;i<n; i++)
-        {
-            dequeue(QueueBNMO,&val);
-        }    
-          if (compareString((*QueueBNMO).buffer[0], "RNG"))
-        {
-            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-            printf("\n");
-            RNG(); 
-                         
-        }
-        else if (compareString((*QueueBNMO).buffer[0], "Diner DASH"))
-        {
-            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-            printf("\n");
-            dinerDash(); 
-                           
-        }
-        else if (compareString((*QueueBNMO).buffer[0], "DINOSAUR IN EARTH"))
-        {
-            printf("Game %s masih dalam maintenance, belum dapat dimainkan\n", (*QueueBNMO).buffer[0]);
-            printf("Silahkan pilih game lain.");
-            printf("\n");
-                           
-        }
+        printf("Berikut adalah daftar Game-mu : \n");
+            int i= 0 ;
+            while (i< length(*QueueBNMO))
+            {
+                printf("%d. %s\n", (i+1), (*QueueBNMO).buffer[i]);
+                i++;
+            }
+        printf("\n");
 
-        else if (compareString((*QueueBNMO).buffer[0], "RISEWOMAN"))
+        if (n >= length(*QueueBNMO))
         {
-            printf("Game %s masih dalam maintenance, belum dapat dimainkan\n", (*QueueBNMO).buffer[0]);
-            printf("Silahkan pilih game lain.");
-            printf("\n");
-                           
-        }
-        else if (compareString((*QueueBNMO).buffer[0], "EIFFEL TOWER"))
-        {
-            printf("Game %s masih dalam maintenance, belum dapat dimainkan\n", (*QueueBNMO).buffer[0]);
-            printf("Silahkan pilih game lain.");
-            printf("\n");
-                           
+            printf("Tidak ada permainan lagi dalam daftar game-mu\n");
+            CreateQueue(QueueBNMO);
         }
         else
         {
-            srand(time(NULL));
-            int r = rand()%1000;
-            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-            printf("\n");
-            printf("%d", r);
-             
+            int i;
+            for (i=0;i<n; i++)
+            {
+                dequeue(QueueBNMO,&val);
+            }    
+            if (compareString((*QueueBNMO).buffer[0], "RNG"))
+            {
+                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+                printf("\n");
+                RNG(); 
+                            
+            }
+            else if (compareString((*QueueBNMO).buffer[0], "Diner DASH"))
+            {
+                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+                printf("\n");
+                dinerDash(); 
+                            
+            }
+            else if (compareString((*QueueBNMO).buffer[0], "DINOSAUR IN EARTH"))
+            {
+                printf("Game %s masih dalam maintenance, belum dapat dimainkan\n", (*QueueBNMO).buffer[0]);
+                printf("Silahkan pilih game lain.");
+                printf("\n");
+                            
+            }
+
+            else if (compareString((*QueueBNMO).buffer[0], "RISEWOMAN"))
+            {
+                printf("Game %s masih dalam maintenance, belum dapat dimainkan\n", (*QueueBNMO).buffer[0]);
+                printf("Silahkan pilih game lain.");
+                printf("\n");
+                            
+            }
+            else if (compareString((*QueueBNMO).buffer[0], "EIFFEL TOWER"))
+            {
+                printf("Game %s masih dalam maintenance, belum dapat dimainkan\n", (*QueueBNMO).buffer[0]);
+                printf("Silahkan pilih game lain.");
+                printf("\n");
+                            
+            }
+            else
+            {
+                srand(time(NULL));
+                int r = rand()%1000;
+                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+                printf("\n");
+                printf("%d", r);
+                
+            }
+            dequeue(QueueBNMO,&val);     
         }
-        dequeue(QueueBNMO,&val);     
     }
 }
 
