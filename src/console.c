@@ -138,9 +138,9 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename)
 void SAVE(ArrayDin *GameBNMO, char *filename)
 {
     char temp[50];
-    printf("%s\n",filename);
+    //printf("%s\n",filename);
     concat("./data/", filename, temp);
-    printf("%s\n",temp);
+    //printf("%s\n",temp);
     FILE *fpita;
     fpita = fopen(temp, "w");
     fprintf(fpita, "%d", GameBNMO->Neff);
@@ -394,6 +394,7 @@ void SKIPGAME(Queue *QueueBNMO, int n)
         dequeue(QueueBNMO,&val);     
     }
 }
+
 void RNG(){
     srand(time(NULL));
     int r = rand()%101;
