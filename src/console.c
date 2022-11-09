@@ -248,7 +248,7 @@ void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameBNMO)
 void PLAYGAME(Queue *QueueBNMO)
 {
     char game[50];
-    ElType *val;
+    ElType val;
 
    if (isEmpty(*QueueBNMO))
    {
@@ -309,7 +309,7 @@ void PLAYGAME(Queue *QueueBNMO)
             printf("%d", r);
              
         }
-        dequeue(QueueBNMO, val);  
+        dequeue(QueueBNMO, &val);  
     }
     printf("\n");
       
