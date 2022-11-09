@@ -8,6 +8,8 @@
 
 boolean compareWord(Kata kata1, char *kata2);
 
+void concat(char *s1, char *s2, char *soutput);
+
 int wordtoInt (Kata Word);
 
 void wordtoString(Kata CurrentWord, char *string);

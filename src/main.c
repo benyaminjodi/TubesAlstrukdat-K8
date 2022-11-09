@@ -119,10 +119,9 @@ int main()
             else if (compareWord(CurrentCommand, "SAVE") == true)
             {
                 ADVCommand();
-                // printf("%s\n",CurrentCommand);
                 char filename[50];
-                wordtoString(CurrentCommand, filename);   
-                // printf("%s",filename);            
+                wordtoString(CurrentCommand, filename);     
+                       
                 SAVE(&ArrayGame, filename);
             }
 

@@ -66,6 +66,7 @@ void concat(char *s1, char *s2, char *soutput)
     soutput[j] = '\0';
 }
 
+
 void wordtoString(Kata CurrentWord, char *string)
 {
     int i = 0;
@@ -111,6 +112,7 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename)
     char temp2[50];
     int i,x;
     concat("./data/",filename, temp2);
+    printf("%s\n", temp2);
     StartWord(temp2);
     x = wordtoInt(CurrentWord);
     ADVWord();
@@ -135,18 +137,22 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename)
 void SAVE(ArrayDin *GameBNMO, char *filename)
 {
     char temp[50];
+    printf("\n");
     concat("./data/", filename, temp);
+    
     FILE *fpita;
     fpita = fopen(temp, "w");
     fprintf(fpita, "%d", GameBNMO->Neff);
+    
     int i=0;
+    
     while (i < (*GameBNMO).Neff)
     {
         fprintf(fpita, "\n%s",(*GameBNMO).A[i]);
         i++;
     }
     printf("%s file berhasil disimpan.\n", filename);        
-    
+
     fclose(fpita);   
 
 }
