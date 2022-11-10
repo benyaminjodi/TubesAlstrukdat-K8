@@ -1,10 +1,9 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
 #include "console.h"
-
-
 
 int main()
 {
@@ -21,11 +20,9 @@ int main()
     printf("|  __  | / _ . | | | / _ . | |     \n");
     printf("| |  | | . __/ | | |  (_)  |_|     \n");
     printf("|_|  |_| '___  |_|_| .___/ (_)     \n");
-                          
-                        
-    printf("Welcome to BNMO\n");                          
-     
-    printf("START/LOAD(?)\n");
+    printf("--------Kelompok 8 K1---------     \n");                      
+    printf("       Welcome to BNMO             \n");                           
+    printf("        START/LOAD(?)              \n");
     while (endProgram == false)
     {
         printf("\nENTER COMMAND: ");
