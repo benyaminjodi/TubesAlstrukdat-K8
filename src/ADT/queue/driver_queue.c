@@ -12,11 +12,11 @@ int main() {
     int n;
     printf("Masukkan banyaknya elemen yang ingin dienqueue (< 10): ");
     scanf("%d", &n);
+    
     for (int i = 0; i < n; i++) {
-        ElType val;
-        scanf("%d", &val);
+        char *val = (char*) malloc (50*sizeof(char));
+        scanf("%s", val);
         enqueue(&Q, val);
-        printf("\n");
     }
     printf("Panjang Queue saat ini: %d\n", length(Q));
     if (isFull(Q)) {

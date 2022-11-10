@@ -57,9 +57,15 @@ void enqueue(Queue *q, ElType val)
     if (isEmpty(*q))
     {
         IDX_HEAD(*q) = 0;
+        IDX_TAIL(*q) = 0;
+        TAIL(*q) = val;
     }
-    IDX_TAIL(*q) = (IDX_TAIL(*q) + 1) % CAPACITY;
-    TAIL(*q) = val;
+    else
+    {
+        IDX_TAIL(*q) = (IDX_TAIL(*q) + 1) % CAPACITY;
+        TAIL(*q) = val;
+    }
+    
 }
 
 void dequeue(Queue *q, ElType *val)
@@ -96,37 +102,9 @@ void displayQueue(Queue q)
 /* Jika Queue kosong : menulis [] */
 {
     int i;
-    printf("[");
-    if (!isEmpty(q)) 
-    {
-        if (IDX_HEAD(q) > IDX_TAIL(q))
-        {
-            
-            for(i = IDX_HEAD(q); i < CAPACITY;i++)
-            {
-                printf("%d,",q.buffer[i]);
-            }
-            for(i = 0; i <= IDX_TAIL(q);i++)
-            {
-                printf("%d",q.buffer[i]);
-                if (i != IDX_TAIL(q))
-                {
-                    printf(",");
-                }
-            }
-        }
-        else
-        {
-            for(i=IDX_HEAD(q); i <= IDX_TAIL(q) ; i++)
-            {
-               
-                printf("%d",q.buffer[i]);
-                if (i != IDX_TAIL(q)) 
-                {
-                    printf(",");
-                }
-            }
-        }
+    
+    for (i=IDX_HEAD(q); i <= IDX_TAIL(q); i++){
+        printf("%d. %s\n", i+1, q.buffer[i]);
     }
-    printf("]\n");
+   
 }
