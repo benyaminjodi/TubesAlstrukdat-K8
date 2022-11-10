@@ -27,58 +27,68 @@ extern Kata CurrentCommand;
 void IgnoreBlank();
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang 
-   F.S. : CC ≠ BLANK atau CC = MARK */
+   F.S. : CC ≠ BLANK atau CC = ENTER */
 
 void StartWord();
 /* I.S. : CC sembarang 
-   F.S. : EndKata = true, dan CC = MARK; 
-          atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
+   F.S. : endWord = true, dan CC = MARK; 
+          atau endWord = false, CurrentWord adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 
 void ADVWord();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
-   F.S. : CKata adalah kata terakhir yang sudah diakuisisi, 
+   F.S. : CurrentWord adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndKata = true.		  
-   Proses : Akuisisi kata menggunakan procedure SalinKata */
+          Jika CC = ENTER, endWord = true.		  
+   Proses : Akuisisi kata menggunakan procedure CopyWord */
 
 void CopyWord();
-/* Mengakuisisi kata, menyimpan dalam CKata
+/* Mengakuisisi kata, menyimpan dalam CurrentWord
    I.S. : CC adalah karakter pertama dari kata
-   F.S. : CKata berisi kata yang sudah diakuisisi; 
-          CC = BLANK atau CC = MARK; 
+   F.S. : CurrentWord berisi kata yang sudah diakuisisi; 
+          CC = ENTER dan akhir dari file; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 /* *** ADT untuk baca commands *** */
 
-void IgnoreDot();
+void IgnoreBlankC();
 /* Mengabaikan satu atau beberapa BLANK dan MARK
    I.S. : CC sembarang 
-   F.S. : CC ≠ BLANK atau CC = ENTER */
+   F.S. : CC ≠ BLANK */
 
 void StartCommand();
 /* I.S. : CC sembarang 
-   F.S. : EndKata = true, dan CC = ENTER; 
-          atau EndKata = false, CCommand adalah kata yang sudah diakuisisi,
+   F.S. : endWord = true, dan CC = ENTER; 
+          atau endWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 
 void ADVCommand();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
-   F.S. : CopyCommand adalah kata terakhir yang sudah diakuisisi, 
+   F.S  : CurrentCommand adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin ENTER
-          Jika CC = ENTER, EndKata = true.		  
+          Jika CC = ENTER, endWord = true.		  
    Proses : Akuisisi kata menggunakan procedure SalinCommand */
 
 void CopyCommand();
-/* Mengakuisisi kata, menyimpan dalam CopyCommand
+/* Mengakuisisi kata, menyimpan dalam CurrentCommand
    I.S. : CC adalah karakter pertama dari kata
-   F.S. : CopyCommand berisi kata yang sudah diakuisisi; 
-          CC = BLANK atau CC = ENTER; 
+   F.S. : CurrentCommand berisi kata yang sudah diakuisisi; 
+          CC = BLANK atau CC = ENTER dan i = Nmax; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 void StartGame();
+/* I.S. : CC sembarang 
+   F.S. : endWord = true, dan CC = ENTER; 
+          atau endWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
 
 void CopyGame();
+/* Mengakuisisi kata, menyimpan dalam CurrentCommand
+   I.S. : CC adalah karakter pertama dari kata
+   F.S. : CurrentCommand berisi kata yang sudah diakuisisi; 
+          CC = ENTER dan i = Nmax; 
+          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+          Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 #endif

@@ -66,7 +66,6 @@ void concat(char *s1, char *s2, char *soutput)
     soutput[j] = '\0';
 }
 
-
 void wordtoString(Kata CurrentWord, char *string)
 {
     int i = 0;
@@ -112,7 +111,7 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename)
     char temp2[50];
     int i,x;
     concat("./data/",filename, temp2);
-    printf("%s\n", temp2);
+    // printf("%s\n", temp2);
     StartWord(temp2);
     x = wordtoInt(CurrentWord);
     ADVWord();
@@ -387,8 +386,7 @@ void SKIPGAME(Queue *QueueBNMO, int n)
                 int r = rand()%1000;
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                printf("%d", r);
-                
+                printf("%d", r);                
             }
             dequeue(QueueBNMO,&val);     
         }

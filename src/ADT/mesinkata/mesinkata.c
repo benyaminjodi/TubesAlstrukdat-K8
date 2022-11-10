@@ -8,7 +8,7 @@ Kata CurrentCommand;
 void IgnoreBlank()
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang 
-   F.S. : CC ≠ BLANK atau CC = MARK */
+   F.S. : CC ≠ BLANK atau CC = ENTER */
 {
     while (CC == ' ' || CC == ENTER){
         ADV();
@@ -39,7 +39,7 @@ void ADVWord()
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S. : CurrentWord adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, endWord = true.		  
+          Jika CC = ENTER, endWord = true.		  
    Proses : Akuisisi kata menggunakan procedure CopyWord */
 {
     IgnoreBlank();
@@ -55,7 +55,7 @@ void CopyWord()
 /* Mengakuisisi kata, menyimpan dalam CurrentWord
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CurrentWord berisi kata yang sudah diakuisisi; 
-          CC = BLANK atau CC = MARK; 
+          CC = ENTER dan akhir dari file; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
@@ -82,7 +82,7 @@ void CopyWord()
 void IgnoreBlankC()
 /* Mengabaikan satu atau beberapa BLANK dan MARK
    I.S. : CC sembarang 
-   F.S. : CC ≠ BLANK atau CC = ENTER */
+   F.S. : CC ≠ BLANK */
 {
     while (CC == ' ')
     {
@@ -126,7 +126,7 @@ void CopyCommand()
 /* Mengakuisisi kata, menyimpan dalam CurrentCommand
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CurrentCommand berisi kata yang sudah diakuisisi; 
-          CC = BLANK atau CC = ENTER; 
+          CC = BLANK atau CC = ENTER dan i = Nmax; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
@@ -170,7 +170,7 @@ void CopyGame()
 /* Mengakuisisi kata, menyimpan dalam CurrentCommand
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CurrentCommand berisi kata yang sudah diakuisisi; 
-          CC = BLANK atau CC = ENTER; 
+          CC = ENTER dan i = Nmax; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {

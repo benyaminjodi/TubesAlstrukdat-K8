@@ -27,29 +27,28 @@ int main()
     {
         printf("\nENTER COMMAND: ");
         StartCommand();
-        //printf("%s\n", CurrentCommand);
-        //ADVCommand();
-        //printf("%s\n", CurrentCommand);
         if (IsEmpty(ArrayGame))
         {
+            /* ----START---- */
             if (compareWord(CurrentCommand, "START") == true)
             {
                 STARTBNMO(&ArrayGame);
             }
+            /* ----LOAD---- */
             else if (compareWord(CurrentCommand, "LOAD") == true)
             {
                 ADVCommand();
-                // printf("%s", CurrentCommand);
                 char filename[50];
                 wordtoString(CurrentCommand, filename);
-                //printf("%s", filename);
                 LOADBNMO(&ArrayGame, filename);
                 
             }
+            /* ---HELP--- */
             else if (compareWord(CurrentCommand, "HELP") == true)
             {
                 HELP();
             }
+            /*---INPUTAN DILUAR START/LOAD--- */
             else
             {
                printf("Program belum memiliki file konfigurasi\n");
@@ -58,6 +57,7 @@ int main()
             }
         }
         else{
+            /* ---LIST GAME--- */
             if (compareWord(CurrentCommand, "LIST") == true)
             {
                 ADVCommand();
@@ -66,6 +66,7 @@ int main()
                     LISTGAME(ArrayGame);
                 }
             }
+            /* ---QUEUE GAME--- */
             else if (compareWord(CurrentCommand, "QUEUE") == true)
             {
                 ADVCommand();
@@ -74,6 +75,7 @@ int main()
                     QUEUEGAME(&QueueGame, ArrayGame);
                 }
             }
+            /* ----CREATE GAME--- */
             else if (compareWord(CurrentCommand, "CREATE") == true)
             {
                 ADVCommand();   
@@ -82,6 +84,7 @@ int main()
                     CREATEGAME(&ArrayGame);
                 }
             }
+            /* ----QUEUE GAME--- */
             else if (compareWord(CurrentCommand, "QUEUE") == true)
             {
                 ADVCommand();   
@@ -90,6 +93,7 @@ int main()
                     QUEUEGAME(&QueueGame, ArrayGame);
                 }
             }
+            /* ----PLAY GAME--- */
             else if (compareWord(CurrentCommand, "PLAY") == true)
             {
                 ADVCommand();   
@@ -98,6 +102,7 @@ int main()
                     PLAYGAME(&QueueGame);
                 }
             }
+            /* ----DELETE GAME--- */
             else if (compareWord(CurrentCommand, "DELETE") == true)
             {
                 ADVCommand();
@@ -106,6 +111,7 @@ int main()
                     DELETEGAME (&ArrayGame, QueueGame);
                 }
             }
+            /* ----SKIPGAME <n>--- */
             else if (compareWord(CurrentCommand, "SKIPGAME") == true)
             {
                 ADVCommand();
@@ -113,6 +119,7 @@ int main()
                 x = wordtoInt(CurrentCommand);
                 SKIPGAME(&QueueGame, x);
             }
+            /* ---SAVE--- */
             else if (compareWord(CurrentCommand, "SAVE") == true)
             {
                 ADVCommand();
@@ -121,15 +128,17 @@ int main()
                        
                 SAVE(&ArrayGame, filename);
             }
-
+            /* ---HELP--- */
             else if (compareWord(CurrentCommand, "HELP") == true)
             {
                 HELP();
             }
+            /* ---QUIT--- */
             else if (compareWord(CurrentCommand, "QUIT") == true)
-                {
-                    QUIT();
-                }
+            {
+                QUIT();
+            }
+            /* ---COMMAND LAIN--- */
             else
             {
                 COMMANDLAIN();
