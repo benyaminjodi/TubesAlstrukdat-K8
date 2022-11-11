@@ -18,3 +18,17 @@ BNMO merupakan suatu robot game console yang dapat menjalankan permainan. BNMO m
 > 18221147 Benyamin Jodi Sitinjak
 
 > 18217035 Joe Putera
+
+## Cara Compile dan Run Program
+-  Pastikan gcc compiler sudah dalam versi yang terbaru
+-  Pastikan anda sudah memiliki tools make
+
+```
+Pastikan path anda sesuai dengan folder/clone repository ini. 
+Lalu jalankan command
+$ make main
+
+Kemudian jalankan command
+$ ./main
+
+```
