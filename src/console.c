@@ -3,6 +3,7 @@
 #include <time.h>
 #include "console.h"
 #include "diner-dash.h"
+#include "tictactoe.h"
 
 //Fungsi dan Prosedur 
 boolean compareWord(Kata kata1, char *kata2)
@@ -299,6 +300,14 @@ void PLAYGAME(Queue *QueueBNMO)
             printf("\n");
                            
         }
+        //BONUS
+        else if (compareString((*QueueBNMO).buffer[0], "TICTACTOE"))
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            tictactoe(); 
+                           
+        }
         else
         {
             srand(time(NULL));
@@ -378,6 +387,13 @@ void SKIPGAME(Queue *QueueBNMO, int n)
                 printf("Game %s masih dalam maintenance, belum dapat dimainkan\n", (*QueueBNMO).buffer[0]);
                 printf("Silahkan pilih game lain.");
                 printf("\n");
+                            
+            }
+            else if (compareString((*QueueBNMO).buffer[0], "TICTACTOE"))
+            {
+                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+                printf("\n");
+                tictactoe(); 
                             
             }
             else
