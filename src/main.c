@@ -112,12 +112,16 @@ int main()
                 }
             }
             /* ----SKIPGAME <n>--- */
-            else if (compareWord(CurrentCommand, "SKIPGAME") == true)
+            else if (compareWord(CurrentCommand, "SKIP") == true)
             {
                 ADVCommand();
-                int x;
-                x = wordtoInt(CurrentCommand);
-                SKIPGAME(&QueueGame, x);
+                if (compareWord(CurrentCommand, "GAME") == true)
+                {
+                    ADVCommand();
+                    int x;
+                    x = wordtoInt(CurrentCommand);
+                    SKIPGAME(&QueueGame, x);
+                } 
             }
             /* ---SAVE--- */
             else if (compareWord(CurrentCommand, "SAVE") == true)

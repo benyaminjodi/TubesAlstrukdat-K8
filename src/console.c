@@ -184,7 +184,7 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q)
     StartCommand();
     int x;
     x = wordtoInt(CurrentCommand);
-    if ((x<=5 && x >=1) || x>(*GameBNMO).Neff) {
+    if ((x<=6 && x >=1) || x>(*GameBNMO).Neff) {
         printf("Game gagal dihapus\n");
     } else {
         boolean found = false;
