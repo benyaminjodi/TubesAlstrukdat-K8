@@ -46,7 +46,6 @@ void tictactoe(){
     scoreboard(winner);
 
     printf("Bye");
-    return 0;
 }
 
 void printBoard(){
