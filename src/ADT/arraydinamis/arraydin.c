@@ -205,3 +205,8 @@ IdxType SearchArrayDin(ArrayDin array, ElType el)
 	return -1;
 }
 
+
+boolean IsMember (ArrayDin array, ElType el)
+{
+	return (SearchArrayDin(array, el) != -1);
+}

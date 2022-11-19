@@ -61,8 +61,8 @@ void initPesanan(QueueDD *Qpesanan)
 // F.S. QueueDD pesanan terisi 3 elemen yang bernilai random 
 {
   for (int i = 0; i < 3; i++) {
-    int durasi = rng(1, 5);
-    int ketahanan = rng(1, 5);
+    int durasi = rng(1, 2);
+    int ketahanan = rng(1, 2);
     int harga = rng(10000, 50000);
     ElTypeDD test;
     test.id = i;
@@ -294,8 +294,8 @@ void addPesanan(QueueDD *Qpesanan, int *IDpesanan) {
   ElTypeDD inpt;
   (*IDpesanan)++;
   inpt.id = *IDpesanan;
-  inpt.durasiMasak = rng(1, 5);
-  inpt.ketahanan = rng(1, 5);
+  inpt.durasiMasak = rng(1, 2);
+  inpt.ketahanan = rng(1, 2);
   inpt.harga = rng(10000, 50000);
   enqueueDD(Qpesanan, inpt);
 }
