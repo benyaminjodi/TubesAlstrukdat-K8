@@ -452,7 +452,7 @@ void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameBNMO)
     }
 }
 
-void PLAYGAME(Queue *QueueBNMO, Arraydin *HistoryBNMO)
+void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO)
 {
     char game[50];
     ElType val;
@@ -532,7 +532,7 @@ void PLAYGAME(Queue *QueueBNMO, Arraydin *HistoryBNMO)
       
 }
 
-void SKIPGAME(Queue *QueueBNMO, int n, Queue *HistoryBNMO)
+void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO)
 {
     ElType val;
     if (n<1)
