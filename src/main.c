@@ -9,8 +9,10 @@ int main()
 {
     ArrayDin ArrayGame;
     Queue QueueGame;
+    ArrayDin ArrayHistory;
 
     ArrayGame = MakeArrayDin();
+    ArrayHistory = MakeArrayDin();
     CreateQueue(&QueueGame);
 
     boolean endProgram = false;
@@ -40,7 +42,7 @@ int main()
                 ADVCommand();
                 char filename[50];
                 wordtoString(CurrentCommand, filename);
-                LOADBNMO(&ArrayGame, filename);
+                LOADBNMO(&ArrayGame, filename, &ArrayHistory);
                 
             }
             /* ---HELP--- */
@@ -99,7 +101,7 @@ int main()
                 ADVCommand();   
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
-                    PLAYGAME(&QueueGame);
+                    PLAYGAME(&QueueGame, &ArrayHistory);
                 }
             }
             /* ----DELETE GAME--- */
@@ -120,9 +122,27 @@ int main()
                     ADVCommand();
                     int x;
                     x = wordtoInt(CurrentCommand);
-                    SKIPGAME(&QueueGame, x);
+                    SKIPGAME(&QueueGame, x, &ArrayHistory);
                 } 
             }
+
+            else if (compareWord(CurrentCommand, "HISTORY") == true)
+            {
+                ADVCommand();  
+                int x;
+                x = wordtoInt(CurrentCommand);
+                HISTORY(&ArrayHistory, x);   
+            }
+
+            else if (compareWord(CurrentCommand, "RESET") == true)
+            {
+                ADVCommand();
+                if (compareWord(CurrentCommand, "HISTORY") == true)
+                {
+                    RESETHISTORY(&ArrayHistory);
+                }
+            }
+            
             /* ---SAVE--- */
             else if (compareWord(CurrentCommand, "SAVE") == true)
             {

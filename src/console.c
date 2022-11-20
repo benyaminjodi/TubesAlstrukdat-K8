@@ -105,7 +105,7 @@ void STARTBNMO(ArrayDin *GameBNMO)
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }
 
-void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO, Map *SBRNG, Map *SBHANGMAN, Map *SBDD, Map *SBToH, Map *SBSoM, Map *SBTTT)
+void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO)
 {
     char string[50];
     char *temp; 
@@ -117,15 +117,14 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO, Map *SB
     fpita = fopen(temp2, "r");
     if (fpita == NULL)
     {
-        printf("File sistem tidak ditemukan. Silahkan masukkan nama file yang valid\n");
+        printf("File konfigurasi sistem tidak ditemukan.\n");
     }
     else
     {
-        //Game
-        STARTWord(fpita);
-        x = wordtoInt(CurrentWord);
+        StartWord(fpita);
+        ngame = wordtoInt(CurrentWord);
         ADVWord();
-        for (int j = 0; j < x; j++)
+        for (int j = 0; j < ngame; j++)
         {
             wordtoString(CurrentWord, string);
             temp = (char *) malloc (CurrentWord.Length * sizeof(char));
@@ -159,198 +158,28 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO, Map *SB
             ADVWord();
             
         }
-
-        //SBRNG
-        nsbrng = wordtoInt(CurrentWord);
-        ADVWord();
-        for (int j = 0; j < nsbrng; j++)
-        {
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            InsertLast(SBRNG, temp);
-            ADVWord();
-            
-        }
-
-        //SBHANGMAN
-        nsbhangman = wordtoInt(CurrentWord);
-        ADVWord();
-        for (int j = 0; j < nsbhangman; j++)
-        {
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            InsertLast(SBHANGMAN, temp);
-            ADVWord();
-            
-        }
-
-        //SBDD  
-        nsbdd = wordtoInt(CurrentWord);
-        ADVWord();
-        for (int j = 0; j < nsbdd; j++)
-        {
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            InsertLast(SBDD, temp);
-            ADVWord();
-            
-        }
-
-        //SBToH
-        nsbtoh = wordtoInt(CurrentWord);
-        ADVWord();
-        for (int j = 0; j < nsbtoh; j++)
-        {
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            InsertLast(SBToH, temp);
-            ADVWord();
-            
-        }
-
-        //SBSoM
-        nsbsom = wordtoInt(CurrentWord);
-        ADVWord();
-        for (int j = 0; j < nsbsom; j++)
-        {
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            InsertLast(SBSoM, temp);
-            ADVWord();
-            
-        }
-
-        //SBTTT
-        nsbttt = wordtoInt(CurrentWord);
-        ADVWord();
-        for (int j = 0; j < nsbttt; j++)
-        {
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            InsertLast(SBTTT, temp);
-            ADVWord();
-            
-        }
-
-        printf("File %s berhasil dibaca. BNMO berhasil dijalankan.\n", filename);
+       printf("File %s berhasil dibaca. BNMO berhasil dijalankan.\n", filename);
     }
-       
+    
 }
 
-void SAVEBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO, Map *SBRNG, Map *SBHANGMAN, Map *SBDD, Map *SBToH, Map *SBSoM, Map *SBTTT)
+void SAVE(ArrayDin *GameBNMO, char *filename)
 {
     char temp[50];
     printf("\n");
     concat("./data/", filename, temp);
+    
     FILE *fpita;
     fpita = fopen(temp, "w");
     fprintf(fpita, "%d", GameBNMO->Neff);
+    
     int i=0;
-    //Game
+    
     while (i < (*GameBNMO).Neff)
     {
         fprintf(fpita, "\n%s",(*GameBNMO).A[i]);
         i++;
     }
-
-    //History
-    i=0;
-    while (i < (*HistoryBNMO).Neff)
-    {
-        fprintf(fpita, "\n%s",(*HistoryBNMO).A[i]);
-        i++;
-    }
-
-    //SBRNG
-    i=0;
-    while (i< (*SBRNG).Neff)
-    {
-        fprintf(fpita, "\n%s",(*SBRNG).A[i]);
-        i++;
-    }
-
-    //SBHANGMAN
-    i=0;
-    while (i< (*SBHANGMAN).Neff)
-    {
-        fprintf(fpita, "\n%s",(*SBHANGMAN).A[i]);
-        i++;
-    }
-
-    //SBDD
-    i=0;
-    while (i< (*SBDD).Neff)
-    {
-        fprintf(fpita, "\n%s",(*SBDD).A[i]);
-        i++;
-    }
-
-    //SBToH
-    i=0;
-    while (i< (*SBToH).Neff)
-    {
-        fprintf(fpita, "\n%s",(*SBToH).A[i]);
-        i++;
-    }   
-
-    //SBSoM
-    i=0;   
-    while (i< (*SBSoM).Neff)
-    {
-        fprintf(fpita, "\n%s",(*SBSoM).A[i]);
-        i++;
-    }
-
-    //SBTTT
-    i=0;
-    while (i< (*SBTTT).Neff)
-    {
-        fprintf(fpita, "\n%s",(*SBTTT).A[i]);
-        i++;
-    }
-
     printf("%s file berhasil disimpan.\n", filename);        
 
     fclose(fpita);   
@@ -364,15 +193,8 @@ void CREATEGAME (ArrayDin *GameBNMO)
     namaGame = (char *) malloc (50 * sizeof(char));
     StartGame();
     wordtoString(CurrentCommand, namaGame);
-    if (!IsMember(*GameBNMO, namaGame))
-    {
-        InsertLast(GameBNMO, namaGame);
-        printf("Game %s berhasil ditambahkan.\n", namaGame);
-    }
-    else
-    {
-        printf("Game %s sudah ada.\n", namaGame);
-    }
+    InsertLast(GameBNMO, namaGame);
+    printf("Game berhasil ditambahkan\n");
 }
 
 void LISTGAME (ArrayDin GameBNMO)
@@ -476,20 +298,22 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO)
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             RNG();
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);            
+            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                         
         }
         else if (compareString((*QueueBNMO).buffer[0], "Diner DASH"))
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            dinerDash(); 
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);                
+            dinerDash();
+            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                           
         }
         else if (compareString((*QueueBNMO).buffer[0], "HANGMAN"))
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            HANGMAN();   
+            //HANGMAN();   
             InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);                
         }
 
@@ -497,7 +321,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO)
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            TOH();
+            //TOH();
             InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
 
@@ -505,7 +329,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO)
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            SNAKE();
+            //SNAKE();
             InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
 
@@ -514,17 +338,19 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO)
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            tictactoe(); 
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);   
+            tictactoe();
+            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                           
         }
         else
         {
             srand(time(NULL));
-            int r = rand()%10;
+            int r = rand()%1000;
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             printf("%d", r);
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);
+             
         }
         dequeue(QueueBNMO, &val);  
     }
@@ -557,32 +383,32 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO)
         }
         else
         {
-            int i= 0 ;
-            while (i< length(*QueueBNMO))
+            int i;
+            for (i=0;i<n; i++)
             {
-                printf("%d. %s\n", (i+1), (*QueueBNMO).buffer[i]);
-                i++;
-            }
-            printf("\n");
+                dequeue(QueueBNMO,&val);
+            }    
             if (compareString((*QueueBNMO).buffer[0], "RNG"))
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 RNG();
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);            
+                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                            
             }
             else if (compareString((*QueueBNMO).buffer[0], "Diner DASH"))
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                dinerDash(); 
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);                
+                dinerDash();
+                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                            
             }
             else if (compareString((*QueueBNMO).buffer[0], "HANGMAN"))
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                HANGMAN();   
+                //HANGMAN();   
                 InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);                
             }
 
@@ -590,7 +416,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO)
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                TOH();
+                //TOH();
                 InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
             }
 
@@ -598,53 +424,63 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO)
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                SNAKE();
+                //SNAKE();
                 InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
             }
 
-            //BONUS
             else if (compareString((*QueueBNMO).buffer[0], "TICTACTOE"))
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 tictactoe(); 
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);   
+                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);
+                            
             }
             else
             {
                 srand(time(NULL));
-                int r = rand()%10;
+                int r = rand()%1000;
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                printf("%d", r);
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+                printf("%d", r); 
+                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);               
             }
-            dequeue(QueueBNMO, &val);     
+            dequeue(QueueBNMO,&val);     
         }
     }
 }
 
 void HISTORY(ArrayDin *HistoryBNMO, int n)
 {
-    printf("Berikut adalah daftar Game yang telah dimainkan : \n");
-    if (n <= length(*HistoryBNMO))
+    if (IsEmpty(*HistoryBNMO))
     {
-        int i = 0;
-        while (i < n)
-        {
-            printf("%d. %s\n", (i+1), (*HistoryBNMO).buffer[i]);
-            i++;
-        }
+        printf("Belum ada game yang dimainkan. History Kosong.\n");
     }
     else
     {
-        int i = 0;
-        while (i < length(*HistoryBNMO))
+        printf("Berikut adalah daftar Game yang telah dimainkan : \n");
+        if (n <= Length(*HistoryBNMO))
         {
-            printf("%d. %s\n", (i+1), (*HistoryBNMO).buffer[i]);
-            i++;
+            int i = 0;
+            while (i < n)
+            {
+                printf("%d. %s\n", (i+1), (*HistoryBNMO).A[i]);
+                
+                i++;
+            }
         }
+        else
+        {
+            int i = 0;
+            while (i < Length(*HistoryBNMO))
+            {
+                printf("%d. %s\n", (i+1), (*HistoryBNMO).A[i]);
+                i++;
+            }
+        }
+
     }
+    
 }
 
 void RESETHISTORY(ArrayDin *HistoryBNMO)
@@ -653,13 +489,13 @@ void RESETHISTORY(ArrayDin *HistoryBNMO)
     StartCommand();
     if (compareWord(CurrentCommand, "YA") == true)
     {
-        CreateArrayDin(HistoryBNMO);
+        (*HistoryBNMO) = MakeArrayDin();
         printf("History berhasil di-reset\n"); 
     }
     else if (compareWord(CurrentCommand, "TIDAK") == true)
     {
         printf("History tidak jadi di-reset.\n");
-        HISTORY();
+        HISTORY(HistoryBNMO, Length(*HistoryBNMO));
     }
     else
     {
