@@ -16,5 +16,5 @@ int main()
         printf("%c\n", CC);
         ADVC();
     }
-    PrintArrayDin
+    
 }

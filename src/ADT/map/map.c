@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "map.h"
+#include "../../console.h"
 
 /* *** Konstruktor/Kreator *** */
 void CreateEmptyMap(Map *M)
@@ -11,14 +12,14 @@ void CreateEmptyMap(Map *M)
 }
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
-boolean IsEmpty(Map M)
+boolean IsEmptyMap(Map M)
 /* Mengirim true jika Map M kosong*/
 /* Ciri Map kosong : count bernilai Nil */
 {
    return M.Count == Nil;
 }
 
-boolean IsFull(Map M)
+boolean IsFullMap(Map M)
 /* Mengirim true jika Map M penuh */
 /* Ciri Map penuh : count bernilai MaxEl */
 {
@@ -35,7 +36,7 @@ valuetype Value(Map M, keytype k)
     boolean found = false;
     while (i < M.Count && !found)
     {
-        if (M.Elements[i].Key == k)
+        if (compareString(M.Elements[i].Key, k)== true)
         {
             found = true;
             loc = i;
@@ -52,13 +53,13 @@ valuetype Value(Map M, keytype k)
     }
 }
 
-void Insert(Map *M, keytype k, valuetype v)
+void InsertMap(Map *M, keytype k, valuetype v)
 /* Menambahkan Elmt sebagai elemen Map M. */
 /* I.S. M mungkin kosong, M tidak penuh
         M mungkin sudah beranggotakan v dengan key k */
 /* F.S. v menjadi anggota dari M dengan key k. Jika k sudah ada, operasi tidak dilakukan */
 {
-    if (IsEmpty(*M))
+    if (IsEmptyMap(*M))
     {
         M->Elements[0].Key = k;
         M->Elements[0].Value = v;
@@ -66,6 +67,7 @@ void Insert(Map *M, keytype k, valuetype v)
     }
     else
     {
+        
         int i = 0;
         boolean found = false;
         while (i < M->Count && !found)
@@ -82,10 +84,14 @@ void Insert(Map *M, keytype k, valuetype v)
             M->Elements[M->Count].Value = v;
             M->Count++;
         }
+        else
+        {
+            printf("Nama sudah ada. Masukkan nama yang valid.\n");
+        }
     }
 }
 
-void Delete(Map *M, keytype k)
+void DeleteMap(Map *M, keytype k)
 /* Menghapus Elmt dari Map M. */
 /* I.S. M tidak kosong
         element dengan key k mungkin anggota / bukan anggota dari M */
@@ -115,7 +121,7 @@ void Delete(Map *M, keytype k)
 }
 
 
-boolean IsMember(Map M, keytype k)
+boolean IsMemberMap(Map M, keytype k)
 /* Mengembalikan true jika k adalah member dari M */
 {
     int i = 0;
@@ -130,3 +136,66 @@ boolean IsMember(Map M, keytype k)
         }
     return found;
 }
+
+void PrintMap(Map M)
+/* I.S. M terdefinisi */
+/* F.S. M dicetak ke layar */
+{
+    int longestname = LongestString(M);
+    if (longestname == 0)
+    {
+        printf("| %-10s | %-10s |\n", "NAMA", "SCORE");
+        printf("---- SCOREBOARD KOSONG ----\n");
+    }
+    else
+    {
+        printf("| NAMA");
+        for (int i = 0; i < longestname + 2 ; i++)
+        {
+            printf(" ");
+        }
+        printf(" | %-10s |\n", "SCORE");
+        for (int i = 0; i < longestname + 23; i++)
+        {
+            printf("-");
+        }
+        printf("\n");
+        for (int i = 0; i < M.Count; i++)
+        {
+            printf("| %s", M.Elements[i].Key);
+            for (int j = 0; j < longestname - (stringlen(M.Elements[i].Key) - 6); j++)
+            {
+                printf(" ");
+            }
+            printf(" | %-10d |\n", M.Elements[i].Value);
+        }
+    }
+}
+
+int LongestString(Map M)
+/* Mengembalikan panjang string terpanjang pada Key M */
+/* I.S. M tidak kosong */
+/* F.S. k adalah key dengan string terpanjang pada M */
+{
+    int n = 0;
+    int i = 0;
+    while(i < M.Count){
+        if (stringlen(M.Elements[i].Key) > n){
+            n = stringlen(M.Elements[i].Key);
+        }
+        i++;
+    }
+    return n;
+}
+int stringlen(char *s)
+/* Mengembalikan panjang string s */
+{
+    int i = 0;
+    while (s[i] != '\0')
+    {
+        i++;
+    }
+    return i;
+}
+
+

@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "console.h"
 #include "tictactoe.h"
+
+
 const char char1 = 'X', char2 = 'O';
 char board[3][3];
 
-void tictactoe(){
+void tictactoe(Map *MapTicTacToe){
     
     //int score1,score2;
     //const char char1 = 'X', char2 = 'Y';
@@ -35,7 +38,7 @@ void tictactoe(){
 
     printBoard();
     printWinner(winner);
-    scoreboard(winner);
+    scoreboard(winner, MapTicTacToe);
 
     printf("Bye");
     
@@ -107,14 +110,10 @@ void player2move(){
         printf("<Pemain 2> Enter row (1-3): ");
         StartCommand();
         x = wordtoInt(CurrentCommand);
-        //StartCommand();
-        //wordtoInt(CurrentCommand, x);
         x--;
         printf("<Pemain 2> Enter column (1-3): ");
         StartCommand();
         y= wordtoInt(CurrentCommand);
-        //StartCommand();
-        //wordtoInt(CurrentCommand, y);
         y--;
 
         if(board[x][y] != ' '){
@@ -165,14 +164,19 @@ void printWinner(char winner){
    }
 }
 
-void scoreboard(char winner)
+void scoreboard(char winner, Map *MapTicTacToe )
 {
+    char player1[50];
+    char player2[50];
+    char *temp;
+    char *temp2;
+    int i;
     int score1 = 0, score2 = 0, tie = 0;
     if (winner == char1){
-        score1++;
+        score1 += 10;
     }
     else if (winner == char2){
-        score2++;
+        score2 += 10;
     }
     else{
         tie++;
@@ -183,4 +187,30 @@ void scoreboard(char winner)
     printf("%d\n", score2);
     printf("Match tied: ");
     printf("%d\n", tie);
+
+    printf("Player 1 Name: ");
+    StartCommand();
+    wordtoString(CurrentCommand, player1);
+    temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
+    i = 0;
+    while (i <= CurrentCommand.Length)
+    {
+        temp[i] = player1[i];
+        
+        i += 1;
+    }
+    InsertMap(MapTicTacToe, temp, score1);
+    printf("Player 2 Name: ");
+    StartCommand();
+    wordtoString(CurrentCommand, player2);
+    temp2 = (char *) malloc (CurrentCommand.Length * sizeof(char));
+    i = 0;
+    while (i <= CurrentCommand.Length)
+    {
+        temp2[i] = player2[i];
+        
+        i += 1;
+    }
+    InsertMap(MapTicTacToe, temp2, score2);
+    printf("\n");
 }

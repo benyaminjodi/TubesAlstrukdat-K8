@@ -10,10 +10,22 @@ int main()
     ArrayDin ArrayGame;
     Queue QueueGame;
     ArrayDin ArrayHistory;
+    Map MapTicTacToe;
+    Map MapRNG;
+    Map MapDD;
+    Map MapHangman;
+    Map MapTower;
+    Map MapSnake;
 
     ArrayGame = MakeArrayDin();
     ArrayHistory = MakeArrayDin();
     CreateQueue(&QueueGame);
+    CreateEmptyMap(&MapTicTacToe);
+    CreateEmptyMap(&MapRNG);
+    CreateEmptyMap(&MapDD);
+    CreateEmptyMap(&MapHangman);
+    CreateEmptyMap(&MapTower);
+    CreateEmptyMap(&MapSnake);
 
     boolean endProgram = false;
     printf(" _    _         _ _         _      \n");
@@ -101,7 +113,7 @@ int main()
                 ADVCommand();   
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
-                    PLAYGAME(&QueueGame, &ArrayHistory);
+                    PLAYGAME(&QueueGame, &ArrayHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
                 }
             }
             /* ----DELETE GAME--- */
@@ -122,8 +134,21 @@ int main()
                     ADVCommand();
                     int x;
                     x = wordtoInt(CurrentCommand);
-                    SKIPGAME(&QueueGame, x, &ArrayHistory);
+                    SKIPGAME(&QueueGame, x,  &ArrayHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
                 } 
+            }
+
+            else if (compareWord(CurrentCommand, "SCOREBOARD") == true)
+            {
+                SCOREBOARD(MapRNG, MapDD, MapHangman, MapTower, MapSnake, MapTicTacToe);
+            }
+            else if (compareWord(CurrentCommand, "RESET") == true)
+            {
+                ADVCommand();
+                if (compareWord(CurrentCommand, "SCOREBOARD") == true)
+                {
+                    RESETSCOREBOARD(&MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
+                }
             }
 
             else if (compareWord(CurrentCommand, "HISTORY") == true)

@@ -110,7 +110,7 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO)
     char string[50];
     char *temp; 
     char temp2[50];
-    int i,ngame, nhistory, nsbrng, nsbhangman, nsbdd, nsbtoh, nsbsom, nsbttt;
+    int i,ngame, nhistory, nsbrng, nsbhangman, nsbdd, nsbtoh, nsbsom, nMapTicTacToe;
     concat("./data/",filename, temp2);
     // printf("%s\n", temp2);
     FILE *fpita;
@@ -190,11 +190,28 @@ void CREATEGAME (ArrayDin *GameBNMO)
 {
     printf("Masukkan nama game yang akan ditambahkan: ");
     char *namaGame;
+    char *temp;
+    int i;
     namaGame = (char *) malloc (50 * sizeof(char));
     StartGame();
     wordtoString(CurrentCommand, namaGame);
-    InsertLast(GameBNMO, namaGame);
-    printf("Game berhasil ditambahkan\n");
+    temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
+    i = 0;
+    while (i <= CurrentCommand.Length)
+    {
+        temp[i] = namaGame[i];
+        
+        i += 1;
+    }
+    if (IsMemberArray(*GameBNMO, temp))
+    {
+        printf("Game sudah ada di dalam sistem. Silahkan masukkan nama game yang valid.\n");
+    }
+    else
+    {
+        InsertLast(GameBNMO, namaGame);
+        printf("Game berhasil ditambahkan.\n");
+    }
 }
 
 void LISTGAME (ArrayDin GameBNMO)
@@ -274,7 +291,7 @@ void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameBNMO)
     }
 }
 
-void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO)
+void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
 {
     char game[50];
     ElType val;
@@ -338,7 +355,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO)
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            tictactoe();
+            tictactoe(MapTicTacToe);
             InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                            
         }
@@ -358,7 +375,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO)
       
 }
 
-void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO)
+void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
 {
     ElType val;
     if (n<1)
@@ -428,12 +445,13 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO)
                 InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
             }
 
+            //BONUS
             else if (compareString((*QueueBNMO).buffer[0], "TICTACTOE"))
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                tictactoe(); 
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);
+                tictactoe(MapTicTacToe);
+                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                             
             }
             else
@@ -442,10 +460,11 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO)
                 int r = rand()%1000;
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                printf("%d", r); 
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);               
+                printf("%d", r);
+                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);
+                
             }
-            dequeue(QueueBNMO,&val);     
+            dequeue(QueueBNMO, &val); 
         }
     }
 }
@@ -482,6 +501,219 @@ void HISTORY(ArrayDin *HistoryBNMO, int n)
     }
     
 }
+
+void SCOREBOARD(Map MapRNG, Map MapDD, Map MapHangman, Map MapTower, Map MapSnake, Map MapTicTacToe)
+{
+    //-----------------RNG-----------------
+    printf("**** SCOREBOARD GAME RNG ****\n");
+    PrintMap(MapRNG);
+    printf("\n");
+
+    //-----------------Diner Dash-----------------
+    printf("**** SCOREBOARD GAME Diner Dash ****\n");
+    PrintMap(MapDD);
+    printf("\n");
+
+    //-----------------Hangman-----------------
+    printf("**** SCOREBOARD GAME Hangman ****\n");
+    PrintMap(MapHangman);
+    printf("\n");
+
+    //-----------------Tower of Hanoi-----------------
+    printf("**** SCOREBOARD GAME Tower of Hanoi ****\n");
+    PrintMap(MapTower);
+    printf("\n");
+
+    //-----------------Snake on Meteor-----------------
+    printf("**** SCOREBOARD GAME Snake on Meteor ****\n");
+    PrintMap(MapSnake);
+    printf("\n");
+
+    //-----------------Tic Tac Toe-----------------
+    printf("**** SCOREBOARD GAME TICTACTOE ****\n");
+    PrintMap(MapTicTacToe);
+    printf("\n");
+
+}
+
+void RESETSCOREBOARD(Map *MapRNG , Map *MapDD , Map *MapHangman , Map *MapTower , Map *MapSnake , Map *MapTicTacToe)
+{
+    printf("DAFTAR SCOREBOARD:\n");
+    printf("0. ALL\n");
+    printf("1. RNG\n");
+    printf("2. Diner DASH\n");
+    printf("3. HANGMAN\n");
+    printf("4. TOWER OF HANOI\n");
+    printf("5. SNAKE ON METEOR\n");
+    printf("6. TICTACTOE\n");
+
+    printf("\n");
+    printf("SCOREBOARD YANG INGIN DIHAPUS: ");
+    StartCommand();
+    int inp = wordtoInt(CurrentCommand);
+    ADVCommand();
+    
+    if(inp>=0 && inp <= 6)
+    {
+        if (inp == 0)
+        {
+            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD ALL (YA/TIDAK)?");
+            StartCommand();
+            
+            if (compareWord(CurrentCommand, "YA") == true)
+            {
+                printf("MELAKUKAN RESET SCOREBOARD ALL...\n");
+                printf("\n");
+                CreateEmptyMap(MapRNG);
+                CreateEmptyMap(MapDD);
+                CreateEmptyMap(MapHangman);
+                CreateEmptyMap(MapTower);
+                CreateEmptyMap(MapSnake);
+                CreateEmptyMap(MapTicTacToe);
+            }
+            else if (compareWord(CurrentCommand, "TIDAK") == true)
+            {
+                printf("RESET SCOREBOARD ALL DIBATALKAN\n");
+            }
+            else
+            {
+                printf("INPUT TIDAK VALID\n");
+            }
+        }
+
+        if(inp ==1)
+        {
+            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD RNG (YA/TIDAK)?");
+            StartCommand();
+            
+            if (compareWord(CurrentCommand, "YA") == true)
+            {
+                printf("MELAKUKAN RESET SCOREBOARD RNG...\n");
+                printf("\n");
+                CreateEmptyMap(MapRNG);
+            }
+            else if (compareWord(CurrentCommand, "TIDAK") == true)
+            {
+                printf("RESET SCOREBOARD RNG DIBATALKAN\n");
+            }
+            else
+            {
+                printf("INPUT TIDAK VALID\n");
+            }
+        }
+
+        if(inp ==2)
+        {
+            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Diner Dash (YA/TIDAK)?");
+            StartCommand();
+            
+            if (compareWord(CurrentCommand, "YA") == true)
+            {
+                printf("MELAKUKAN RESET SCOREBOARD Diner Dash...\n");
+                printf("\n");
+                CreateEmptyMap(MapDD);
+            }
+            else if (compareWord(CurrentCommand, "TIDAK") == true)
+            {
+                printf("RESET SCOREBOARD Diner Dash DIBATALKAN\n");
+            }
+            else
+            {
+                printf("INPUT TIDAK VALID\n");
+            }
+        }
+
+        if(inp ==3)
+        {
+            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Hangman (YA/TIDAK)?");
+            StartCommand();
+            
+            if (compareWord(CurrentCommand, "YA") == true)
+            {
+                printf("MELAKUKAN RESET SCOREBOARD Hangman...\n");
+                printf("\n");
+                CreateEmptyMap(MapHangman);
+            }
+            else if (compareWord(CurrentCommand, "TIDAK") == true)
+            {
+                printf("RESET SCOREBOARD Hangman DIBATALKAN\n");
+            }
+            else
+            {
+                printf("INPUT TIDAK VALID\n");
+            }
+        }
+
+        if(inp ==4)
+        {
+            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Tower of Hanoi (YA/TIDAK)?");
+            StartCommand();
+            
+            if (compareWord(CurrentCommand, "YA") == true)
+            {
+                printf("MELAKUKAN RESET SCOREBOARD Tower of Hanoi...\n");
+                printf("\n");
+                CreateEmptyMap(MapTower);
+            }
+            else if (compareWord(CurrentCommand, "TIDAK") == true)
+            {
+                printf("RESET SCOREBOARD Tower of Hanoi DIBATALKAN\n");
+            }
+            else
+            {
+                printf("INPUT TIDAK VALID\n");
+            }
+        }
+
+        if(inp ==5)
+        {
+            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Snake on Meteor (YA/TIDAK)?");
+            StartCommand();
+            
+            if (compareWord(CurrentCommand, "YA") == true)
+            {
+                printf("MELAKUKAN RESET SCOREBOARD Snake on Meteor...\n");
+                printf("\n");
+                CreateEmptyMap(MapSnake);
+            }
+            else if (compareWord(CurrentCommand, "TIDAK") == true)
+            {
+                printf("RESET SCOREBOARD Snake on Meteor DIBATALKAN\n");
+            }
+            else
+            {
+                printf("INPUT TIDAK VALID\n");
+            }
+        }
+
+        if(inp ==6)
+        {
+            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Tic Tac Toe (YA/TIDAK)?");
+            StartCommand();
+            
+            if (compareWord(CurrentCommand, "YA") == true)
+            {
+                printf("MELAKUKAN RESET SCOREBOARD Tic Tac Toe...\n");
+                printf("\n");
+                CreateEmptyMap(MapTicTacToe);
+            }
+            else if (compareWord(CurrentCommand, "TIDAK") == true)
+            {
+                printf("RESET SCOREBOARD Tic Tac Toe DIBATALKAN\n");
+            }
+            else
+            {
+                printf("INPUT TIDAK VALID\n");
+            }
+        }
+    }
+    else
+    {
+        printf("INPUT TIDAK VALID\n");
+    }
+
+}
+
 
 void RESETHISTORY(ArrayDin *HistoryBNMO)
 {

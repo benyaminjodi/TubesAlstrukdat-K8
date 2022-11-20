@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "arraydin.h"
+#include "../../console.h"
 
 /**
  * Konstruktor
@@ -195,9 +196,9 @@ ArrayDin CopyArrayDin(ArrayDin array)
 IdxType SearchArrayDin(ArrayDin array, ElType el)
 {
 	int i;
-	for (i = 0 ; i < array.Neff; i++)
+	for (i = 0 ; i < array.Neff ; i++)
 	{
-		if (array.A[i] == el)
+		if (compareString(array.A[i], el) == true)
 		{
 			return i;
 		}
@@ -206,7 +207,7 @@ IdxType SearchArrayDin(ArrayDin array, ElType el)
 }
 
 
-boolean IsMember (ArrayDin array, ElType el)
+boolean IsMemberArray (ArrayDin array, ElType el)
 {
 	return (SearchArrayDin(array, el) != -1);
 }

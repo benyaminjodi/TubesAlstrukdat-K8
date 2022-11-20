@@ -112,4 +112,9 @@ ArrayDin CopyArrayDin(ArrayDin array);
  */
 IdxType SearchArrayDin(ArrayDin array, ElType el);
 
+boolean IsMemberArray (ArrayDin array, ElType el);
+
+
+
+
 #endif
