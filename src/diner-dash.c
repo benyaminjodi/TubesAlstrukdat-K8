@@ -300,7 +300,7 @@ void addPesanan(QueueDD *Qpesanan, int *IDpesanan) {
   enqueueDD(Qpesanan, inpt);
 }
 
-void dinerDash() {
+void dinerDash(Map *MapDD) {
 // Program utama diner-dash
   printf("Selamat Datang di Diner Dash!\n");
   int saldo = 0;
@@ -388,4 +388,21 @@ void dinerDash() {
     printf("Selamat, Anda menang!\n");
     printf("Skor Anda: %d\n", saldo);
   }
+  // MASUKKAN NAMA PEMAIN DAN TAMBAH KE MAP
+  char player[50];
+  char *temp;
+  int i;
+  printf("\n");
+  printf("Masukkan nama pemain: ");
+  StartCommand();
+  wordtoString(CurrentCommand, player);
+  temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
+  i = 0;
+  while (i <= CurrentCommand.Length)
+  {
+      temp[i] = player[i];
+      
+      i += 1;
+  }
+  InsertMap(MapDD, temp, saldo);
 }
