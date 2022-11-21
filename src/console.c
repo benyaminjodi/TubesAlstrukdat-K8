@@ -502,7 +502,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            dinerDash();
+            dinerDash(MapDD);
             InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                            
         }
@@ -597,7 +597,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                dinerDash();
+                dinerDash(MapDD);
                 InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                             
             }

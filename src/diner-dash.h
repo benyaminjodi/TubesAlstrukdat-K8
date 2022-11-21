@@ -83,7 +83,7 @@ void addPesanan(QueueDD *Qpesanan, int *IDpesanan);
 // I.S. Qpesanan dan IDPesanan terdefinisi
 // F.S. Menambahkan elemen ke Qpesanan 
 
-void dinerDash();
+void dinerDash(Map *MapDD);
 // Program utama diner-dash
 
 #endif
