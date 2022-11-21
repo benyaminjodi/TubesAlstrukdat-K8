@@ -67,7 +67,6 @@ void InsertMap(Map *M, keytype k, valuetype v)
     }
     else
     {
-        
         int i = 0;
         boolean found = false;
         while (i < M->Count && !found)
@@ -80,17 +79,23 @@ void InsertMap(Map *M, keytype k, valuetype v)
         }
         if (!found)
         {
-            M->Elements[M->Count].Key = k;
-            M->Elements[M->Count].Value = v;
+            int i,j;
+            i=0;
+            while (v < M->Elements[i].Value)
+            {
+                i++;
+            }
+            for(j=i;j<M->Count;j++)
+            {
+                M->Elements[j+1].Key = M->Elements[j].Key;
+                M->Elements[j+1].Value = M->Elements[j].Value;
+            }
+            M->Elements[i].Key = k;
+            M->Elements[i].Value = v;
             M->Count++;
-        }
-        else
-        {
-            printf("Nama sudah ada. Masukkan nama yang valid.\n");
         }
     }
 }
-
 void DeleteMap(Map *M, keytype k)
 /* Menghapus Elmt dari Map M. */
 /* I.S. M tidak kosong
@@ -117,6 +122,7 @@ void DeleteMap(Map *M, keytype k)
             M->Elements[j]= M->Elements[j+1];
         }
         M->Count--;
+
     }
 }
 
