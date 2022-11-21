@@ -105,12 +105,12 @@ void STARTBNMO(ArrayDin *GameBNMO)
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }
 
-void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO)
+void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
 {
     char string[50];
     char *temp; 
     char temp2[50];
-    int i,ngame, nhistory, nsbrng, nsbhangman, nsbdd, nsbtoh, nsbsom, nMapTicTacToe;
+    int i,ngame, nhistory, nsbrng, nsbhangman, nsbdd, nsbtoh, nsbsom, nsbttt;
     concat("./data/",filename, temp2);
     // printf("%s\n", temp2);
     FILE *fpita;
@@ -121,7 +121,8 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO)
     }
     else
     {
-        StartWord(fpita);
+        fclose(fpita);
+        StartWord(temp2);
         ngame = wordtoInt(CurrentWord);
         ADVWord();
         for (int j = 0; j < ngame; j++)
@@ -129,6 +130,7 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO)
             wordtoString(CurrentWord, string);
             temp = (char *) malloc (CurrentWord.Length * sizeof(char));
             i = 0;
+            
             while (i <= CurrentWord.Length)
             {
                 temp[i] = string[i];
@@ -158,12 +160,134 @@ void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO)
             ADVWord();
             
         }
+
+        /*--- RNG ---*/
+        nsbrng = wordtoInt(CurrentWord);
+        printf("%d\n", nsbrng);
+        for (int j = 0; j < nsbrng; j++)
+        {
+            ADVName();
+            wordtoString(CurrentWord, string);
+            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentWord.Length)
+            {
+                temp[i] = string[i];
+                
+                i += 1;
+            }
+            ADVName();
+            int x = wordtoInt(CurrentWord);
+            InsertMap(MapRNG, temp, x); 
+        }
+
+        /*--- Hangman ---*/
+        nsbhangman = wordtoInt(CurrentWord);
+        printf("%d\n", nsbhangman);
+        for (int j = 0; j < nsbhangman; j++)
+        {
+            ADVName();
+            wordtoString(CurrentWord, string);
+            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentWord.Length)
+            {
+                temp[i] = string[i];
+                
+                i += 1;
+            }
+            ADVName();
+            int x = wordtoInt(CurrentWord);
+            InsertMap(MapHangman, temp, x); 
+        }
+
+        /*--- DD ---*/
+        nsbdd = wordtoInt(CurrentWord);
+        printf("%d\n", nsbdd);
+        for (int j = 0; j < nsbdd; j++)
+        {
+            ADVName();
+            wordtoString(CurrentWord, string);
+            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentWord.Length)
+            {
+                temp[i] = string[i];
+                
+                i += 1;
+            }
+            ADVName();
+            int x = wordtoInt(CurrentWord);
+            InsertMap(MapDD, temp, x); 
+        }
+
+        /*--- Tower of Hanoi ---*/
+        nsbtoh = wordtoInt(CurrentWord);
+        printf("%d\n", nsbtoh);
+        for (int j = 0; j < nsbtoh; j++)
+        {
+            ADVName();
+            wordtoString(CurrentWord, string);
+            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentWord.Length)
+            {
+                temp[i] = string[i];
+                
+                i += 1;
+            }
+            ADVName();
+            int x = wordtoInt(CurrentWord);
+            InsertMap(MapTower, temp, x); 
+        }
+
+        /*--- Snake ---*/
+        nsbsom = wordtoInt(CurrentWord);
+        printf("%d\n", nsbsom);
+        for (int j = 0; j < nsbsom; j++)
+        {
+            ADVName();
+            wordtoString(CurrentWord, string);
+            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentWord.Length)
+            {
+                temp[i] = string[i];
+                
+                i += 1;
+            }
+            ADVName();
+            int x = wordtoInt(CurrentWord);
+            InsertMap(MapSnake, temp, x); 
+        }
+
+        //TicTacToe
+        nsbttt = wordtoInt(CurrentWord);
+        printf("%d\n", nsbttt);
+        for (int j = 0; j < nsbttt; j++)
+        {
+            ADVName();
+            wordtoString(CurrentWord, string);
+            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentWord.Length)
+            {
+                temp[i] = string[i];
+                
+                i += 1;
+            }
+            ADVName();
+            int x = wordtoInt(CurrentWord);
+            InsertMap(MapTicTacToe, temp, x);
+            
+        }
+        
        printf("File %s berhasil dibaca. BNMO berhasil dijalankan.\n", filename);
     }
     
 }
 
-void SAVE(ArrayDin *GameBNMO, char *filename)
+void SAVEBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
 {
     char temp[50];
     printf("\n");
@@ -172,14 +296,70 @@ void SAVE(ArrayDin *GameBNMO, char *filename)
     FILE *fpita;
     fpita = fopen(temp, "w");
     fprintf(fpita, "%d", GameBNMO->Neff);
-    
     int i=0;
-    
     while (i < (*GameBNMO).Neff)
     {
         fprintf(fpita, "\n%s",(*GameBNMO).A[i]);
         i++;
     }
+
+    fprintf(fpita, "\n%d", HistoryBNMO->Neff);
+    i=0;
+    while (i < (*HistoryBNMO).Neff)
+    {
+        fprintf(fpita, "\n%s",(*HistoryBNMO).A[i]);
+        i++;
+    }
+
+    fprintf(fpita, "\n%d", MapRNG->Count);
+    i=0;
+    while (i < (*MapRNG).Count)
+    {
+        fprintf(fpita, "\n%s %d",(*MapRNG).Elements[i].Key, (*MapRNG).Elements[i].Value);
+        i++;
+    }
+
+    fprintf(fpita, "\n%d", MapDD->Count);
+    i=0;
+    while (i < (*MapDD).Count)
+    {
+        fprintf(fpita, "\n%s %d",(*MapDD).Elements[i].Key, (*MapDD).Elements[i].Value);
+        i++;
+    }
+
+
+    fprintf(fpita, "\n%d", MapHangman->Count);
+    i=0;
+    while (i < (*MapHangman).Count)
+    {
+        fprintf(fpita, "\n%s %d",(*MapHangman).Elements[i].Key, (*MapHangman).Elements[i].Value);
+        i++;
+    }
+
+    fprintf(fpita, "\n%d", MapTower->Count);
+    i=0;
+    while (i < (*MapTower).Count)
+    {
+        fprintf(fpita, "\n%s %d",(*MapTower).Elements[i].Key, (*MapTower).Elements[i].Value);
+        i++;
+    }
+
+    fprintf(fpita, "\n%d", MapSnake->Count);
+    i=0;
+    while (i < (*MapSnake).Count)
+    {
+        fprintf(fpita, "\n%s %d",(*MapSnake).Elements[i].Key, (*MapSnake).Elements[i].Value);
+        i++;
+    }
+
+    fprintf(fpita, "\n%d", MapTicTacToe->Count);
+    i=0;
+    while (i < (*MapTicTacToe).Count)
+    {
+        fprintf(fpita, "\n%s %d",(*MapTicTacToe).Elements[i].Key, (*MapTicTacToe).Elements[i].Value);
+        i++;
+    }
+
     printf("%s file berhasil disimpan.\n", filename);        
 
     fclose(fpita);   

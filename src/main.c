@@ -54,7 +54,7 @@ int main()
                 ADVCommand();
                 char filename[50];
                 wordtoString(CurrentCommand, filename);
-                LOADBNMO(&ArrayGame, filename, &ArrayHistory);
+                LOADBNMO(&ArrayGame, filename, &ArrayHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
                 
             }
             /* ---HELP--- */
@@ -175,7 +175,7 @@ int main()
                 char filename[50];
                 wordtoString(CurrentCommand, filename);     
                        
-                SAVE(&ArrayGame, filename);
+                SAVEBNMO(&ArrayGame, filename, &ArrayHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
             }
             /* ---HELP--- */
             else if (compareWord(CurrentCommand, "HELP") == true)

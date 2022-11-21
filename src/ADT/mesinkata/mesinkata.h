@@ -42,6 +42,20 @@ void ADVWord();
           Jika CC = ENTER, endWord = true.		  
    Proses : Akuisisi kata menggunakan procedure CopyWord */
 
+void ADVName();
+/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
+   F.S. : CurrentWord adalah kata terakhir yang sudah diakuisisi, 
+          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika CC = ENTER, endWord = true.		  
+   Proses : Akuisisi kata menggunakan procedure CopyWord */
+
+void CopyName();
+/* Mengakuisisi kata, menyimpan dalam CurrentWord
+   I.S. : CC adalah karakter pertama dari kata
+   F.S. : CurrentWord berisi kata yang sudah diakuisisi; 
+          CC = BLANK atau CC = ENTER;
+          CC adalah karakter sesudah karakter terakhir yang diakuisisi. */
+          
 void CopyWord();
 /* Mengakuisisi kata, menyimpan dalam CurrentWord
    I.S. : CC adalah karakter pertama dari kata
@@ -91,4 +105,5 @@ void CopyGame();
           CC = ENTER dan i = Nmax; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
 #endif

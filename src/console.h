@@ -18,9 +18,9 @@ void wordtoString(Kata CurrentWord, char *string);
 
 void STARTBNMO(ArrayDin *GameBNMO);
 
-void LOADBNMO(ArrayDin *GameBNMO, char *filename, ArrayDin *HistoryBNMO);
+void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
 
-void SAVE(ArrayDin *GameBNMO, char *filename);
+void SAVEBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
 
 void CREATEGAME (ArrayDin *GameBNMO);
 
