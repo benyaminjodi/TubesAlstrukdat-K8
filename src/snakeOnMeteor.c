@@ -259,15 +259,25 @@ void prosesMakan(List *snake, List *makanan) {
     addMakanan(makanan, *snake);
 }
 
-void addMeteor(List *meteor) {
+void addMeteor(List *meteor, List makanan) {
     int xMeteor = rng2(0,4);
     int yMeteor = rng2(0,4);
     if (!IsEmptyList(*meteor)) {
         addressNode P = SearchList(*meteor, xMeteor, yMeteor);
-        while (P != NIL) {
-            xMeteor = rng2(0,4);
-            yMeteor = rng2(0,4);
-            P = SearchList(*meteor, xMeteor, yMeteor);
+        if (!IsEmptyList(makanan)) {
+            addressNode Q = SearchList(makanan, xMeteor, yMeteor);
+            while (P != NIL && Q != NIL) {
+                xMeteor = rng2(0,4);
+                yMeteor = rng2(0,4);
+                P = SearchList(*meteor, xMeteor, yMeteor);
+                Q = SearchList(makanan, xMeteor, yMeteor);
+            }
+        } else {
+            while (P != NIL) {
+                xMeteor = rng2(0,4);
+                yMeteor = rng2(0,4);
+                P = SearchList(*meteor, xMeteor, yMeteor);
+            }
         }
     }
     InsVLast(meteor, xMeteor, yMeteor);
@@ -288,7 +298,6 @@ boolean prosesMeteor(List *snake, List meteor, boolean *isMeteorHitHead) {
         if (kena != NIL) {
             if (kena == First(*snake)) {
                 int xHead, yHead;
-                DelVFirst(snake, &xHead, &yHead);
                 (*isMeteorHitHead) = true;
             } else {
                 addressNode prev = Prev(kena);
@@ -309,6 +318,14 @@ boolean isLose(List snake, boolean isMeteorHitHead) {
         return false;
     }
     // Belum tambahin kondisi kalah yg kedua
+}
+
+int hitungScore(List snake, boolean isMeteorHitHead) {
+    if (isMeteorHitHead) {
+        return 2*(listLength(snake)-1);
+    } else {
+        return 2*listLength(snake);
+    }
 }
 
 int main() {
@@ -364,7 +381,7 @@ int main() {
             prosesMakan(&snake, &makanan);
         }
         delMeteor(&meteor, &xDelMeteor, &yDelMeteor);
-        addMeteor(&meteor);
+        addMeteor(&meteor, makanan);
         prosesMeteor(&snake, meteor, &isMeteorHitHead);
         updateMatrixMap(&peta, snake, makanan, meteor, lastX, lastY, xDelMeteor, yDelMeteor);
         displayMatrixMap(peta);
@@ -379,8 +396,11 @@ int main() {
         printf("meteor: ");
         PrintForward(meteor);
         printf("\n");
-
     }
+
+    // HITUNG SCORE
+    int score = hitungScore(snake, isMeteorHitHead);
+    printf("Score Anda: %d\n", score);
     
     return 0;
 }
