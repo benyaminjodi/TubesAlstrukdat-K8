@@ -4,6 +4,7 @@
 #include "ADT/queue/queue.h"
 #include "ADT/queue/queueDD.h"
 #include "ADT/map/map.h"
+#include "ADT/stack/stack.h"
 
 
 boolean compareWord(Kata kata1, char *kata2);
@@ -18,9 +19,9 @@ void wordtoString(Kata CurrentWord, char *string);
 
 void STARTBNMO(ArrayDin *GameBNMO);
 
-void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
+void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
 
-void SAVEBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
+void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
 
 void CREATEGAME (ArrayDin *GameBNMO);
 
@@ -30,17 +31,17 @@ void LISTGAME(ArrayDin GameBNMO);
 
 void DELETEGAME (ArrayDin *GameBNMO, Queue Q);
 
-void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
+void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
 
-void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
+void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
 
 void SCOREBOARD(Map RNG, Map MapDD, Map MapHangman, Map MapTower, Map MapSnake, Map MapTicTacToe);
 
 void RESETSCOREBOARD(Map *MapRNG , Map *MapDD , Map *MapHangman , Map *MapTower , Map *MapSnake , Map *MapTicTacToe);
 
-void HISTORY(ArrayDin *HistoryBNMO, int n);
+void HISTORY(Stack HistoryBNMO, int n);
 
-void RESETHISTORY(ArrayDin *HistoryBNMO);
+void RESETHISTORY(Stack *HistoryBNMO);
 
 void COMMANDLAIN ();
 

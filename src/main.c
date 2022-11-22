@@ -9,7 +9,7 @@ int main()
 {
     ArrayDin ArrayGame;
     Queue QueueGame;
-    ArrayDin ArrayHistory;
+    Stack StackHistory;
     Map MapTicTacToe;
     Map MapRNG;
     Map MapDD;
@@ -18,8 +18,8 @@ int main()
     Map MapSnake;
 
     ArrayGame = MakeArrayDin();
-    ArrayHistory = MakeArrayDin();
     CreateQueue(&QueueGame);
+    CreateEmptyStack(&StackHistory);
     CreateEmptyMap(&MapTicTacToe);
     CreateEmptyMap(&MapRNG);
     CreateEmptyMap(&MapDD);
@@ -54,7 +54,7 @@ int main()
                 ADVCommand();
                 char filename[50];
                 wordtoString(CurrentCommand, filename);
-                LOADBNMO(&ArrayGame, filename, &ArrayHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
+                LOADBNMO(&ArrayGame, filename, &StackHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
                 
             }
             /* ---HELP--- */
@@ -113,7 +113,7 @@ int main()
                 ADVCommand();   
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
-                    PLAYGAME(&QueueGame, &ArrayHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
+                    PLAYGAME(&QueueGame, &StackHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
                 }
             }
             /* ----DELETE GAME--- */
@@ -134,7 +134,7 @@ int main()
                     ADVCommand();
                     int x;
                     x = wordtoInt(CurrentCommand);
-                    SKIPGAME(&QueueGame, x,  &ArrayHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
+                    SKIPGAME(&QueueGame, x,  &StackHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
                 } 
             }
 
@@ -156,7 +156,7 @@ int main()
                 ADVCommand();  
                 int x;
                 x = wordtoInt(CurrentCommand);
-                HISTORY(&ArrayHistory, x);   
+                HISTORY(StackHistory, x);   
             }
 
             else if (compareWord(CurrentCommand, "RESET") == true)
@@ -164,7 +164,7 @@ int main()
                 ADVCommand();
                 if (compareWord(CurrentCommand, "HISTORY") == true)
                 {
-                    RESETHISTORY(&ArrayHistory);
+                    RESETHISTORY(&StackHistory);
                 }
             }
             
@@ -175,7 +175,7 @@ int main()
                 char filename[50];
                 wordtoString(CurrentCommand, filename);     
                        
-                SAVEBNMO(&ArrayGame, filename, &ArrayHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
+                SAVEBNMO(&ArrayGame, filename, &StackHistory, &MapRNG, &MapDD, &MapHangman, &MapTower, &MapSnake, &MapTicTacToe);
             }
             /* ---HELP--- */
             else if (compareWord(CurrentCommand, "HELP") == true)

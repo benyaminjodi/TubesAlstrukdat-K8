@@ -106,7 +106,7 @@ void STARTBNMO(ArrayDin *GameBNMO)
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }
 
-void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
+void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
 {
     char string[50];
     char *temp; 
@@ -157,14 +157,13 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *Ma
                 
                 i += 1;
             }
-            InsertLast(HistoryBNMO, temp);
+            Push(HistoryBNMO, temp);
             ADVWord();
             
         }
 
         /*--- RNG ---*/
         nsbrng = wordtoInt(CurrentWord);
-        printf("%d\n", nsbrng);
         for (int j = 0; j < nsbrng; j++)
         {
             ADVName();
@@ -184,7 +183,6 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *Ma
 
         /*--- Hangman ---*/
         nsbhangman = wordtoInt(CurrentWord);
-        printf("%d\n", nsbhangman);
         for (int j = 0; j < nsbhangman; j++)
         {
             ADVName();
@@ -204,7 +202,6 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *Ma
 
         /*--- DD ---*/
         nsbdd = wordtoInt(CurrentWord);
-        printf("%d\n", nsbdd);
         for (int j = 0; j < nsbdd; j++)
         {
             ADVName();
@@ -224,7 +221,6 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *Ma
 
         /*--- Tower of Hanoi ---*/
         nsbtoh = wordtoInt(CurrentWord);
-        printf("%d\n", nsbtoh);
         for (int j = 0; j < nsbtoh; j++)
         {
             ADVName();
@@ -244,7 +240,6 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *Ma
 
         /*--- Snake ---*/
         nsbsom = wordtoInt(CurrentWord);
-        printf("%d\n", nsbsom);
         for (int j = 0; j < nsbsom; j++)
         {
             ADVName();
@@ -264,7 +259,6 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *Ma
 
         //TicTacToe
         nsbttt = wordtoInt(CurrentWord);
-        printf("%d\n", nsbttt);
         for (int j = 0; j < nsbttt; j++)
         {
             ADVName();
@@ -288,7 +282,7 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *Ma
     
 }
 
-void SAVEBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
+void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
 {
     char temp[50];
     printf("\n");
@@ -304,11 +298,11 @@ void SAVEBNMO(ArrayDin *GameBNMO, char* filename, ArrayDin *HistoryBNMO, Map *Ma
         i++;
     }
 
-    fprintf(fpita, "\n%d", HistoryBNMO->Neff);
+    fprintf(fpita, "\n%d", Top(*HistoryBNMO)+1);
     i=0;
-    while (i < (*HistoryBNMO).Neff)
+    while (i < Top(*HistoryBNMO)+1)
     {
-        fprintf(fpita, "\n%s",(*HistoryBNMO).A[i]);
+        fprintf(fpita, "\n%s",(*HistoryBNMO).T[i]);
         i++;
     }
 
@@ -472,7 +466,7 @@ void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameBNMO)
     }
 }
 
-void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
+void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
 {
     char game[50];
     ElType val;
@@ -496,7 +490,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             RNG();
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                          
         }
         else if (compareString((*QueueBNMO).buffer[0], "Diner DASH"))
@@ -504,7 +498,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             dinerDash(MapDD);
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                            
         }
         else if (compareString((*QueueBNMO).buffer[0], "HANGMAN"))
@@ -512,7 +506,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             //HANGMAN();   
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);                
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);                
         }
 
         else if (compareString((*QueueBNMO).buffer[0], "TOWER OF HANOI"))
@@ -520,7 +514,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             //TOH();
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
 
         else if (compareString((*QueueBNMO).buffer[0], "SNAKE ON METEOR"))
@@ -528,7 +522,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             snake(MapSnake);
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
 
         //BONUS
@@ -537,7 +531,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             tictactoe(MapTicTacToe);
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                            
         }
         else
@@ -547,7 +541,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
             printf("%d", r);
-            InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);
              
         }
         dequeue(QueueBNMO, &val);  
@@ -556,7 +550,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
       
 }
 
-void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
+void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
 {
     ElType val;
     if (n<1)
@@ -591,7 +585,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 RNG();
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                             
             }
             else if (compareString((*QueueBNMO).buffer[0], "Diner DASH"))
@@ -599,7 +593,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 dinerDash(MapDD);
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                             
             }
             else if (compareString((*QueueBNMO).buffer[0], "HANGMAN"))
@@ -607,7 +601,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 //HANGMAN();   
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);                
+                Push(HistoryBNMO, (*QueueBNMO).buffer[0]);                
             }
 
             else if (compareString((*QueueBNMO).buffer[0], "TOWER OF HANOI"))
@@ -615,7 +609,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 //TOH();
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+                Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
             }
 
             else if (compareString((*QueueBNMO).buffer[0], "SNAKE ON METEOR"))
@@ -623,7 +617,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 snake(MapSnake);
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+                Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
             }
 
             //BONUS
@@ -632,7 +626,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 tictactoe(MapTicTacToe);
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                             
             }
             else
@@ -642,7 +636,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
                 printf("%d", r);
-                InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);
+                Push(HistoryBNMO, (*QueueBNMO).buffer[0]);
                 
             }
             dequeue(QueueBNMO, &val); 
@@ -650,31 +644,35 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
     }
 }
 
-void HISTORY(ArrayDin *HistoryBNMO, int n)
+void HISTORY(Stack HistoryBNMO, int n)
 {
-    if (IsEmpty(*HistoryBNMO))
+    if (IsEmptyStack(HistoryBNMO))
     {
         printf("Belum ada game yang dimainkan. History Kosong.\n");
     }
     else
     {
         printf("Berikut adalah daftar Game yang telah dimainkan : \n");
-        if (n <= Length(*HistoryBNMO))
+        if (n <= Top(HistoryBNMO)+1)
         {
+    
             int i = 0;
             while (i < n)
             {
-                printf("%d. %s\n", (i+1), (*HistoryBNMO).A[i]);
-                
+                printf("%d. %s\n", (i+1), InfoTop(HistoryBNMO));
+                char* val;
+                Pop(&HistoryBNMO, &val);
                 i++;
             }
         }
         else
         {
             int i = 0;
-            while (i < Length(*HistoryBNMO))
+            while (i <= Top(HistoryBNMO)+1)
             {
-                printf("%d. %s\n", (i+1), (*HistoryBNMO).A[i]);
+                printf("%d. %s\n", (i+1), InfoTop(HistoryBNMO));
+                char* val;
+                Pop(&HistoryBNMO, &val);
                 i++;
             }
         }
@@ -896,19 +894,19 @@ void RESETSCOREBOARD(Map *MapRNG , Map *MapDD , Map *MapHangman , Map *MapTower 
 }
 
 
-void RESETHISTORY(ArrayDin *HistoryBNMO)
+void RESETHISTORY(Stack *HistoryBNMO)
 {
     printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET HISTORY? ");
     StartCommand();
     if (compareWord(CurrentCommand, "YA") == true)
     {
-        (*HistoryBNMO) = MakeArrayDin();
+        CreateEmptyStack(HistoryBNMO);
         printf("History berhasil di-reset\n"); 
     }
     else if (compareWord(CurrentCommand, "TIDAK") == true)
     {
         printf("History tidak jadi di-reset.\n");
-        HISTORY(HistoryBNMO, Length(*HistoryBNMO));
+        HISTORY(*HistoryBNMO, Top(*HistoryBNMO)+1);
     }
     else
     {
