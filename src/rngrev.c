@@ -4,7 +4,7 @@
 #include <math.h>
 #include "mesinkarakter.h"
 
-void rng(){
+void rng(Map *MapRNG){
     srand(time(NULL));
     int r = rand()%101;
     int masukan;
@@ -14,7 +14,7 @@ void rng(){
     printf("RNG Telah dimulai. Uji keberuntungan Anda dengan menebak X.\n");
     printf("%d\n", r);
     printf("Tebakan: ");
-    //scanf("%d", &masukan);
+ 
     StartCommand();
     masukan = wordtoInt(CurrentCommand);
 
@@ -41,5 +41,19 @@ void rng(){
     else{
         printf("Anda tidak beruntung. Score yang didapatkan adalah 0.");
     }
-    //return 0;
+    
+    char player [50];
+    char *temp;
+    int k;
+    printf("\n");
+    printf("Masukkan nama pemain: ");
+    StartCommand();
+    wordtoString(CurrentCommand, player);
+    temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
+    k = 0;
+    while (k <= CurrentCommand.Length){
+        temp[k] = player[k];
+            k += 1;
+    }
+    InsertMap(MapRNG, temp, score);
 }
