@@ -4,6 +4,7 @@
 #include "console.h"
 #include "diner-dash.h"
 #include "tictactoe.h"
+#include "snakeOnMeteor.h"
 
 //Fungsi dan Prosedur 
 boolean compareWord(Kata kata1, char *kata2)
@@ -526,7 +527,7 @@ void PLAYGAME(Queue *QueueBNMO, ArrayDin *HistoryBNMO, Map *MapRNG, Map *MapDD, 
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            //SNAKE();
+            snake(MapSnake);
             InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
 
@@ -621,7 +622,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, ArrayDin *HistoryBNMO, Map *MapRNG, Map *
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                //SNAKE();
+                snake(MapSnake);
                 InsertFirst(HistoryBNMO, (*QueueBNMO).buffer[0]);  
             }
 

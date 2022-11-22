@@ -328,7 +328,7 @@ int hitungScore(List snake, boolean isMeteorHitHead) {
     }
 }
 
-int main() {
+void snake(Map *MapSnake) {
     List snake;
     List makanan;
     List meteor;
@@ -401,6 +401,22 @@ int main() {
     // HITUNG SCORE
     int score = hitungScore(snake, isMeteorHitHead);
     printf("Score Anda: %d\n", score);
-    
-    return 0;
+
+    // MASUKKAN NAMA PEMAIN DAN TAMBAH KE MAP
+    char player[50];
+    char *temp;
+    int i;
+    printf("\n");
+    printf("Masukkan nama pemain: ");
+    StartCommand();
+    wordtoString(CurrentCommand, player);
+    temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
+    i = 0;
+    while (i <= CurrentCommand.Length)
+    {
+        temp[i] = player[i];
+        
+        i += 1;
+    }
+    InsertMap(MapSnake, temp, score);
 }
