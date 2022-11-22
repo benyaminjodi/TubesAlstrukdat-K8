@@ -489,7 +489,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            RNG();
+            RNG(MapRNG);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                          
         }
@@ -584,7 +584,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, Map *MapRNG, Map *Map
             {
                 printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
                 printf("\n");
-                RNG();
+                RNG(MapRNG);
                 Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                             
             }
@@ -893,7 +893,6 @@ void RESETSCOREBOARD(Map *MapRNG , Map *MapDD , Map *MapHangman , Map *MapTower 
 
 }
 
-
 void RESETHISTORY(Stack *HistoryBNMO)
 {
     printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET HISTORY? ");
@@ -915,30 +914,58 @@ void RESETHISTORY(Stack *HistoryBNMO)
     
 }
 
-void RNG(){
+void RNG(Map *MapRNG){
     srand(time(NULL));
     int r = rand()%101;
     int masukan;
+    int score = 10;
+    int i = 0;
 
     printf("RNG Telah dimulai. Uji keberuntungan Anda dengan menebak X.\n");
     printf("Tebakan: ");
+ 
     StartCommand();
     masukan = wordtoInt(CurrentCommand);
-    while (masukan != r){
-        if (masukan < r){
-            printf("Lebih besar\n");
-        }
-        else{
-            printf("Lebih kecil\n");
-        }
-        printf("Tebakan: ");
-        StartCommand();
-        masukan = wordtoInt(CurrentCommand);
-    }
-    printf("Ya, X adalah ");
-    printf("%d.", masukan);
-}
 
+    while (masukan != r && i < 9){
+                if (masukan < r){
+                    printf("Lebih besar\n");
+                }
+                else if (masukan > r){
+                    printf("Lebih kecil\n");
+                }
+                i++;
+                printf("Tebakan: ");
+
+                StartCommand();
+                masukan = wordtoInt(CurrentCommand);
+                score--;
+    }
+
+    if (score > 0 && masukan == r){
+        printf("Ya, X adalah ");
+        printf("%d.\n", masukan);
+        printf("Score yang didapatkan adalah %d.", score);
+    }
+    else{
+        printf("Anda tidak beruntung. Score yang didapatkan adalah 0.");
+    }
+    
+    char player [50];
+    char *temp;
+    int k;
+    printf("\n");
+    printf("Masukkan nama pemain: ");
+    StartCommand();
+    wordtoString(CurrentCommand, player);
+    temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
+    k = 0;
+    while (k <= CurrentCommand.Length){
+        temp[k] = player[k];
+            k += 1;
+    }
+    InsertMap(MapRNG, temp, score);
+}
 void COMMANDLAIN()
 {
     printf("Command tidak dikenali, silahkan masukkan command yang valid.");

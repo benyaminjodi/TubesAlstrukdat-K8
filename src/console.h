@@ -7,6 +7,7 @@
 #include "ADT/stack/stack.h"
 
 
+
 boolean compareWord(Kata kata1, char *kata2);
 
 boolean compareString(char *kata1, char *kata2);
@@ -45,7 +46,7 @@ void RESETHISTORY(Stack *HistoryBNMO);
 
 void COMMANDLAIN ();
 
-void RNG();
+void RNG(Map *MapRNG);
 
 void HELP();
 
