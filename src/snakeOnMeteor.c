@@ -253,9 +253,9 @@ boolean isEating(List snake, int xFood, int yFood) {
 void eating(List *snake, int xFood, int yFood) {
     int tailX = InfoX(Last(*snake));
     int tailY = InfoY(Last(*snake));
-    if (tailX > 0) {
+    if (tailX > 0 && SearchList(*snake, tailX-1, tailY) == NIL) {
         InsVLast(snake, tailX-1, tailY);
-    } else if (tailY > 0) {
+    } else if (tailY > 0 && SearchList(*snake, tailX, tailY-1) == NIL) {
         InsVLast(snake, tailX, tailY-1);
     } else {
         InsVLast(snake, tailX, tailY+1);
