@@ -10,34 +10,31 @@ typedef struct {
 } matrixMap;
 
 void CreateEmptyMatrixMap(matrixMap *peta);
-// I.S. peta terdefinisi 
-// F.S. Mengisi peta dengan char 0
 
 void displayMatrixMap(matrixMap peta);
 
-void updateMatrixMap(matrixMap *peta, List snake, List makanan, List meteor, int lastX, int lastY, int xDelMeteor, int yDelMeteor);
+void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFood, int yFood, int xMeteor, int yMeteor, int prevXMeteor, int prevYMeteor);
 
 int listLength(List list);
 
 int rng2(int lower, int upper);
+// Menghasilkan bilangan random antara [lower..upper]
 
 void initSnake(List *snake);
 
-void validateCommand(char inpt, List snake, List meteor, boolean *isValid);
+void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean initMeteor, boolean *isValid);
 
 void moveSnake(List *snake, char inpt, int *lastX, int *lastY);
 
-void addMakanan(List *makanan, List snake);
+void addFood(int *xFood, int *yFood, List snake);
 
-boolean isMakan(List snake, List makanan);
+boolean isEating(List snake, int xFood, int yFood);
 
-void prosesMakan(List *snake, List *makanan);
+void eating(List *snake, int xFood, int yFood);
 
-void addMeteor(List *meteor, List makanan);
+void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor);
 
-void delMeteor(List *meteor, int *xDelMeteor, int *yDelMeteor);
-
-boolean prosesMeteor(List *snake, List meteor, boolean *isMeteorHitHead);
+void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHead);
 
 boolean isLose(List snake, boolean isMeteorHitHead);
 

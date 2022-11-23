@@ -18,6 +18,7 @@ void CreateEmptyMatrixMap(matrixMap *peta) {
 }
 
 void displayMatrixMap(matrixMap peta) {
+    printf("Berikut merupakan peta permainan\n");
     printf("-----------------\n");
     for (int i = 0; i < 5; i++) {
         printf("|");
@@ -42,13 +43,13 @@ void displayMatrixMap(matrixMap peta) {
     printf("-----------------\n");
 }
 
-void updateMatrixMap(matrixMap *peta, List snake, List makanan, List meteor, int lastX, int lastY, int xDelMeteor, int yDelMeteor) {
+void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFood, int yFood, int xMeteor, int yMeteor, int prevXMeteor, int prevYMeteor) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             if (j == lastX && i == lastY) {
                 (*peta).buffer[i][j] = '0';
             }
-            if (j == xDelMeteor && i == yDelMeteor) {
+            if (j == prevXMeteor && i == prevYMeteor) {
                 (*peta).buffer[i][j] = '0';
             }
             if (SearchList(snake, j, i) != NIL) {
@@ -65,12 +66,12 @@ void updateMatrixMap(matrixMap *peta, List snake, List makanan, List meteor, int
                     (*peta).buffer[i][j] = count + '0';
                 }
             }
-            if (SearchList(makanan, j, i) != NIL) {
+            if (xFood == j && yFood == i) {
                 (*peta).buffer[i][j] = 'o';
             }
-            if (SearchList(meteor, j, i) != NIL) {
+            if (xMeteor == j && yMeteor == i) {
                 (*peta).buffer[i][j] = 'm';
-            }
+            } 
         }
     }
 }
@@ -112,15 +113,20 @@ void initSnake(List *snake) {
     }
 }
 
-void validateCommand(char inpt, List snake, List meteor, boolean *isValid) {
+void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean initMeteor, boolean *isValid) {
     if (inpt == 'w' || inpt == 'W') {
         if (InfoY(First(snake)) != 0) {
             if (SearchList(snake, InfoX(First(snake)), InfoY(First(snake))-1) != NIL) {
                 printf("Anda tidak dapat bergerak ke tubuh anda sendiri!\n");
                 printf("Silakan input command lain\n");
-            } else if (SearchList(meteor, InfoX(First(snake)), InfoY(First(snake))-1) != NIL) {
-                printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut.\n");
-                printf("Silakan masukkan command lainnya\n");
+            } else if (initMeteor) {
+                if (InfoX(First(snake)) == xMeteor && (InfoY(First(snake))-1) == yMeteor) {
+                    printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut.\n");
+                    printf("Silakan masukkan command lainnya\n");
+                } else {
+                    (*isValid) = true;
+                    printf("Berhasil bergerak ke atas\n");
+                }
             } else {
                 (*isValid) = true;
                 printf("Berhasil bergerak ke atas\n");
@@ -134,9 +140,14 @@ void validateCommand(char inpt, List snake, List meteor, boolean *isValid) {
             if (SearchList(snake, InfoX(First(snake))-1, InfoY(First(snake))) != NIL) {
                 printf("Anda tidak dapat bergerak ke tubuh anda sendiri!\n");
                 printf("Silakan input command lain\n");
-            } else if (SearchList(meteor, InfoX(First(snake))-1, InfoY(First(snake))) != NIL) {
-                printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut.\n");
-                printf("Silakan masukkan command lainnya\n");
+            } else if (initMeteor) {
+                if ((InfoX(First(snake))-1) == xMeteor && InfoY(First(snake)) == yMeteor) {
+                    printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut.\n");
+                    printf("Silakan masukkan command lainnya\n");
+                } else {
+                    (*isValid) = true;
+                    printf("Berhasil bergerak ke kiri\n");
+                }
             } else {
                 (*isValid) = true;
                 printf("Berhasil bergerak ke kiri\n");
@@ -150,9 +161,14 @@ void validateCommand(char inpt, List snake, List meteor, boolean *isValid) {
             if (SearchList(snake, InfoX(First(snake)), InfoY(First(snake))+1) != NIL) {
                 printf("Anda tidak dapat bergerak ke tubuh anda sendiri!\n");
                 printf("Silakan input command lain\n");
-            } else if (SearchList(meteor, InfoX(First(snake)), InfoY(First(snake))+1) != NIL) {
-                printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut.\n");
-                printf("Silakan masukkan command lainnya\n");
+            } else if (initMeteor) {
+                if (InfoX(First(snake)) == xMeteor && (InfoY(First(snake))+1) == yMeteor) {
+                    printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut.\n");
+                    printf("Silakan masukkan command lainnya\n");
+                } else {
+                    (*isValid) = true;
+                    printf("Berhasil bergerak ke bawah\n");
+                }
             } else {
                 (*isValid) = true;
                 printf("Berhasil bergerak ke bawah\n");
@@ -166,9 +182,14 @@ void validateCommand(char inpt, List snake, List meteor, boolean *isValid) {
             if (SearchList(snake, InfoX(First(snake))+1, InfoY(First(snake))) != NIL) {
                 printf("Anda tidak dapat bergerak ke tubuh anda sendiri!\n");
                 printf("Silakan input command lain\n");
-            } else if (SearchList(meteor, InfoX(First(snake))+1, InfoY(First(snake))) != NIL) {
-                printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut.\n");
-                printf("Silakan masukkan command lainnya\n");
+            } else if (initMeteor) {
+                if ((InfoX(First(snake))+1) == xMeteor && InfoY(First(snake)) == yMeteor) {
+                    printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut.\n");
+                    printf("Silakan masukkan command lainnya\n");
+                } else {
+                    (*isValid) = true;
+                    printf("Berhasil bergerak ke kanan\n");
+                }
             } else {
                 (*isValid) = true;
                 printf("Berhasil bergerak ke kanan\n");
@@ -210,34 +231,26 @@ void moveSnake(List *snake, char inpt, int *lastX, int *lastY) {
     *lastY = prevY;
 }
 
-void addMakanan(List *makanan, List snake) {
-    int xFood = rng2(0, 4);
-    int yFood = rng2(0, 4);
-    if (!IsEmptyList(*makanan)) {
-        while (SearchList(snake, xFood, yFood) != NIL && SearchList(*makanan, xFood, yFood) != NIL) {
-            xFood = rng2(0, 4);
-            yFood = rng2(0, 4);
-        }
-    } else {
-        while (SearchList(snake, xFood, yFood) != NIL) {
-            xFood = rng2(0, 4);
-            yFood = rng2(0, 4);
-        }
+void addFood(int *xFood, int *yFood, List snake) {
+    *xFood = rng2(0, 4);
+    *yFood = rng2(0, 4);
+   while (SearchList(snake, *xFood, *yFood) != NIL) {
+        *xFood = rng2(0, 4);
+        *yFood = rng2(0, 4);
     }
-    InsVLast(makanan, xFood, yFood);
 }
 
-boolean isMakan(List snake, List makanan) {
-    int headX = InfoX(First(snake));
-    int headY = InfoY(First(snake));
-    if (SearchList(makanan, headX, headY)) {
+boolean isEating(List snake, int xFood, int yFood) {
+    int xHead = InfoX(First(snake));
+    int yHead = InfoY(First(snake));
+    if (xHead == xFood && yHead == yFood) {
         return true;
     } else {
         return false;
     }
 }
 
-void prosesMakan(List *snake, List *makanan) {
+void eating(List *snake, int xFood, int yFood) {
     int tailX = InfoX(Last(*snake));
     int tailY = InfoY(Last(*snake));
     if (tailX > 0) {
@@ -247,65 +260,30 @@ void prosesMakan(List *snake, List *makanan) {
     } else {
         InsVLast(snake, tailX, tailY+1);
     }
-    addressNode P = SearchList(*makanan, InfoX(First(*snake)), InfoY(First(*snake)));
-    if (listLength(*makanan) == 1 || P == First(*makanan)) {
-        int xFood, yFood;
-        DelVFirst(makanan, &xFood, &yFood);
-    } else {
-        addressNode prev = Prev(P);
-        addressNode Pdel;
-        DelAfter(makanan, &Pdel, prev);
-    }
-    addMakanan(makanan, *snake);
 }
 
-void addMeteor(List *meteor, List makanan) {
-    int xMeteor = rng2(0,4);
-    int yMeteor = rng2(0,4);
-    if (!IsEmptyList(*meteor)) {
-        addressNode P = SearchList(*meteor, xMeteor, yMeteor);
-        if (!IsEmptyList(makanan)) {
-            addressNode Q = SearchList(makanan, xMeteor, yMeteor);
-            while (P != NIL && Q != NIL) {
-                xMeteor = rng2(0,4);
-                yMeteor = rng2(0,4);
-                P = SearchList(*meteor, xMeteor, yMeteor);
-                Q = SearchList(makanan, xMeteor, yMeteor);
-            }
+void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor) {
+    if (initMeteor) {
+        *prevXMeteor = *xMeteor;
+        *prevYMeteor = *yMeteor;
+    }
+    *xMeteor = rng2(0,4);
+    *yMeteor = rng2(0,4);
+}
+
+void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHead) {
+    addressNode kena = SearchList(*snake, xMeteor, yMeteor);
+    if (kena != NIL) {
+        printf("Anda terkena meteor!\n");
+        if (kena == First(*snake)) {
+            (*isMeteorHitHead) = true;
         } else {
-            while (P != NIL) {
-                xMeteor = rng2(0,4);
-                yMeteor = rng2(0,4);
-                P = SearchList(*meteor, xMeteor, yMeteor);
-            }
+            addressNode prev = Prev(kena);
+            addressNode Pdel;
+            DelAfter(snake, &Pdel, prev);
         }
-    }
-    InsVLast(meteor, xMeteor, yMeteor);
-}
-
-void delMeteor(List *meteor, int *xDelMeteor, int *yDelMeteor) {
-    if (!IsEmptyList(*meteor)) {
-        DelVFirst(meteor, xDelMeteor, yDelMeteor);
-    }
-}
-
-boolean prosesMeteor(List *snake, List meteor, boolean *isMeteorHitHead) {
-    addressNode lokasiMeteor = First(meteor);
-    while (lokasiMeteor != NIL) {
-        int xMeteor = InfoX(lokasiMeteor);
-        int yMeteor = InfoY(lokasiMeteor);
-        addressNode kena = SearchList(*snake, xMeteor, yMeteor);
-        if (kena != NIL) {
-            if (kena == First(*snake)) {
-                int xHead, yHead;
-                (*isMeteorHitHead) = true;
-            } else {
-                addressNode prev = Prev(kena);
-                addressNode Pdel;
-                DelAfter(snake, &Pdel, prev);
-            }
-        }
-        lokasiMeteor = Next(lokasiMeteor);
+    } else {
+        printf("Anda beruntung tidak terkena meteor! Silakan lanjutkan permainan\n");
     }
 }
 
@@ -330,12 +308,12 @@ int hitungScore(List snake, boolean isMeteorHitHead) {
 
 void snake(Map *MapSnake) {
     List snake;
-    List makanan;
-    List meteor;
+    int xFood;
+    int yFood;
+    int xMeteor;
+    int yMeteor;
     matrixMap peta;
     CreateEmptyList(&snake);
-    CreateEmptyList(&makanan);
-    CreateEmptyList(&meteor);
     CreateEmptyMatrixMap(&peta);
 
     // INISIALISASI RNG
@@ -346,16 +324,16 @@ void snake(Map *MapSnake) {
     printf("Mengenerate peta, snake, dan makanan...\n");
     printf("Berhasil digenerate!\n");
     printf("_______________________________________\n");
-    printf("Berikut merupakan peta permainan\n");
     
     // INISIALISASI GAME
     int lastX, lastY;
-    int xDelMeteor, yDelMeteor;
+    int prevXMeteor, prevYMeteor;
     boolean isMeteorHitHead = false;
-    int nTurn = 0;
+    boolean initMeteor = false;
+    int nTurn = 1;
     initSnake(&snake);
-    addMakanan(&makanan, snake);
-    updateMatrixMap(&peta, snake, makanan, meteor, lastX, lastY, xDelMeteor, yDelMeteor);
+    addFood(&xFood, &yFood, snake);
+    updateMatrixMap(&peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor);
     displayMatrixMap(peta);
    
     // PROGRAM UTAMA
@@ -364,38 +342,39 @@ void snake(Map *MapSnake) {
         char command[50];
         char inpt;
         boolean isValid = false;
-        while (!isValid) {    
+        while (!isValid) {
+            printf("\n");
+            printf("TURN %d:\n", nTurn);
             printf("Silakan masukkan command Anda: ");
             StartCommand();
             if (CurrentCommand.Length == 1) {
                 inpt = CurrentCommand.TabWord[0];
-                validateCommand(inpt, snake, meteor, &isValid);
+                validateCommand(inpt, snake, xMeteor, yMeteor, initMeteor, &isValid);
             } else {
                 printf("Command tidak valid! Silakan input command menggunakan huruf w/a/s/d\n");
             }
         }
+        nTurn++;
 
         // PROSES COMMAND
         moveSnake(&snake, inpt, &lastX, &lastY);
-        if (isMakan(snake, makanan)) {
-            prosesMakan(&snake, &makanan);
+        if (isEating(snake, xFood, yFood)) {
+            eating(&snake, xFood, yFood);
+            addFood(&xFood, &yFood, snake);
         }
-        delMeteor(&meteor, &xDelMeteor, &yDelMeteor);
-        addMeteor(&meteor, makanan);
-        prosesMeteor(&snake, meteor, &isMeteorHitHead);
-        updateMatrixMap(&peta, snake, makanan, meteor, lastX, lastY, xDelMeteor, yDelMeteor);
+        // delMeteor(&meteor, &xDelMeteor, &yDelMeteor);
+        addMeteor(&xMeteor, &yMeteor, &prevXMeteor, &prevYMeteor, initMeteor);
+        initMeteor = true;
+        prosesMeteor(&snake, xMeteor, yMeteor, &isMeteorHitHead);
+        updateMatrixMap(&peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor);
         displayMatrixMap(peta);
 
          // HANYA UNTUK TES
-        printf("snake: ");
-        PrintForward(snake);
-        printf("\n");
-        printf("makanan: ");
-        PrintForward(makanan);
-        printf("\n");
-        printf("meteor: ");
-        PrintForward(meteor);
-        printf("\n");
+        // printf("snake: ");
+        // PrintForward(snake);
+        // printf("\n");
+        // printf("Meteor: ");
+        // printf("<%d, %d>\n", xMeteor, yMeteor);
     }
 
     // HITUNG SCORE
