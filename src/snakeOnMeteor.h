@@ -13,7 +13,7 @@ void CreateEmptyMatrixMap(matrixMap *peta);
 
 void displayMatrixMap(matrixMap peta);
 
-void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFood, int yFood, int xMeteor, int yMeteor, int prevXMeteor, int prevYMeteor);
+void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFood, int yFood, int xMeteor, int yMeteor, int prevXMeteor, int prevYMeteor, int xObstacle, int yObstacle);
 
 int listLength(List list);
 
@@ -26,7 +26,7 @@ void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean in
 
 void moveSnake(List *snake, char inpt, int *lastX, int *lastY);
 
-void addFood(int *xFood, int *yFood, List snake);
+void addFood(int *xFood, int *yFood, List snake, int xObstacle, int yObstacle);
 
 boolean isEating(List snake, int xFood, int yFood);
 
@@ -36,7 +36,9 @@ void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, b
 
 void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHead);
 
-boolean isLose(List snake, boolean isMeteorHitHead);
+void addObstacle(List snake, int *xObstacle, int *yObstacle);
+
+boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle);
 
 int hitungScore(List snake, boolean isMeteorHitHead);
 

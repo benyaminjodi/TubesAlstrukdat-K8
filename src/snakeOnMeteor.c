@@ -41,7 +41,7 @@ void displayMatrixMap(matrixMap peta) {
     printf("+-----+-----+-----+-----+-----+\n");
 }
 
-void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFood, int yFood, int xMeteor, int yMeteor, int prevXMeteor, int prevYMeteor) {
+void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFood, int yFood, int xMeteor, int yMeteor, int prevXMeteor, int prevYMeteor, int xObstacle, int yObstacle) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             if (j == lastX && i == lastY) {
@@ -69,7 +69,10 @@ void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFoo
             }
             if (xMeteor == j && yMeteor == i) {
                 (*peta).buffer[i][j] = 'm';
-            } 
+            }
+            if (xObstacle == j && yObstacle == i) {
+                (*peta).buffer[i][j] = 'x';
+            }
         }
     }
 }
@@ -130,8 +133,9 @@ void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean in
                 printf("Berhasil bergerak ke atas\n");
             }
         } else {
-            printf("Anda tidak dapat bergerak ke atas\n");
-            printf("Silakan input command lain\n");
+            (*isValid) = true;
+            printf("Anda berada di posisi teratas\n");
+            printf("Kepala snake akan muncul di posisi terbawah\n");
         }
     } else if (inpt == 'a' || inpt == 'A') {
         if (InfoX(First(snake)) != 0) {
@@ -151,8 +155,9 @@ void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean in
                 printf("Berhasil bergerak ke kiri\n");
             }
         } else {
-            printf("Anda tidak dapat bergerak ke kiri\n");
-            printf("Silakan input command lain\n");
+            (*isValid) = true;
+            printf("Anda berada di posisi terkiri\n");
+            printf("Kepala snake akan muncul di posisi terkanan\n");
         }
     } else if (inpt == 's' || inpt == 'S') {
         if (InfoY(First(snake)) != 4) {
@@ -172,8 +177,9 @@ void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean in
                 printf("Berhasil bergerak ke bawah\n");
             }
         } else {
-            printf("Anda tidak dapat bergerak ke bawah\n");
-            printf("Silakan input command lain\n");
+            (*isValid) = true;
+            printf("Anda berada di posisi terbawah\n");
+            printf("Kepala snake akan muncul di posisi teratas\n");
         }
     } else if (inpt == 'd' || inpt == 'D') {
         if (InfoX(First(snake)) != 4) {
@@ -193,8 +199,9 @@ void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean in
                 printf("Berhasil bergerak ke kanan\n");
             }
         } else {
-            printf("Anda tidak dapat bergerak ke kanan\n");
-            printf("Silakan input command lain\n");
+            (*isValid) = true;
+            printf("Anda berada di posisi terkanan\n");
+            printf("Kepala snake akan muncul di posisi terkiri\n");
         }
     } else {
         printf("Command tidak valid! Silakan input command menggunakan huruf w/a/s/d\n");
@@ -208,12 +215,24 @@ void moveSnake(List *snake, char inpt, int *lastX, int *lastY) {
     // TIDAK BOLEH KE METEOR
     if (inpt == 'w' || inpt == 'W') {
         InfoY(First(*snake)) -= 1;
+        if (InfoY(First(*snake)) < 0) {
+            InfoY(First(*snake)) = 4;
+        }
     } else if (inpt == 'a' || inpt == 'A') {
         InfoX(First(*snake)) -= 1;
+        if (InfoX(First(*snake)) < 0) {
+            InfoX(First(*snake)) = 4;
+        }
     } else if (inpt == 's' || inpt == 'S') {
         InfoY(First(*snake)) += 1;
+        if (InfoY(First(*snake)) > 4) {
+            InfoY(First(*snake)) = 0;
+        }
     } else if (inpt == 'd' || inpt == 'D') {
         InfoX(First(*snake)) += 1;
+        if (InfoX(First(*snake)) > 4) {
+            InfoX(First(*snake)) = 0;
+        }
     }
     P = Next(P);
     while (P != NIL) {
@@ -229,10 +248,10 @@ void moveSnake(List *snake, char inpt, int *lastX, int *lastY) {
     *lastY = prevY;
 }
 
-void addFood(int *xFood, int *yFood, List snake) {
+void addFood(int *xFood, int *yFood, List snake, int xObstacle, int yObstacle) {
     *xFood = rng2(0, 4);
     *yFood = rng2(0, 4);
-   while (SearchList(snake, *xFood, *yFood) != NIL) {
+    while (SearchList(snake, *xFood, *yFood) != NIL && (*xFood != xObstacle) && (*yFood != yObstacle)) {
         *xFood = rng2(0, 4);
         *yFood = rng2(0, 4);
     }
@@ -285,10 +304,21 @@ void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHea
     }
 }
 
-boolean isLose(List snake, boolean isMeteorHitHead) {
+void addObstacle(List snake, int *xObstacle, int *yObstacle) {
+    *xObstacle = rng2(0, 4);
+    *yObstacle = rng2(0, 4);
+    while (SearchList(snake, *xObstacle, *yObstacle) != NIL) {
+        *xObstacle = rng2(0, 4);
+        *yObstacle = rng2(0, 4);
+    }
+}
+
+boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle) {
     if (isMeteorHitHead) {
         return true;
     } else if (listLength(snake) == 0) {
+        return true;
+    } else if (InfoX(First(snake)) == xObstacle && InfoY(First(snake)) == yObstacle) {
         return true;
     } else {
         return false;
@@ -310,6 +340,8 @@ void snake(Map *MapSnake) {
     int yFood;
     int xMeteor;
     int yMeteor;
+    int xObstacle;
+    int yObstacle;
     matrixMap peta;
     CreateEmptyList(&snake);
     CreateEmptyMatrixMap(&peta);
@@ -330,12 +362,13 @@ void snake(Map *MapSnake) {
     boolean initMeteor = false;
     int nTurn = 1;
     initSnake(&snake);
-    addFood(&xFood, &yFood, snake);
-    updateMatrixMap(&peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor);
+    addObstacle(snake, &xObstacle, &yObstacle);
+    addFood(&xFood, &yFood, snake, xObstacle, yObstacle);
+    updateMatrixMap(&peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor, xObstacle, yObstacle);
     displayMatrixMap(peta);
    
     // PROGRAM UTAMA
-    while (isLose(snake, isMeteorHitHead) == false) {
+    while (isLose(snake, isMeteorHitHead, xObstacle, yObstacle) == false) {
         // TERIMA COMMAND
         char command[50];
         char inpt;
@@ -358,16 +391,16 @@ void snake(Map *MapSnake) {
         moveSnake(&snake, inpt, &lastX, &lastY);
         if (isEating(snake, xFood, yFood)) {
             eating(&snake, xFood, yFood);
-            addFood(&xFood, &yFood, snake);
+            addFood(&xFood, &yFood, snake, xObstacle, yObstacle);
         }
         // delMeteor(&meteor, &xDelMeteor, &yDelMeteor);
         addMeteor(&xMeteor, &yMeteor, &prevXMeteor, &prevYMeteor, initMeteor);
         initMeteor = true;
         prosesMeteor(&snake, xMeteor, yMeteor, &isMeteorHitHead);
-        updateMatrixMap(&peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor);
+        updateMatrixMap(&peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor, xObstacle, yObstacle);
         displayMatrixMap(peta);
 
-         // HANYA UNTUK TES
+        // HANYA UNTUK TES
         // printf("snake: ");
         // PrintForward(snake);
         // printf("\n");
