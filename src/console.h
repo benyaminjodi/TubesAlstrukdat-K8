@@ -5,6 +5,7 @@
 #include "ADT/queue/queueDD.h"
 #include "ADT/map/map.h"
 #include "ADT/stack/stack.h"
+#include "ADT/arrayofmap/arrayofmap.h"
 
 
 
@@ -20,25 +21,25 @@ void wordtoString(Kata CurrentWord, char *string);
 
 void STARTBNMO(ArrayDin *GameBNMO);
 
-void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
+void LOADBNMO(ArrayDin *GameBNMO, char* filename,Stack *HistoryBNMO, ArrayMap *ScoreBoard);
 
-void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
+void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, ArrayMap *ScoreBoard);
 
-void CREATEGAME (ArrayDin *GameBNMO);
+void CREATEGAME (ArrayDin *GameBNMO, ArrayMap *ScoreBoard);
 
 void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameList);
 
 void LISTGAME(ArrayDin GameBNMO);
 
-void DELETEGAME (ArrayDin *GameBNMO, Queue Q);
+void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard);
 
-void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
+void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, ArrayMap *ScoreBoard);
 
-void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe);
+void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, ArrayMap *ScoreBoard);
 
-void SCOREBOARD(Map RNG, Map MapDD, Map MapHangman, Map MapTower, Map MapSnake, Map MapTicTacToe);
+void SCOREBOARD(ArrayMap ScoreBoard, ArrayDin GameBNMO);
 
-void RESETSCOREBOARD(Map *MapRNG , Map *MapDD , Map *MapHangman , Map *MapTower , Map *MapSnake , Map *MapTicTacToe);
+void RESETSCOREBOARD(ArrayMap *ScoreBoard ,ArrayDin *GameBNMO);
 
 void HISTORY(Stack HistoryBNMO, int n);
 

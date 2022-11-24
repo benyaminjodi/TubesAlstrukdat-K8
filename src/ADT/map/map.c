@@ -57,51 +57,28 @@ void InsertMap(Map *M, keytype k, valuetype v)
 /* Menambahkan Elmt sebagai elemen Map M. */
 /* I.S. M mungkin kosong, M tidak penuh
         M mungkin sudah beranggotakan v dengan key k */
-/* F.S. v menjadi anggota dari M dengan key k. Jika k sudah ada, operasi tidak dilakukan */
+/* F.S. M bertambah satu elemen dengan key k dan value v dengan v terurut membesar */
 {
-    if (IsEmptyMap(*M))
-    {
-        M->Elements[0].Key = k;
-        M->Elements[0].Value = v;
-        M->Count++;
-    }
-    else
+    if (IsMemberMap(*M, k) == false)
     {
         int i = 0;
-        boolean found = false;
-        while (i < M->Count && !found)
+        while (i < M->Count && compareString(M->Elements[i].Key, k) == false)
         {
-            if (compareString(M->Elements[i].Key,k))
-            {
-                found = true;
-            }
             i++;
         }
-        if (!found)
+        if (i == M->Count)
         {
-            // 2
-            // 3 2   
-            int i,j;
-            i=0;
-            while (v <= M->Elements[i].Value)
-            {
-                i++;
-            }
-            for(j=M->Count+1;j>i;j--)
-            {
-                M->Elements[j].Key = M->Elements[j-1].Key;
-                M->Elements[j].Value = M->Elements[j-1].Value;
-            }
             M->Elements[i].Key = k;
             M->Elements[i].Value = v;
             M->Count++;
         }
         else
         {
-            printf("Nama tidak valid.\n");
+            printf("Nama tidak valid\n");
         }
     }
 }
+
 void DeleteMap(Map *M, keytype k)
 /* Menghapus Elmt dari Map M. */
 /* I.S. M tidak kosong

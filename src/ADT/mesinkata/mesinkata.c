@@ -60,7 +60,6 @@ void ADVName()
 {
     IgnoreBlank();
     CopyName();
-    IgnoreBlank(); 
 }
 
 void CopyName()
@@ -72,7 +71,7 @@ void CopyName()
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
     int i = 0;
-    while ((CC != ENTER) && i != NMax && (CC != BLANK))
+    while ((CC != ENTER) && i != NMax && (CC != BLANK) && !feof(pita))
     {
         CurrentWord.TabWord[i] = CC;
         ADV();

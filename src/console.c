@@ -106,7 +106,7 @@ void STARTBNMO(ArrayDin *GameBNMO)
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }
 
-void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
+void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
 {
     char string[50];
     char *temp; 
@@ -161,120 +161,32 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRN
             ADVWord();
             
         }
-
-        /*--- RNG ---*/
-        nsbrng = wordtoInt(CurrentWord);
-        for (int j = 0; j < nsbrng; j++)
+        /*--- Membaca Map Semua Game---*/
+        int nmap;
+        for (nmap=1; nmap <= ngame; nmap++)
         {
-            ADVName();
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
+            Map Score;
+            CreateEmptyMap(&Score);
+            int n;
+            n = wordtoInt(CurrentWord);            
+            for (int j = 0; j < n; j++)
             {
-                temp[i] = string[i];
-                
-                i += 1;
+                ADVName();
+                wordtoString(CurrentWord, string);
+                temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+                i = 0;
+                while (i <= CurrentWord.Length)
+                {
+                    temp[i] = string[i];
+                    
+                    i += 1;
+                }
+                ADVName();
+                int x = wordtoInt(CurrentWord);
+                InsertMap(&Score, temp, x);
             }
             ADVName();
-            int x = wordtoInt(CurrentWord);
-            InsertMap(MapRNG, temp, x); 
-        }
-
-        /*--- Hangman ---*/
-        nsbhangman = wordtoInt(CurrentWord);
-        for (int j = 0; j < nsbhangman; j++)
-        {
-            ADVName();
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            ADVName();
-            int x = wordtoInt(CurrentWord);
-            InsertMap(MapHangman, temp, x); 
-        }
-
-        /*--- DD ---*/
-        nsbdd = wordtoInt(CurrentWord);
-        for (int j = 0; j < nsbdd; j++)
-        {
-            ADVName();
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            ADVName();
-            int x = wordtoInt(CurrentWord);
-            InsertMap(MapDD, temp, x); 
-        }
-
-        /*--- Tower of Hanoi ---*/
-        nsbtoh = wordtoInt(CurrentWord);
-        for (int j = 0; j < nsbtoh; j++)
-        {
-            ADVName();
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            ADVName();
-            int x = wordtoInt(CurrentWord);
-            InsertMap(MapTower, temp, x); 
-        }
-
-        /*--- Snake ---*/
-        nsbsom = wordtoInt(CurrentWord);
-        for (int j = 0; j < nsbsom; j++)
-        {
-            ADVName();
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            ADVName();
-            int x = wordtoInt(CurrentWord);
-            InsertMap(MapSnake, temp, x); 
-        }
-
-        //TicTacToe
-        nsbttt = wordtoInt(CurrentWord);
-        for (int j = 0; j < nsbttt; j++)
-        {
-            ADVName();
-            wordtoString(CurrentWord, string);
-            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
-            i = 0;
-            while (i <= CurrentWord.Length)
-            {
-                temp[i] = string[i];
-                
-                i += 1;
-            }
-            ADVName();
-            int x = wordtoInt(CurrentWord);
-            InsertMap(MapTicTacToe, temp, x);
-            
+            SetElArrayOfMap(ScoreBoard, nmap, Score);
         }
         
        printf("File %s berhasil dibaca. BNMO berhasil dijalankan.\n", filename);
@@ -282,7 +194,7 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRN
     
 }
 
-void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
+void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, ArrayMap *ScoreBoard)
 {
     char temp[50];
     printf("\n");
@@ -290,6 +202,7 @@ void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRN
     
     FILE *fpita;
     fpita = fopen(temp, "w");
+    /* --- Game --- */
     fprintf(fpita, "%d", GameBNMO->Neff);
     int i=0;
     while (i < (*GameBNMO).Neff)
@@ -298,6 +211,7 @@ void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRN
         i++;
     }
 
+    /* --- History --- */
     fprintf(fpita, "\n%d", Top(*HistoryBNMO)+1);
     i=0;
     while (i < Top(*HistoryBNMO)+1)
@@ -306,62 +220,26 @@ void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, Map *MapRN
         i++;
     }
 
-    fprintf(fpita, "\n%d", MapRNG->Count);
-    i=0;
-    while (i < (*MapRNG).Count)
+    /* --- Array Map --- */
+    int j= 0;
+    for (j=0; j < (*ScoreBoard).NeffArrayOfMap; j++)
     {
-        fprintf(fpita, "\n%s %d",(*MapRNG).Elements[i].Key, (*MapRNG).Elements[i].Value);
-        i++;
+        fprintf(fpita, "\n%d", (*ScoreBoard).AMap[j].Count);
+        i=0;
+        while (i < (*ScoreBoard).AMap[j].Count)
+        {
+            fprintf(fpita, "\n%s", (*ScoreBoard).AMap[j].Elements[i].Key);
+            fprintf(fpita, " %d", (*ScoreBoard).AMap[j].Elements[i].Value);
+            i++;
+        }
     }
-
-    fprintf(fpita, "\n%d", MapDD->Count);
-    i=0;
-    while (i < (*MapDD).Count)
-    {
-        fprintf(fpita, "\n%s %d",(*MapDD).Elements[i].Key, (*MapDD).Elements[i].Value);
-        i++;
-    }
-
-
-    fprintf(fpita, "\n%d", MapHangman->Count);
-    i=0;
-    while (i < (*MapHangman).Count)
-    {
-        fprintf(fpita, "\n%s %d",(*MapHangman).Elements[i].Key, (*MapHangman).Elements[i].Value);
-        i++;
-    }
-
-    fprintf(fpita, "\n%d", MapTower->Count);
-    i=0;
-    while (i < (*MapTower).Count)
-    {
-        fprintf(fpita, "\n%s %d",(*MapTower).Elements[i].Key, (*MapTower).Elements[i].Value);
-        i++;
-    }
-
-    fprintf(fpita, "\n%d", MapSnake->Count);
-    i=0;
-    while (i < (*MapSnake).Count)
-    {
-        fprintf(fpita, "\n%s %d",(*MapSnake).Elements[i].Key, (*MapSnake).Elements[i].Value);
-        i++;
-    }
-
-    fprintf(fpita, "\n%d", MapTicTacToe->Count);
-    i=0;
-    while (i < (*MapTicTacToe).Count)
-    {
-        fprintf(fpita, "\n%s %d",(*MapTicTacToe).Elements[i].Key, (*MapTicTacToe).Elements[i].Value);
-        i++;
-    }
-
     printf("%s file berhasil disimpan.\n", filename);        
 
     fclose(fpita);   
 
 }
 
-void CREATEGAME (ArrayDin *GameBNMO) 
+void CREATEGAME (ArrayDin *GameBNMO, ArrayMap *ScoreBoard) 
 {
     printf("Masukkan nama game yang akan ditambahkan: ");
     char *namaGame;
@@ -385,6 +263,9 @@ void CREATEGAME (ArrayDin *GameBNMO)
     else
     {
         InsertLast(GameBNMO, namaGame);
+        Map Score;
+        CreateEmptyMap(&Score);
+        InsertLastArrayMap(ScoreBoard, Score);
         printf("Game berhasil ditambahkan.\n");
     }
 }
@@ -398,7 +279,7 @@ void LISTGAME (ArrayDin GameBNMO)
     }
 }
 
-void DELETEGAME (ArrayDin *GameBNMO, Queue Q) 
+void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard ) 
 {
     LISTGAME(*GameBNMO);
     printf("Masukkan nomor game yang akan dihapus: ");
@@ -421,9 +302,12 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q)
             int i = x-1;
             while (i<(*GameBNMO).Neff) {
                 (*GameBNMO).A[i] = (*GameBNMO).A[i+1];
+                (*ScoreBoard).AMap[i] = (*ScoreBoard).AMap[i+1];
                 i++;  
             } 
             (*GameBNMO).Neff--;
+            (*ScoreBoard).NeffArrayOfMap--;
+
             printf("Game berhasil dihapus\n");
         }
     }
@@ -466,7 +350,7 @@ void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameBNMO)
     }
 }
 
-void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
+void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
 {
     char game[50];
     ElType val;
@@ -489,7 +373,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            RNG(MapRNG);
+            RNG(&(*ScoreBoard).AMap[0]);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                          
         }
@@ -497,7 +381,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            dinerDash(MapDD);
+            dinerDash(&(*ScoreBoard).AMap[1]);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                            
         }
@@ -521,7 +405,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            snake(MapSnake);
+            snake(&(*ScoreBoard).AMap[4]);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
 
@@ -530,7 +414,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            tictactoe(MapTicTacToe);
+            tictactoe(&(*ScoreBoard).AMap[5]);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                            
         }
@@ -550,7 +434,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map
       
 }
 
-void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, Map *MapRNG, Map *MapDD, Map *MapHangman, Map *MapTower, Map *MapSnake, Map *MapTicTacToe)
+void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
 {
     ElType val;
     if (n<1)
@@ -581,65 +465,65 @@ void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, Map *MapRNG, Map *Map
                 dequeue(QueueBNMO,&val);
             }    
             if (compareString((*QueueBNMO).buffer[0], "RNG"))
-            {
-                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-                printf("\n");
-                RNG(MapRNG);
-                Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
-                            
-            }
-            else if (compareString((*QueueBNMO).buffer[0], "Diner DASH"))
-            {
-                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-                printf("\n");
-                dinerDash(MapDD);
-                Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
-                            
-            }
-            else if (compareString((*QueueBNMO).buffer[0], "HANGMAN"))
-            {
-                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-                printf("\n");
-                //HANGMAN();   
-                Push(HistoryBNMO, (*QueueBNMO).buffer[0]);                
-            }
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            RNG(&(*ScoreBoard).AMap[0]);
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                         
+        }
+        else if (compareString((*QueueBNMO).buffer[0], "Diner DASH"))
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            dinerDash(&(*ScoreBoard).AMap[1]);
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                           
+        }
+        else if (compareString((*QueueBNMO).buffer[0], "HANGMAN"))
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            //HANGMAN();   
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);                
+        }
 
-            else if (compareString((*QueueBNMO).buffer[0], "TOWER OF HANOI"))
-            {
-                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-                printf("\n");
-                //TOH();
-                Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
-            }
+        else if (compareString((*QueueBNMO).buffer[0], "TOWER OF HANOI"))
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            //TOH();
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+        }
 
-            else if (compareString((*QueueBNMO).buffer[0], "SNAKE ON METEOR"))
-            {
-                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-                printf("\n");
-                snake(MapSnake);
-                Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
-            }
+        else if (compareString((*QueueBNMO).buffer[0], "SNAKE ON METEOR"))
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            snake(&(*ScoreBoard).AMap[4]);
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+        }
 
-            //BONUS
-            else if (compareString((*QueueBNMO).buffer[0], "TICTACTOE"))
-            {
-                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-                printf("\n");
-                tictactoe(MapTicTacToe);
-                Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
-                            
-            }
-            else
-            {
-                srand(time(NULL));
-                int r = rand()%1000;
-                printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
-                printf("\n");
-                printf("%d", r);
-                Push(HistoryBNMO, (*QueueBNMO).buffer[0]);
-                
-            }
-            dequeue(QueueBNMO, &val); 
+        //BONUS
+        else if (compareString((*QueueBNMO).buffer[0], "TICTACTOE"))
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            tictactoe(&(*ScoreBoard).AMap[5]);
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
+                           
+        }
+        else
+        {
+            srand(time(NULL));
+            int r = rand()%1000;
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            printf("%d", r);
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);
+             
+        }
+        dequeue(QueueBNMO, &val); 
         }
     }
 }
@@ -681,57 +565,34 @@ void HISTORY(Stack HistoryBNMO, int n)
     
 }
 
-void SCOREBOARD(Map MapRNG, Map MapDD, Map MapHangman, Map MapTower, Map MapSnake, Map MapTicTacToe)
+void SCOREBOARD(ArrayMap ScoreBoard, ArrayDin GameBNMO)
 {
-    //-----------------RNG-----------------
-    printf("**** SCOREBOARD GAME RNG ****\n");
-    PrintMap(MapRNG);
-    printf("\n");
-
-    //-----------------Diner Dash-----------------
-    printf("**** SCOREBOARD GAME Diner Dash ****\n");
-    PrintMap(MapDD);
-    printf("\n");
-
-    //-----------------Hangman-----------------
-    printf("**** SCOREBOARD GAME Hangman ****\n");
-    PrintMap(MapHangman);
-    printf("\n");
-
-    //-----------------Tower of Hanoi-----------------
-    printf("**** SCOREBOARD GAME Tower of Hanoi ****\n");
-    PrintMap(MapTower);
-    printf("\n");
-
-    //-----------------Snake on Meteor-----------------
-    printf("**** SCOREBOARD GAME Snake on Meteor ****\n");
-    PrintMap(MapSnake);
-    printf("\n");
-
-    //-----------------Tic Tac Toe-----------------
-    printf("**** SCOREBOARD GAME TICTACTOE ****\n");
-    PrintMap(MapTicTacToe);
-    printf("\n");
-
+    int i = 0;
+    for (i = 0; i < GameBNMO.Neff; i++)
+    {
+        printf("*** SCOREBOARD GAME %s ***\n", (GameBNMO).A[i]);
+        PrintMap((ScoreBoard).AMap[i]);
+        printf("\n");
+    }
+    
 }
 
-void RESETSCOREBOARD(Map *MapRNG , Map *MapDD , Map *MapHangman , Map *MapTower , Map *MapSnake , Map *MapTicTacToe)
+void RESETSCOREBOARD(ArrayMap *ScoreBoard, ArrayDin *GameBNMO)
 {
     printf("DAFTAR SCOREBOARD:\n");
     printf("0. ALL\n");
-    printf("1. RNG\n");
-    printf("2. Diner DASH\n");
-    printf("3. HANGMAN\n");
-    printf("4. TOWER OF HANOI\n");
-    printf("5. SNAKE ON METEOR\n");
-    printf("6. TICTACTOE\n");
+    int k;
+    for (int k = 0; k < (*GameBNMO).Neff; k++)
+    {
+        printf("%d. %s\n", (k+1), (*GameBNMO).A[k]);
+    }
 
     printf("\n");
     printf("SCOREBOARD YANG INGIN DIHAPUS: ");
     StartCommand();
     int inp = wordtoInt(CurrentCommand);
     ADVCommand();
-    
+ 
     if(inp>=0 && inp <= 6)
     {
         if (inp == 0)
@@ -743,12 +604,11 @@ void RESETSCOREBOARD(Map *MapRNG , Map *MapDD , Map *MapHangman , Map *MapTower 
             {
                 printf("MELAKUKAN RESET SCOREBOARD ALL...\n");
                 printf("\n");
-                CreateEmptyMap(MapRNG);
-                CreateEmptyMap(MapDD);
-                CreateEmptyMap(MapHangman);
-                CreateEmptyMap(MapTower);
-                CreateEmptyMap(MapSnake);
-                CreateEmptyMap(MapTicTacToe);
+                int j;
+                for (j=0; j < ScoreBoard->NeffArrayOfMap; j++)
+                {
+                    CreateEmptyMap(&(ScoreBoard->AMap[j]));
+                }
             }
             else if (compareWord(CurrentCommand, "TIDAK") == true)
             {
@@ -759,131 +619,26 @@ void RESETSCOREBOARD(Map *MapRNG , Map *MapDD , Map *MapHangman , Map *MapTower 
                 printf("INPUT TIDAK VALID\n");
             }
         }
-
-        if(inp ==1)
+        else
         {
-            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD RNG (YA/TIDAK)?");
+            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD %s (YA/TIDAK)?", (*GameBNMO).A[inp-1]);
             StartCommand();
-            
             if (compareWord(CurrentCommand, "YA") == true)
             {
-                printf("MELAKUKAN RESET SCOREBOARD RNG...\n");
+                printf("MELAKUKAN RESET SCOREBOARD %s...\n", (*GameBNMO).A[inp-1] );
                 printf("\n");
-                CreateEmptyMap(MapRNG);
+                CreateEmptyMap(&ScoreBoard->AMap[inp-1]);
+                
             }
             else if (compareWord(CurrentCommand, "TIDAK") == true)
             {
-                printf("RESET SCOREBOARD RNG DIBATALKAN\n");
+                printf("RESET SCOREBOARD %s DIBATALKAN\n", (*GameBNMO).A[inp-1]);
             }
             else
             {
                 printf("INPUT TIDAK VALID\n");
             }
-        }
 
-        if(inp ==2)
-        {
-            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Diner Dash (YA/TIDAK)?");
-            StartCommand();
-            
-            if (compareWord(CurrentCommand, "YA") == true)
-            {
-                printf("MELAKUKAN RESET SCOREBOARD Diner Dash...\n");
-                printf("\n");
-                CreateEmptyMap(MapDD);
-            }
-            else if (compareWord(CurrentCommand, "TIDAK") == true)
-            {
-                printf("RESET SCOREBOARD Diner Dash DIBATALKAN\n");
-            }
-            else
-            {
-                printf("INPUT TIDAK VALID\n");
-            }
-        }
-
-        if(inp ==3)
-        {
-            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Hangman (YA/TIDAK)?");
-            StartCommand();
-            
-            if (compareWord(CurrentCommand, "YA") == true)
-            {
-                printf("MELAKUKAN RESET SCOREBOARD Hangman...\n");
-                printf("\n");
-                CreateEmptyMap(MapHangman);
-            }
-            else if (compareWord(CurrentCommand, "TIDAK") == true)
-            {
-                printf("RESET SCOREBOARD Hangman DIBATALKAN\n");
-            }
-            else
-            {
-                printf("INPUT TIDAK VALID\n");
-            }
-        }
-
-        if(inp ==4)
-        {
-            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Tower of Hanoi (YA/TIDAK)?");
-            StartCommand();
-            
-            if (compareWord(CurrentCommand, "YA") == true)
-            {
-                printf("MELAKUKAN RESET SCOREBOARD Tower of Hanoi...\n");
-                printf("\n");
-                CreateEmptyMap(MapTower);
-            }
-            else if (compareWord(CurrentCommand, "TIDAK") == true)
-            {
-                printf("RESET SCOREBOARD Tower of Hanoi DIBATALKAN\n");
-            }
-            else
-            {
-                printf("INPUT TIDAK VALID\n");
-            }
-        }
-
-        if(inp ==5)
-        {
-            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Snake on Meteor (YA/TIDAK)?");
-            StartCommand();
-            
-            if (compareWord(CurrentCommand, "YA") == true)
-            {
-                printf("MELAKUKAN RESET SCOREBOARD Snake on Meteor...\n");
-                printf("\n");
-                CreateEmptyMap(MapSnake);
-            }
-            else if (compareWord(CurrentCommand, "TIDAK") == true)
-            {
-                printf("RESET SCOREBOARD Snake on Meteor DIBATALKAN\n");
-            }
-            else
-            {
-                printf("INPUT TIDAK VALID\n");
-            }
-        }
-
-        if(inp ==6)
-        {
-            printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET SCOREBOARD Tic Tac Toe (YA/TIDAK)?");
-            StartCommand();
-            
-            if (compareWord(CurrentCommand, "YA") == true)
-            {
-                printf("MELAKUKAN RESET SCOREBOARD Tic Tac Toe...\n");
-                printf("\n");
-                CreateEmptyMap(MapTicTacToe);
-            }
-            else if (compareWord(CurrentCommand, "TIDAK") == true)
-            {
-                printf("RESET SCOREBOARD Tic Tac Toe DIBATALKAN\n");
-            }
-            else
-            {
-                printf("INPUT TIDAK VALID\n");
-            }
         }
     }
     else
