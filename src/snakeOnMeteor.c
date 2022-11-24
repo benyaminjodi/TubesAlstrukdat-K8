@@ -19,28 +19,26 @@ void CreateEmptyMatrixMap(matrixMap *peta) {
 
 void displayMatrixMap(matrixMap peta) {
     printf("Berikut merupakan peta permainan\n");
-    printf("-----------------\n");
+    printf("+-----+-----+-----+-----+-----+\n");
     for (int i = 0; i < 5; i++) {
         printf("|");
         for (int j = 0; j < 5; j++) {
-            if (j == 0) {
-                printf(" ");
-            }
             if (peta.buffer[i][j] == '0') {
-                printf(" ");
+                printf("     ");
             } else {
-                printf("%c", peta.buffer[i][j]);
+                printf("  %c  ", peta.buffer[i][j]);
             }
-            if (j != 4) {
-                printf("  ");
-            } else {
-                printf(" ");
+            if (j < 4) {
+                printf("|");
             }
         }
         printf("|");
         printf("\n");
+        if (i < 4) {
+            printf("+-----+-----+-----+-----+-----+\n");
+        }
     }
-    printf("-----------------\n");
+    printf("+-----+-----+-----+-----+-----+\n");
 }
 
 void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFood, int yFood, int xMeteor, int yMeteor, int prevXMeteor, int prevYMeteor) {
