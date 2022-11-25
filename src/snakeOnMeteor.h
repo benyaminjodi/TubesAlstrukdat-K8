@@ -30,16 +30,16 @@ void addFood(int *xFood, int *yFood, List snake, int xObstacle, int yObstacle);
 
 boolean isEating(List snake, int xFood, int yFood);
 
-void eating(List *snake, int xFood, int yFood);
+void eating(List *snake, int xFood, int yFood, boolean *isStuck);
 
-void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor);
+void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor, int xObstacle, int yObstacle);
 
 void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHead);
 
 void addObstacle(List snake, int *xObstacle, int *yObstacle);
 
-boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle);
+boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle, boolean isStuck);
 
-int hitungScore(List snake, boolean isMeteorHitHead);
+int hitungScore(List snake, boolean isMeteorHitHead, boolean isStuck);
 
 void snake(Map *MapSnake);

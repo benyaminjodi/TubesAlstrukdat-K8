@@ -96,7 +96,7 @@ int rng2(int lower, int upper)
 
 void initSnake(List *snake) {
     int xHead = rng2(0, 4);
-    int yHead = rng2(0, 2);
+    int yHead = rng2(0, 4);
     InsVFirst(snake, xHead, yHead);
     if (xHead >= 2) {
         InsVLast(snake, xHead-1, yHead);
@@ -111,6 +111,13 @@ void initSnake(List *snake) {
     } else {
         InsVLast(snake, xHead, yHead+1);
         InsVLast(snake, xHead, yHead+2);
+    }
+    addressNode P = First(*snake);
+    while (P != Nil) {
+        if (InfoY(P) < 0 || InfoY(P) > 4) {
+            InfoY(P) = InfoY(P) % 5;
+        }
+        P = Next(P);
     }
 }
 
@@ -251,7 +258,7 @@ void moveSnake(List *snake, char inpt, int *lastX, int *lastY) {
 void addFood(int *xFood, int *yFood, List snake, int xObstacle, int yObstacle) {
     *xFood = rng2(0, 4);
     *yFood = rng2(0, 4);
-    while (SearchList(snake, *xFood, *yFood) != NIL && (*xFood != xObstacle) && (*yFood != yObstacle)) {
+    while ((SearchList(snake, *xFood, *yFood) != NIL) || ((*xFood == xObstacle) && (*yFood == yObstacle))) {
         *xFood = rng2(0, 4);
         *yFood = rng2(0, 4);
     }
@@ -267,25 +274,33 @@ boolean isEating(List snake, int xFood, int yFood) {
     }
 }
 
-void eating(List *snake, int xFood, int yFood) {
+void eating(List *snake, int xFood, int yFood, boolean *isStuck) {
     int tailX = InfoX(Last(*snake));
     int tailY = InfoY(Last(*snake));
     if (tailX > 0 && SearchList(*snake, tailX-1, tailY) == NIL) {
         InsVLast(snake, tailX-1, tailY);
     } else if (tailY > 0 && SearchList(*snake, tailX, tailY-1) == NIL) {
         InsVLast(snake, tailX, tailY-1);
-    } else {
+    } else if (SearchList(*snake, tailX, tailY+1) == NIL) {
         InsVLast(snake, tailX, tailY+1);
+    } else if (SearchList(*snake, tailX+1, tailY) == NIL) {
+        InsVLast(snake, tailX+1, tailY);
+    } else {
+        *isStuck = true;
     }
 }
 
-void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor) {
+void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor, int xObstacle, int yObstacle) {
     if (initMeteor) {
         *prevXMeteor = *xMeteor;
         *prevYMeteor = *yMeteor;
     }
     *xMeteor = rng2(0,4);
     *yMeteor = rng2(0,4);
+    while (*xMeteor == xObstacle && *yMeteor == yObstacle) {
+        *xMeteor = rng2(0,4);
+        *yMeteor = rng2(0,4);
+    }
 }
 
 void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHead) {
@@ -313,12 +328,22 @@ void addObstacle(List snake, int *xObstacle, int *yObstacle) {
     }
 }
 
-boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle) {
+boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle, boolean isStuck) {
     if (isMeteorHitHead) {
+        printf("Kepala snake terkena meteor!\n");
+        printf("GAME OVER\n");
         return true;
     } else if (listLength(snake) == 0) {
+        printf("Seluruh tubuh snake terkena meteor!\n");
+        printf("GAME OVER\n");
         return true;
     } else if (InfoX(First(snake)) == xObstacle && InfoY(First(snake)) == yObstacle) {
+        printf("Kepala snake terkena obstacle!\n");
+        printf("GAME OVER\n");
+        return true;
+    } else if (isStuck) {
+        printf("Tail snake menabrak badan!\n");
+        printf("GAME OVER\n");
         return true;
     } else {
         return false;
@@ -326,7 +351,7 @@ boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle
     // Belum tambahin kondisi kalah yg kedua
 }
 
-int hitungScore(List snake, boolean isMeteorHitHead) {
+int hitungScore(List snake, boolean isMeteorHitHead, boolean isStuck) {
     if (isMeteorHitHead) {
         return 2*(listLength(snake)-1);
     } else {
@@ -360,6 +385,7 @@ void snake(Map *MapSnake) {
     int prevXMeteor, prevYMeteor;
     boolean isMeteorHitHead = false;
     boolean initMeteor = false;
+    boolean isStuck = false;
     int nTurn = 1;
     initSnake(&snake);
     addObstacle(snake, &xObstacle, &yObstacle);
@@ -368,7 +394,7 @@ void snake(Map *MapSnake) {
     displayMatrixMap(peta);
    
     // PROGRAM UTAMA
-    while (isLose(snake, isMeteorHitHead, xObstacle, yObstacle) == false) {
+    while (isLose(snake, isMeteorHitHead, xObstacle, yObstacle, isStuck) == false) {
         // TERIMA COMMAND
         char command[50];
         char inpt;
@@ -390,11 +416,11 @@ void snake(Map *MapSnake) {
         // PROSES COMMAND
         moveSnake(&snake, inpt, &lastX, &lastY);
         if (isEating(snake, xFood, yFood)) {
-            eating(&snake, xFood, yFood);
+            eating(&snake, xFood, yFood, &isStuck);
             addFood(&xFood, &yFood, snake, xObstacle, yObstacle);
         }
         // delMeteor(&meteor, &xDelMeteor, &yDelMeteor);
-        addMeteor(&xMeteor, &yMeteor, &prevXMeteor, &prevYMeteor, initMeteor);
+        addMeteor(&xMeteor, &yMeteor, &prevXMeteor, &prevYMeteor, initMeteor, xObstacle, yObstacle);
         initMeteor = true;
         prosesMeteor(&snake, xMeteor, yMeteor, &isMeteorHitHead);
         updateMatrixMap(&peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor, xObstacle, yObstacle);
@@ -406,10 +432,12 @@ void snake(Map *MapSnake) {
         // printf("\n");
         // printf("Meteor: ");
         // printf("<%d, %d>\n", xMeteor, yMeteor);
+        printf("Makanan: ");
+        printf("<%d, %d>\n", xFood, yFood);
     }
 
     // HITUNG SCORE
-    int score = hitungScore(snake, isMeteorHitHead);
+    int score = hitungScore(snake, isMeteorHitHead, isStuck);
     printf("Score Anda: %d\n", score);
 
     // MASUKKAN NAMA PEMAIN DAN TAMBAH KE MAP
