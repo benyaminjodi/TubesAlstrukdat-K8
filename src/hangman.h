@@ -1,9 +1,26 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
-#include "boolean.h"
-#include "ADT/linkedlist/linkList.h"
-#include "ADT/mesinkarakter/mesinkarakter.h"
 #include "console.h"
-#include "ADT/arraydinamis/arraydin.h"
 
-void HANGMAN ();
+
+void HangmanFile(ArrayDin *ListHangman);
+
+void Before(Queue *Q);
+
+void Lowerstring(char *string);
+
+void Upperstring(char *string);
+
+void PrintKata(char *guess);
+
+boolean isInQueue(Queue QueueBefore, char *temp);
+
+void HANGMAN(Map *MapHangman);
+
+void PlayHangman(Map *MapHangman);
+
+void AddKataHangman();
+
+
+

@@ -5,6 +5,7 @@
 #include "diner-dash.h"
 #include "tictactoe.h"
 #include "snakeOnMeteor.h"
+#include "hangman.h"
 
 //Fungsi dan Prosedur 
 boolean compareWord(Kata kata1, char *kata2)
@@ -113,6 +114,7 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO,ArrayMap *S
     char temp2[50];
     int i,ngame, nhistory, nsbrng, nsbhangman, nsbdd, nsbtoh, nsbsom, nsbttt;
     concat("./data/",filename, temp2);
+    
     // printf("%s\n", temp2);
     FILE *fpita;
     fpita = fopen(temp2, "r");
@@ -389,7 +391,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            //HANGMAN();   
+            HANGMAN(&(*ScoreBoard).AMap[2]);   
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);                
         }
 
@@ -484,7 +486,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            //HANGMAN();   
+            HANGMAN(&(*ScoreBoard).AMap[2]);   
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);                
         }
 
