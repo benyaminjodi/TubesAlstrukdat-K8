@@ -116,7 +116,7 @@ boolean IsMemberMap(Map M, keytype k)
         boolean found = false;
         while (i < M.Count && !found)
         {
-            if (M.Elements[i].Key == k)
+            if (compareString(M.Elements[i].Key, k))
             {
                 found = true;
             }
