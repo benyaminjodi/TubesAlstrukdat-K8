@@ -6,6 +6,7 @@
 #include "tictactoe.h"
 #include "snakeOnMeteor.h"
 #include "hangman.h"
+#include "chooseyouradv.h"
 
 //Fungsi dan Prosedur 
 boolean compareWord(Kata kata1, char *kata2)
@@ -447,6 +448,13 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard, ArrayDi
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                            
         }
+        else if (compareString((*QueueBNMO).buffer[0], "CHOOSE YOUR ADV"))
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            chooseyouradv(&(*ScoreBoard).AMap[6]);
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
+        }
         else
         {
             srand(time(NULL));
@@ -561,6 +569,13 @@ void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard, 
             tictactoe(&(*ScoreBoard).AMap[5]);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]); 
                            
+        }
+        else if (compareString((*QueueBNMO).buffer[0], "CHOOSE YOUR ADV"))
+        {
+            printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
+            printf("\n");
+            chooseyouradv(&(*ScoreBoard).AMap[6]);
+            Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
         else
         {

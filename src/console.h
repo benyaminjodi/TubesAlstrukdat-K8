@@ -9,6 +9,7 @@
 
 
 
+
 boolean compareWord(Kata kata1, char *kata2);
 
 boolean compareString(char *kata1, char *kata2);

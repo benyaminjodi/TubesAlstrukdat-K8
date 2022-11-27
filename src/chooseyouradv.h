@@ -2,9 +2,10 @@
 #define _chooseyouradv_h_
 
 #include "boolean.h"
+#include "console.h"
 #include <stdio.h>
 
-#define Nil NULL
+#define Nil 0
 
 #include<stdio.h>
  
@@ -16,6 +17,6 @@ typedef struct node {
 
 int recursive(node* base);
 
-void playchooseyouradv();
+void chooseyouradv();
 
 #endif

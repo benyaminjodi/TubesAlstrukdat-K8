@@ -1,15 +1,6 @@
-#include "boolean.h"
+#include "chooseyouradv.h"
 #include <stdio.h>
-
-#define Nil NULL
-
-#include<stdio.h>
- 
-typedef struct node {
-    char* data;
-    struct node* left;
-    struct node* right;
-} node;
+#include <stdlib.h>
 
 boolean isLeaf(node base) {
     if ((base.left == Nil) && (base.right == Nil)){
@@ -38,7 +29,9 @@ int recursive(node* base){
         while (isValid!=true)
         {
             printf("Type whether you choose yes or no (0 for yes/1 for no)\n");
-            scanf("%d", &answer);
+            StartCommand();
+            answer = wordtoInt(CurrentCommand);
+            printf("\n");
             if (answer==0)
             {
                 isValid=true;
@@ -62,7 +55,7 @@ int recursive(node* base){
     }
 }
 
-void playchooseyouradv(){
+void chooseyouradv(Map *MapCYA){
     //-----------------------------------------------------------------//
     int scoreCount=0;
     node route1, route2, route3, route10, route20;
@@ -86,5 +79,19 @@ void playchooseyouradv(){
     route20.data="\nYou close your eyes, and drift into sleep. When you awaken, you are in your own bed.\nThe previous events were a dream, which has already begun to fade.\nYou spend the rest of your life trying to return to the winding path in the dark forest.\n\nYou never will.\n\n";
     route3.data="\nYou scrub your hands across your eyes and push yourself back to your feet.\nThe path takes you on a short, downhill curve, and winds around to the door of an inn.\nThe Quill and Ink, reads the sign over the door. You smile, and enter.\nInside, there is warmth, the hearty scent of food, and a group of people singing songs both off-key and bawdy.\nYou slide seamlessly into the small community, and feel refreshed after you have shared a meal and stood a round of drinks.\nEventually, you notice the singing has died down, replaced by a rapt silence. \nThere is a knot of people wound tight around the fire, telling stories.\nAt first, you simply listen, but then you are asked to tell a tale of your own.\nIt is the tale, not the coin, that will pay your shelter for the night.\n\nDo you tell a story?\n\n";
     scoreCount = recursive(&route1);
-    printf("%d", scoreCount);
+    printf("Your Score : %d\n", scoreCount);
+    printf("Player Name: ");
+    char *temp2;
+    char player[50];
+    StartCommand();
+    wordtoString(CurrentCommand, player);
+    temp2 = (char *) malloc (CurrentCommand.Length * sizeof(char));
+    int i = 0;
+    while (i <= CurrentCommand.Length)
+    {
+        temp2[i] = player[i];
+        
+        i += 1;
+    }
+    InsertMap(MapCYA, temp2, scoreCount);
 }
