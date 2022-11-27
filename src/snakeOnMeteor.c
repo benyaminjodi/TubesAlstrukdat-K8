@@ -419,7 +419,6 @@ void snake(Map *MapSnake) {
             eating(&snake, xFood, yFood, &isStuck);
             addFood(&xFood, &yFood, snake, xObstacle, yObstacle);
         }
-        // delMeteor(&meteor, &xDelMeteor, &yDelMeteor);
         addMeteor(&xMeteor, &yMeteor, &prevXMeteor, &prevYMeteor, initMeteor, xObstacle, yObstacle);
         initMeteor = true;
         prosesMeteor(&snake, xMeteor, yMeteor, &isMeteorHitHead);
@@ -432,8 +431,8 @@ void snake(Map *MapSnake) {
         // printf("\n");
         // printf("Meteor: ");
         // printf("<%d, %d>\n", xMeteor, yMeteor);
-        printf("Makanan: ");
-        printf("<%d, %d>\n", xFood, yFood);
+        // printf("Makanan: ");
+        // printf("<%d, %d>\n", xFood, yFood);
     }
 
     // HITUNG SCORE
