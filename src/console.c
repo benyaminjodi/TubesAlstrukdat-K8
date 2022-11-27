@@ -81,15 +81,15 @@ void wordtoString(Kata CurrentWord, char *string)
 }
 
 // Command untuk Spesifikasi
-void STARTBNMO(ArrayDin *GameBNMO)
+void STARTBNMO(ArrayDin *GameBNMO, ArrayMap *ScoreBoard)
 {
     char string[50];
     char *temp;
-    int i,x;
+    int i,ngame;
     StartWord("./data/config.txt");
-    x = wordtoInt(CurrentWord);
+    ngame = wordtoInt(CurrentWord);
     ADVWord();
-    for (int j = 0; j < x; j++)
+    for (int j = 0; j < ngame; j++)
     {
         wordtoString(CurrentWord, string);
         temp = (char *) malloc (CurrentWord.Length * sizeof(char));
@@ -103,6 +103,33 @@ void STARTBNMO(ArrayDin *GameBNMO)
         InsertLast(GameBNMO, temp);
         ADVWord();
         
+    }
+
+    int nmap;
+    for (nmap=1; nmap <= ngame; nmap++)
+    {
+        Map Score;
+        CreateEmptyMap(&Score);
+        int n;
+        n = wordtoInt(CurrentWord);            
+        for (int j = 0; j < n; j++)
+        {
+            ADVName();
+            wordtoString(CurrentWord, string);
+            temp = (char *) malloc (CurrentWord.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentWord.Length)
+            {
+                temp[i] = string[i];
+                
+                i += 1;
+            }
+            ADVName();
+            int x = wordtoInt(CurrentWord);
+            InsertMap(&Score, temp, x);
+        }
+        ADVName();
+        SetElArrayOfMap(ScoreBoard, nmap, Score);
     }
     printf("File konfigurasi sistem berhasil dibaca. BNMO berhasil dijalankan.\n");
 }
@@ -352,7 +379,7 @@ void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameBNMO)
     }
 }
 
-void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
+void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard, ArrayDin *GameBNMO)
 {
     char game[50];
     ElType val;
@@ -423,10 +450,30 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
         else
         {
             srand(time(NULL));
-            int r = rand()%1000;
+            int score = rand()%10;
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            printf("%d", r);
+            printf("Skor anda adalah %d\n", score);
+            int idx;
+            for (idx=0; idx < (*GameBNMO).Neff; idx++){
+                if (compareString((*GameBNMO).A[idx], (*QueueBNMO).buffer[0])){
+                    break;
+                }
+            }
+            char *temp;
+            char player[50];
+            printf("Player Name: ");
+            StartCommand();
+            wordtoString(CurrentCommand, player);
+            temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentCommand.Length)
+            {
+                temp[i] = player[i];
+                
+                i += 1;
+            }
+            InsertMap(&(*ScoreBoard).AMap[idx], temp, score);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);
              
         }
@@ -436,7 +483,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
       
 }
 
-void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
+void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard, ArrayDin *GameBNMO)
 {
     ElType val;
     if (n<1)
@@ -518,10 +565,30 @@ void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard)
         else
         {
             srand(time(NULL));
-            int r = rand()%1000;
+            int score = rand()%10;
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            printf("%d", r);
+            printf("Skor anda adalah %d\n", score);
+            int idx;
+            for (idx=0; idx < (*GameBNMO).Neff; idx++){
+                if (compareString((*GameBNMO).A[idx], (*QueueBNMO).buffer[0])){
+                    break;
+                }
+            }
+            char *temp;
+            char player[50];
+            printf("Player Name: ");
+            StartCommand();
+            wordtoString(CurrentCommand, player);
+            temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
+            i = 0;
+            while (i <= CurrentCommand.Length)
+            {
+                temp[i] = player[i];
+                
+                i += 1;
+            }
+            InsertMap(&(*ScoreBoard).AMap[idx], temp, score);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);
              
         }
@@ -740,6 +807,10 @@ void HELP()
     printf("DELETE GAME     : Command untuk menghapus sebuah game dari daftar game tanpa menghapus 5 game awal pada konfigurasi atau yang sedang diqueue\n");
     printf("QUEUE GAME      : Command untuk menambahkan permainan ke list game yang akan dimainkan\n");
     printf("PLAY GAME       : Command untuk memainkan game yang ada di list game yang akan dimainkan\n");
+    printf("HISTORY <n>     : Command untuk menampilkan riwayat permainan sebanyak n kali\n");\
+    printf("RESET HISTORY   : Command untuk menghapus semua riwayat permainan\n");
+    printf("SCOREBOARD      : Command untuk menampilkan scoreboard dari game tersedia\n");
+    printf("RESET SCOREBOARD: Command untuk menghapus scoreboard dari game yang dipilih\n");
     printf("SKIPGAME        : Command untuk melewati permainan ke-n\n");
     printf("QUIT            : Command untuk keluar dari permainan\n");
     printf("HELP            : Command untuk menampilkan daftar-daftar command\n");

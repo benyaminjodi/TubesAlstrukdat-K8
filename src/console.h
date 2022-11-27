@@ -19,7 +19,7 @@ int wordtoInt (Kata Word);
 
 void wordtoString(Kata CurrentWord, char *string);
 
-void STARTBNMO(ArrayDin *GameBNMO);
+void STARTBNMO(ArrayDin *GameBNMO, ArrayMap *ScoreBoard);
 
 void LOADBNMO(ArrayDin *GameBNMO, char* filename,Stack *HistoryBNMO, ArrayMap *ScoreBoard);
 
@@ -33,9 +33,9 @@ void LISTGAME(ArrayDin GameBNMO);
 
 void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard);
 
-void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, ArrayMap *ScoreBoard);
+void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, ArrayMap *ScoreBoard, ArrayDin *GameBNMO);
 
-void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, ArrayMap *ScoreBoard);
+void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO, ArrayMap *ScoreBoard, ArrayDin *GameBNMO);
 
 void SCOREBOARD(ArrayMap ScoreBoard, ArrayDin GameBNMO);
 

@@ -61,23 +61,22 @@ void InsertMap(Map *M, keytype k, valuetype v)
 {
     if (IsMemberMap(*M, k) == false)
     {
-        int i = 0;
-        while (i < M->Count && compareString(M->Elements[i].Key, k) == false)
+        int i = M->Count;
+        while (i > 0 && M->Elements[i-1].Value < v)
         {
-            i++;
+            M->Elements[i] = M->Elements[i-1];
+            i--;
         }
-        if (i == M->Count)
-        {
-            M->Elements[i].Key = k;
-            M->Elements[i].Value = v;
-            M->Count++;
-        }
-        else
-        {
-            printf("Nama tidak valid\n");
-        }
+        M->Elements[i].Key = k;
+        M->Elements[i].Value = v;
+        M->Count++;        
+    }
+    else
+    {
+        printf("Nama tidak valid\n");
     }
 }
+
 
 void DeleteMap(Map *M, keytype k)
 /* Menghapus Elmt dari Map M. */

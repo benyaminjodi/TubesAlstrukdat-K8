@@ -37,7 +37,7 @@ int main()
             /* ----START---- */
             if (compareWord(CurrentCommand, "START") == true)
             {
-                STARTBNMO(&ArrayGame);
+                STARTBNMO(&ArrayGame, &ScoreBoard);
             }
             /* ----LOAD---- */
             else if (compareWord(CurrentCommand, "LOAD") == true)
@@ -104,7 +104,7 @@ int main()
                 ADVCommand();   
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
-                    PLAYGAME(&QueueGame, &StackHistory, &ScoreBoard);
+                    PLAYGAME(&QueueGame, &StackHistory, &ScoreBoard, &ArrayGame);
                 }
             }
             /* ----DELETE GAME--- */
@@ -125,7 +125,7 @@ int main()
                     ADVCommand();
                     int x;
                     x = wordtoInt(CurrentCommand);
-                    SKIPGAME(&QueueGame, x,  &StackHistory, &ScoreBoard);
+                    SKIPGAME(&QueueGame, x,  &StackHistory, &ScoreBoard, &ArrayGame);
                 } 
             }
 
