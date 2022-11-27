@@ -70,6 +70,10 @@ int main()
                 {
                     LISTGAME(ArrayGame);
                 }
+                else
+                {
+                    COMMANDLAIN();
+                }
             }
             /* ---QUEUE GAME--- */
             else if (compareWord(CurrentCommand, "QUEUE") == true)
@@ -78,6 +82,10 @@ int main()
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
                     QUEUEGAME(&QueueGame, ArrayGame);
+                }
+                else
+                {
+                    COMMANDLAIN();
                 }
             }
             /* ----CREATE GAME--- */
@@ -88,6 +96,10 @@ int main()
                 {
                     CREATEGAME(&ArrayGame, &ScoreBoard);
                 }
+                else
+                {
+                    COMMANDLAIN();
+                }
             }
             /* ----QUEUE GAME--- */
             else if (compareWord(CurrentCommand, "QUEUE") == true)
@@ -96,6 +108,10 @@ int main()
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
                     QUEUEGAME(&QueueGame, ArrayGame);
+                }
+                else
+                {
+                    COMMANDLAIN();
                 }
             }
             /* ----PLAY GAME--- */
@@ -106,6 +122,10 @@ int main()
                 {
                     PLAYGAME(&QueueGame, &StackHistory, &ScoreBoard, &ArrayGame);
                 }
+                else
+                {
+                    COMMANDLAIN();
+                }
             }
             /* ----DELETE GAME--- */
             else if (compareWord(CurrentCommand, "DELETE") == true)
@@ -114,6 +134,10 @@ int main()
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
                     DELETEGAME (&ArrayGame, QueueGame, &ScoreBoard);
+                }
+                else
+                {
+                    COMMANDLAIN();
                 }
             }
             /* ----SKIPGAME <n>--- */
@@ -127,6 +151,10 @@ int main()
                     x = wordtoInt(CurrentCommand);
                     SKIPGAME(&QueueGame, x,  &StackHistory, &ScoreBoard, &ArrayGame);
                 } 
+                else
+                {
+                    COMMANDLAIN();
+                }
             }
 
             else if (compareWord(CurrentCommand, "SCOREBOARD") == true)
@@ -140,6 +168,10 @@ int main()
                 if (compareWord(CurrentCommand, "SCOREBOARD") == true)
                 {
                     RESETSCOREBOARD(&ScoreBoard, &ArrayGame);
+                }
+                else
+                {
+                    COMMANDLAIN();
                 }
             }
 
@@ -157,6 +189,10 @@ int main()
                 if (compareWord(CurrentCommand, "HISTORY") == true)
                 {
                     RESETHISTORY(&StackHistory);
+                }
+                else
+                {
+                    COMMANDLAIN();
                 }
             }
             
@@ -183,6 +219,11 @@ int main()
             else
             {
                 COMMANDLAIN();
+            }
+            
+            while(!EndWord)
+            {
+                ADVCommand();
             }
             
         }

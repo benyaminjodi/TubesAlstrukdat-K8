@@ -7,9 +7,6 @@
 #include "ADT/stack/stack.h"
 #include "ADT/arrayofmap/arrayofmap.h"
 
-
-
-
 boolean compareWord(Kata kata1, char *kata2);
 
 boolean compareString(char *kata1, char *kata2);

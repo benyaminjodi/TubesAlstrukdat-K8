@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include "mesinkata.h"
 
-boolean endWord;
+boolean EndWord;
 Kata CurrentWord;
 Kata CurrentCommand;
 
@@ -17,20 +17,20 @@ void IgnoreBlank()
 
 void StartWord(char * filename)
 /* I.S. : CC sembarang 
-   F.S. : endWord = true, dan CC = MARK; 
-          atau endWord = false, CurrentWord adalah kata yang sudah diakuisisi,
+   F.S. : EndWord = true, dan CC = MARK; 
+          atau EndWord = false, CurrentWord adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
     START(filename);
     IgnoreBlank();
     if (CC != MARK)
     {
-        endWord = false;
+        EndWord = false;
         CopyWord();
     }
     else
     {
-        endWord = true;
+        EndWord = true;
     }
 }
 
@@ -39,12 +39,12 @@ void ADVWord()
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S. : CurrentWord adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = ENTER, endWord = true.		  
+          Jika CC = ENTER, EndWord = true.		  
    Proses : Akuisisi kata menggunakan procedure CopyWord */
 {
     IgnoreBlank();
     if (CC == ENTER){
-        endWord = true;
+        EndWord = true;
     } else{
         CopyWord();
         IgnoreBlank();
@@ -55,7 +55,7 @@ void ADVName()
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S. : CurrentWord adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = ENTER, endWord = true.		  
+          Jika CC = ENTER, EndWord = true.		  
    Proses : Akuisisi kata menggunakan procedure CopyWord */
 {
     IgnoreBlank();
@@ -129,16 +129,16 @@ void IgnoreBlankC()
 
 void StartCommand()
 /* I.S. : CC sembarang 
-   F.S. : endWord = true, dan CC = ENTER; 
-          atau endWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
+   F.S. : EndWord = true, dan CC = ENTER; 
+          atau EndWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
     StartC();
     IgnoreBlankC();
     if (CC == ENTER){
-        endWord = true;
+        EndWord = true;
     } else {
-        endWord = false;
+        EndWord = false;
         CopyCommand();
     }
 }
@@ -147,12 +147,12 @@ void ADVCommand()
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S      . : CurrentCommand adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin ENTER
-          Jika CC = ENTER, endWord = true.		  
+          Jika CC = ENTER, EndWord = true.		  
    Proses : Akuisisi kata menggunakan procedure SalinCommand */
 {
     IgnoreBlankC();
-    if (CC == ENTER && !endWord){
-        endWord = true;
+    if (CC == ENTER && !EndWord){
+        EndWord = true;
     } else{
         CopyCommand();
         IgnoreBlankC();
@@ -187,16 +187,16 @@ void CopyCommand()
 
 void StartGame()
 /* I.S. : CC sembarang 
-   F.S. : endWord = true, dan CC = ENTER; 
-          atau endWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
+   F.S. : EndWord = true, dan CC = ENTER; 
+          atau EndWord = false, CurrentCommand adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
     StartC();
     IgnoreBlankC();
     if (CC == ENTER){
-        endWord = true;
+        EndWord = true;
     } else {
-        endWord = false;
+        EndWord = false;
         CopyGame();
     }
 }
