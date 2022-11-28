@@ -5,7 +5,7 @@ int main()
     Map M;
     char A,B,C;
     CreateEmptyMap(&M);
-    InsertMap(&M, &A, 2);
+    InsertMap(&M, &A , 2);
     InsertMap(&M, &B, 3);
     InsertMap(&M, &C, 4);
     printf("%d\n", Value(M, &A));

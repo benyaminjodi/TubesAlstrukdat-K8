@@ -49,29 +49,6 @@ void Before(Queue *Q)
     }
 }
 
-void Lowerstring(char *string)
-{
-    int i;
-    for (i=0; i < stringlen(string); i++)
-    {
-        if (string[i] >= 'A' && string[i] <= 'Z')
-        {
-            string[i] = string[i] + 32;
-        }
-    }
-}
-
-void Upperstring(char *string)
-{
-    int i;
-    for (i=0; i < stringlen(string); i++)
-    {
-        if (string[i] >= 'a' && string[i] <= 'z')
-        {
-            string[i] = string[i] - 32;
-        }
-    }
-}
 
 void PrintKata(char *guess)
 {
@@ -100,6 +77,9 @@ boolean isInQueue(Queue QueueBefore, char *temp)
         return false;
     }
 }
+
+
+
 
 
 void HANGMAN(Map *MapHangman)

@@ -113,15 +113,15 @@ boolean IsMemberMap(Map M, keytype k)
 /* Mengembalikan true jika k adalah member dari M */
 {
     int i = 0;
-        boolean found = false;
-        while (i < M.Count && !found)
+    boolean found = false;
+    while (i < M.Count && !found)
+    {
+        if (compareString(M.Elements[i].Key, k)== true)
         {
-            if (compareString(M.Elements[i].Key, k))
-            {
-                found = true;
-            }
-            i++;
+            found = true;
         }
+        i++;
+    }
     return found;
 }
 

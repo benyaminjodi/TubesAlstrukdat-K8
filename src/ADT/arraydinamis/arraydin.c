@@ -196,8 +196,10 @@ ArrayDin CopyArrayDin(ArrayDin array)
 IdxType SearchArrayDin(ArrayDin array, ElType el)
 {
 	int i;
+	Upperstring(el);
 	for (i = 0 ; i < array.Neff ; i++)
 	{
+		Upperstring(array.A[i]);
 		if (compareString(array.A[i], el) == true)
 		{
 			return i;

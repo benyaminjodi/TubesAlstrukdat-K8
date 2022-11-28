@@ -7,6 +7,10 @@
 #include "ADT/stack/stack.h"
 #include "ADT/arrayofmap/arrayofmap.h"
 
+void Lowerstring(char *string);
+
+void Upperstring(char *string);
+
 boolean compareWord(Kata kata1, char *kata2);
 
 boolean compareString(char *kata1, char *kata2);

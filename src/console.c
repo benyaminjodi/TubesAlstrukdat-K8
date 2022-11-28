@@ -24,21 +24,55 @@ boolean compareWord(Kata kata1, char *kata2)
     return same;
 }
 
-boolean compareString(char* kata1, char *kata2)
+boolean compareString(char *kata1, char *kata2)
 {
     boolean same = true;
-    int i = 0;
-    while (*kata1 != '\0' && *kata2 != '\0')
+    int i,j;
+    i = stringlen(kata1);
+    j = stringlen(kata2);
+    if (i != j)
     {
-        if (*kata1 != *kata2)
+        same = false;
+    }
+    else
+    {
+        int k = 0;
+        while (kata1[k] != '\0')
         {
-            same = false;
+            if (kata1[k] != kata2[k])
+            {
+                same = false;
+            }
+            k++;
         }
-        kata1++;
-        kata2++;
     }
     return same;
 }
+
+void Lowerstring(char *string)
+{
+    int i;
+    for (i=0; i < stringlen(string); i++)
+    {
+        if (string[i] >= 'A' && string[i] <= 'Z')
+        {
+            string[i] = string[i] + 32;
+        }
+    }
+}
+
+void Upperstring(char *string)
+{
+    int i;
+    for (i=0; i < stringlen(string); i++)
+    {
+        if (string[i] >= 'a' && string[i] <= 'z')
+        {
+            string[i] = string[i] - 32;
+        }
+    }
+}
+
 
 int wordtoInt(Kata Word) 
 {
@@ -471,7 +505,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard, ArrayDi
             char *temp;
             char player[50];
             printf("Player Name: ");
-            StartCommand();
+            StartGame();
             wordtoString(CurrentCommand, player);
             temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
             i = 0;
@@ -481,6 +515,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard, ArrayDi
                 
                 i += 1;
             }
+            temp[i]='0';
             InsertMap(&(*ScoreBoard).AMap[idx], temp, score);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);
              
@@ -593,7 +628,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard, 
             char *temp;
             char player[50];
             printf("Player Name: ");
-            StartCommand();
+            StartGame();
             wordtoString(CurrentCommand, player);
             temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
             i = 0;
@@ -603,6 +638,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard, 
                 
                 i += 1;
             }
+            temp[i]= '\0';
             InsertMap(&(*ScoreBoard).AMap[idx], temp, score);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);
              
