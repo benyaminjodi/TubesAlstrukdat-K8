@@ -677,7 +677,7 @@ void RESETSCOREBOARD(ArrayMap *ScoreBoard, ArrayDin *GameBNMO)
     int inp = wordtoInt(CurrentCommand);
     ADVCommand();
  
-    if(inp>=0 && inp <= 6)
+    if(inp>=0 && inp <= (*GameBNMO).Neff)
     {
         if (inp == 0)
         {
