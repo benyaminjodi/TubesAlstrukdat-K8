@@ -45,3 +45,21 @@ int LengthStack(Stack S)
 {
     return Top(S) + 1;
 }
+
+Stack ReverseStack(Stack *S)
+/* I.S. S terdefinisi */
+/* F.S. Elemen stack S dibalik : */
+{
+    int i;
+    Stack S1;
+    infostack X;
+    CreateEmptyStack(&S1);
+    int n = LengthStack(*S);
+    for (i = 0; i < n; i++)
+    {
+        Push(&S1, InfoTop(*S));
+        Pop(S, &X); 
+    }
+    
+    return S1;
+}

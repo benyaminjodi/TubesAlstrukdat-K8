@@ -70,4 +70,8 @@ void Pop(Stack * S, infostack* X);
 int LengthStack(Stack S);
 /* Mengirimkan banyaknya elemen stack. Mengirimkan 0 jika stack kosong. */
 
+Stack ReverseStack(Stack *S);
+/* I.S. S terdefinisi */
+/* F.S. Elemen stack S dibalik : */
+
 #endif

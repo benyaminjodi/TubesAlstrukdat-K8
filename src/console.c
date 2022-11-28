@@ -222,9 +222,9 @@ void LOADBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO,ArrayMap *S
                 i += 1;
             }
             Push(HistoryBNMO, temp);
-            ADVWord();
-            
+            ADVWord();   
         }
+        (*HistoryBNMO) = ReverseStack(HistoryBNMO);
         /*--- Membaca Map Semua Game---*/
         int nmap;
         for (nmap=1; nmap <= ngame; nmap++)
@@ -280,9 +280,10 @@ void SAVEBNMO(ArrayDin *GameBNMO, char* filename, Stack *HistoryBNMO, ArrayMap *
     i=0;
     while (i < Top(*HistoryBNMO)+1)
     {
-        fprintf(fpita, "\n%s",(*HistoryBNMO).T[i]);
+        fprintf(fpita, "\n%s",(*HistoryBNMO).T[Top(*HistoryBNMO)-i]);
         i++;
     }
+
 
     /* --- Array Map --- */
     int j= 0;
