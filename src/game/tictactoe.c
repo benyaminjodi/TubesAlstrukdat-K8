@@ -83,13 +83,7 @@ void player1move(){
 
         StartCommand();
         x = wordtoInt(CurrentCommand);
-        
-        while (x < 1 || x > 3){
-            printf("<Pemain 1> Enter row (1-3): ");
-
-            StartCommand();
-            x = wordtoInt(CurrentCommand);
-        }
+       
         //StartCommand();
        // wordtoInt(CurrentCommand, x);
         x--;
@@ -97,13 +91,6 @@ void player1move(){
         StartCommand();
         y= wordtoInt(CurrentCommand);
         
-        while (y < 1 || y > 3){
-            printf("<Pemain 1> Enter column (1-3): ");
-
-            StartCommand();
-            y = wordtoInt(CurrentCommand);
-        }
-
         y--;
         //StartCommand();
         //wordtoInt(CurrentCommand, y);
@@ -125,23 +112,11 @@ void player2move(){
         printf("<Pemain 2> Enter row (1-3): ");
         StartCommand();
         x = wordtoInt(CurrentCommand);
-        while (x < 1 || x > 3){
-            printf("<Pemain 2> Enter row (1-3): ");
-
-            StartCommand();
-            x = wordtoInt(CurrentCommand);
-        }
-
+        
         x--;
         printf("<Pemain 2> Enter column (1-3): ");
         StartCommand();
         y= wordtoInt(CurrentCommand);
-         while (y < 1 || y > 3){
-            printf("<Pemain 2> Enter column (1-3): ");
-
-            StartCommand();
-            y = wordtoInt(CurrentCommand);
-        }
         y--;
 
         if(board[x][y] != ' '){
