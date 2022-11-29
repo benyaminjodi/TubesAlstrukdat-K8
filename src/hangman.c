@@ -272,7 +272,7 @@ void PlayHangman(Map *MapHangman)
     char player[50];
     printf("Skor anda adalah %d\n", score);  
     printf("Player Name: ");
-    StartCommand();
+    StartGame();
     wordtoString(CurrentCommand, player);
     temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
     i = 0;

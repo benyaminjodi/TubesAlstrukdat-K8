@@ -832,7 +832,7 @@ void RNG(Map *MapRNG){
     int k;
     printf("\n");
     printf("Masukkan nama pemain: ");
-    StartCommand();
+    StartGame();
     wordtoString(CurrentCommand, player);
     temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
     k = 0;

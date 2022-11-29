@@ -83,7 +83,7 @@ void chooseyouradv(Map *MapCYA){
     printf("Player Name: ");
     char *temp2;
     char player[50];
-    StartCommand();
+    StartGame();
     wordtoString(CurrentCommand, player);
     temp2 = (char *) malloc (CurrentCommand.Length * sizeof(char));
     int i = 0;

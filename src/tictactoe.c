@@ -189,7 +189,7 @@ void scoreboard(char winner, Map *MapTicTacToe )
     printf("%d\n", tie);
 
     printf("Player 1 Name: ");
-    StartCommand();
+    StartGame();
     wordtoString(CurrentCommand, player1);
     temp = (char *) malloc (CurrentCommand.Length * sizeof(char));
     i = 0;
@@ -201,7 +201,7 @@ void scoreboard(char winner, Map *MapTicTacToe )
     }
     InsertMap(MapTicTacToe, temp, score1);
     printf("Player 2 Name: ");
-    StartCommand();
+    StartGame();
     wordtoString(CurrentCommand, player2);
     temp2 = (char *) malloc (CurrentCommand.Length * sizeof(char));
     i = 0;
