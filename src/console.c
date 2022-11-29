@@ -676,10 +676,12 @@ void HISTORY(Stack HistoryBNMO, int n)
                 i++;
             }
         }
-        else
+        else if (n >Top(HistoryBNMO)+1)
         {
             int i = 0;
-            while (i <= Top(HistoryBNMO)+1)
+            int n;
+            n = Top(HistoryBNMO);
+            while (i <= n)
             {
                 printf("%d. %s\n", (i+1), InfoTop(HistoryBNMO));
                 char* val;
@@ -687,7 +689,6 @@ void HISTORY(Stack HistoryBNMO, int n)
                 i++;
             }
         }
-
     }
     
 }
