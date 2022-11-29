@@ -143,7 +143,6 @@ void AddKataHangman()
         pita = fopen("./data/hangman.txt", "a");
         fprintf(pita, "\n");
         fprintf(pita, "%s", temp);
-        printf("ini temp nya : %s\n", temp);
         fclose(pita);
         printf("Kata berhasil ditambahkan\n");
     }
