@@ -777,7 +777,7 @@ void RESETSCOREBOARD(ArrayMap *ScoreBoard, ArrayDin *GameBNMO)
 
 void RESETHISTORY(Stack *HistoryBNMO)
 {
-    printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET HISTORY? ");
+    printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET HISTORY? (YA/TIDAK)");
     StartCommand();
     if (compareWord(CurrentCommand, "YA") == true)
     {

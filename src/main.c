@@ -211,10 +211,10 @@ int main()
                 COMMANDLAIN();
             }
             
-            // while(!EndWord)
-            // {
-            //     ADVCommand();
-            // }
+            while(!EndWord)
+            {
+                ADVCommand();
+            }
             
         }
     }
