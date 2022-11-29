@@ -7,6 +7,7 @@
 #include "game/snakeOnMeteor.h"
 #include "game/hangman.h"
 #include "game/chooseyouradv.h"
+#include "game/hanoi.h"
 
 //Fungsi dan Prosedur 
 boolean compareWord(Kata kata1, char *kata2)
@@ -468,7 +469,7 @@ void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO,ArrayMap *ScoreBoard, ArrayDi
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            //TOH();
+            TowerOfHanoi(&(*ScoreBoard).AMap[3]);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
 
@@ -591,7 +592,7 @@ void SKIPGAME(Queue *QueueBNMO, int n, Stack *HistoryBNMO,ArrayMap *ScoreBoard, 
         {
             printf("Loading %s ...\n", (*QueueBNMO).buffer[0]);
             printf("\n");
-            //TOH();
+            TowerOfHanoi(&(*ScoreBoard).AMap[3]);
             Push(HistoryBNMO, (*QueueBNMO).buffer[0]);  
         }
 
