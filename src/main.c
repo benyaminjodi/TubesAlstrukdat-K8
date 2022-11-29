@@ -169,6 +169,10 @@ int main()
                 {
                     RESETSCOREBOARD(&ScoreBoard, &ArrayGame);
                 }
+                else if (compareWord(CurrentCommand, "HISTORY") == true)
+                {
+                    RESETHISTORY(&StackHistory);
+                }
                 else
                 {
                     COMMANDLAIN();
@@ -181,21 +185,7 @@ int main()
                 int x;
                 x = wordtoInt(CurrentCommand);
                 HISTORY(StackHistory, x);   
-            }
-
-            else if (compareWord(CurrentCommand, "RESET") == true)
-            {
-                ADVCommand();
-                if (compareWord(CurrentCommand, "HISTORY") == true)
-                {
-                    RESETHISTORY(&StackHistory);
-                }
-                else
-                {
-                    COMMANDLAIN();
-                }
-            }
-            
+            }            
             /* ---SAVE--- */
             else if (compareWord(CurrentCommand, "SAVE") == true)
             {
@@ -221,10 +211,10 @@ int main()
                 COMMANDLAIN();
             }
             
-            while(!EndWord)
-            {
-                ADVCommand();
-            }
+            // while(!EndWord)
+            // {
+            //     ADVCommand();
+            // }
             
         }
     }
