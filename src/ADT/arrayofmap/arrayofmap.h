@@ -54,7 +54,7 @@ void CopyArrayOfMap(ArrayMap Ain, ArrayMap *Aout);
 /* Assignment THsl -> Tin */
 void SetElArrayOfMap(ArrayMap *A, IdxTypeArrayOfMap i, ElTypeArrayOfMap M);
 /* I.S. A terdefinisi, sembarang */
-/* F.S. Elemen A yang ke-i bernilai v */
+/* F.S. Elemen A yang ke-i bernilai M */
 
 /* Mengeset nilai elemen tabel yang ke-i sehingga bernilai M */
 void SetNeffArrayOfMap(ArrayMap *A, IdxTypeArrayOfMap N);

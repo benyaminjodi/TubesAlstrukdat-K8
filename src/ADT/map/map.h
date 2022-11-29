@@ -10,7 +10,7 @@ Deklarasi stack yang dengan implementasi array eksplisit-statik rata kiri
 // #define false 0
 // #define true 1
 #define Nil 0
-#define MaxEl 10
+#define MaxEl 100
 #define Undefined -999
 
 // typedef int bool;

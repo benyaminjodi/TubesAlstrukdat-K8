@@ -12,14 +12,20 @@
 boolean compareWord(Kata kata1, char *kata2)
 {
     boolean same = true;
-    int i = 0;
-    for (i=0 ; i<kata1.Length;i++)
+    if (kata1.Length != stringlen(kata2))
     {
-        if (kata1.TabWord[i] != *kata2)
+        same = false;
+    }
+    else{   
+        int i = 0;
+        for (i=0 ; i<kata1.Length;i++)
         {
-            same = false;
+            if (kata1.TabWord[i] != *kata2)
+            {
+                same = false;
+            }
+            kata2++;
         }
-        kata2++;
     }
     return same;
 }
