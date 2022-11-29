@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "ADT/map/map.h"
-#include "boolean.h"
-#include "console.h"
+#include "../ADT/map/map.h"
+#include "../boolean.h"
+#include "../console.h"
 
 
 

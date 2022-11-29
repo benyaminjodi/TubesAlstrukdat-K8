@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <time.h>
-#include "boolean.h"
-#include "ADT/linkedlist/linkList.h"
-#include "ADT/mesinkata/mesinkata.h"
-#include "console.h"
+#include "../boolean.h"
+#include "../ADT/linkedlist/linkList.h"
+#include "../ADT/mesinkata/mesinkata.h"
+#include "../console.h"
 
 typedef struct {
     char buffer[5][5];

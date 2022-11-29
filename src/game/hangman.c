@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "hangman.h"
-#include "console.h"
+#include "../console.h"
 
 
 void HangmanFile(ArrayDin *ListHangman)

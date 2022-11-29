@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include "console.h"
-#include "diner-dash.h"
-#include "tictactoe.h"
-#include "snakeOnMeteor.h"
-#include "hangman.h"
-#include "chooseyouradv.h"
+#include "game/diner-dash.h"
+#include "game/tictactoe.h"
+#include "game/snakeOnMeteor.h"
+#include "game/hangman.h"
+#include "game/chooseyouradv.h"
 
 //Fungsi dan Prosedur 
 boolean compareWord(Kata kata1, char *kata2)

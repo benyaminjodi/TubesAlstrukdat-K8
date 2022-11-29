@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "boolean.h"
-#include "ADT/queue/queueDD.h"
-#include "ADT/mesinkata/mesinkata.h"
-#include "console.h"
+#include "../boolean.h"
+#include "../ADT/queue/queueDD.h"
+#include "../ADT/mesinkata/mesinkata.h"
+#include "../console.h"
 
 
 void displayData(int saldo, QueueDD Qpesanan, QueueDD Qmasak, QueueDD Qsaji);

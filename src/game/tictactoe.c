@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "console.h"
 #include "tictactoe.h"
+#include "../console.h"
 
 
 const char char1 = 'X', char2 = 'O';
