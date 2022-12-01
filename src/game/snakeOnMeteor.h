@@ -32,7 +32,7 @@ boolean isEating(List snake, int xFood, int yFood);
 
 void eating(List *snake, int xFood, int yFood, boolean *isTailStuck);
 
-void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor, int xObstacle, int yObstacle);
+void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor, int xFood, int yFood, int xObstacle, int yObstacle);
 
 void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHead);
 

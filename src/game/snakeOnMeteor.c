@@ -1,14 +1,5 @@
 #include "snakeOnMeteor.h"
 
-/*
-HAL YANG MASIH HARUS DIPERBAIKIN
-1. Proses kena meteor
-2. Kondisi kalah
-3. ??? (ga tau, coba cek aja misalnya ada yang kurang)
-
-command gcc: gcc src/console.c src/ADT/arraydinamis/arraydin.c src/ADT/mesinkarakter/mesinkarakter.c src/ADT/mesinkata/mesinkata.c src/ADT/queue/queue.c src/ADT/queue/queueDD.c src/ADT/map/map.c src/diner-dash.c src/tictactoe.c src/snakeOnMeteor.c src/ADT/linkedlist/linkList.c -o snakeOnMeteor
-*/
-
 void CreateEmptyMatrixMap(matrixMap *peta) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -299,14 +290,14 @@ void eating(List *snake, int xFood, int yFood, boolean *isTailStuck) {
     }
 }
 
-void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor, int xObstacle, int yObstacle) {
+void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor,int xFood, int yFood, int xObstacle, int yObstacle) {
     if (initMeteor) {
         *prevXMeteor = *xMeteor;
         *prevYMeteor = *yMeteor;
     }
     *xMeteor = rng2(0,4);
     *yMeteor = rng2(0,4);
-    while (*xMeteor == xObstacle && *yMeteor == yObstacle) {
+    while (*xMeteor == xObstacle && *yMeteor == yObstacle && *xMeteor == xFood && *yMeteor == yFood) {
         *xMeteor = rng2(0,4);
         *yMeteor = rng2(0,4);
     }
@@ -435,7 +426,7 @@ void snake(Map *MapSnake) {
             eating(&snake, xFood, yFood, &isTailStuck);
             addFood(&xFood, &yFood, snake, xObstacle, yObstacle);
         }
-        addMeteor(&xMeteor, &yMeteor, &prevXMeteor, &prevYMeteor, initMeteor, xObstacle, yObstacle);
+        addMeteor(&xMeteor, &yMeteor, &prevXMeteor, &prevYMeteor, initMeteor, xFood, yFood, xObstacle, yObstacle);
         initMeteor = true;
         prosesMeteor(&snake, xMeteor, yMeteor, &isMeteorHitHead);
         updateMatrixMap(&peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor, xObstacle, yObstacle);
