@@ -17,6 +17,6 @@ typedef struct node {
 
 int recursive(node* base);
 
-void chooseyouradv();
+void chooseyouradv(Map *MapCYA);
 
 #endif
