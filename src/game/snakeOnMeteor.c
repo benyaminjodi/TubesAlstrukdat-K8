@@ -1,6 +1,8 @@
 #include "snakeOnMeteor.h"
 
 void CreateEmptyMatrixMap(matrixMap *peta) {
+    // I.S. peta terdefinisi 
+    // F.S. Membuat peta kosong. Peta kosong berisikan character 0
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             (*peta).buffer[i][j] = '0';
@@ -9,6 +11,8 @@ void CreateEmptyMatrixMap(matrixMap *peta) {
 }
 
 void displayMatrixMap(matrixMap peta) {
+    // I.S. peta terdefinisi
+    // F.S. Menampilkan peta
     printf("Berikut merupakan peta permainan\n");
     printf("+-----+-----+-----+-----+-----+\n");
     for (int i = 0; i < 5; i++) {
@@ -33,6 +37,8 @@ void displayMatrixMap(matrixMap peta) {
 }
 
 void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFood, int yFood, int xMeteor, int yMeteor, int prevXMeteor, int prevYMeteor, int xObstacle, int yObstacle) {
+    // I.S. peta, snake, lastX, lastY, xFood, yFood, xMeteor, yMeteor, prevXMeteor, prevYMeteor, xObstacle, dan yObstacle terdefinisi 
+    // Mengupdate peta sesuai dengan lokasi snake, food, meteor, dan obstacle
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             if (j == lastX && i == lastY) {
@@ -69,6 +75,7 @@ void updateMatrixMap(matrixMap *peta, List snake, int lastX, int lastY, int xFoo
 }
 
 int listLength(List list) {
+    // Mengambalikan panjang dari sebuah list
     addressNode P = First(list);
     int length = 0;
     while (P != NIL) {
@@ -86,6 +93,8 @@ int rng2(int lower, int upper)
 }
 
 void initSnake(List *snake) {
+    // I.S. snake terdefinisi 
+    // F.S. menginisialisasi snake saat game dijalankan
     int xHead = rng2(0, 4);
     int yHead = rng2(0, 4);
     InsVFirst(snake, xHead, yHead);
@@ -113,6 +122,8 @@ void initSnake(List *snake) {
 }
 
 void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean initMeteor, boolean *isValid, boolean *isHeadStuck) {
+    // I.S. semua variable input dan output terdefinisi 
+    // F.S. memvalidasi command yang yang diinput
     if (inpt == 'w' || inpt == 'W' || inpt == 'a' || inpt == 'A' || inpt == 's' || inpt == 'S' || inpt == 'd' || inpt == 'D') {
         addressNode w = SearchList(snake, InfoX(First(snake)), InfoY(First(snake))-1);
         addressNode a = SearchList(snake, InfoX(First(snake))-1, InfoY(First(snake)));
@@ -216,6 +227,8 @@ void validateCommand(char inpt, List snake, int xMeteor, int yMeteor, boolean in
 }
 
 void moveSnake(List *snake, char inpt, int *lastX, int *lastY) {
+    // I.S. snake, inpt, lastX, dan lastY terdefinisi 
+    // F.S. snake bergerak sesuai input
     addressNode P = First(*snake);
     int prevX = InfoX(P);
     int prevY = InfoY(P);
@@ -256,6 +269,8 @@ void moveSnake(List *snake, char inpt, int *lastX, int *lastY) {
 }
 
 void addFood(int *xFood, int *yFood, List snake, int xObstacle, int yObstacle) {
+    // I.S. xFood, yFood, snake, xObstacle, yObstacle terdefinisi
+    // F.S. memberikan nilai kepada xFood dan yFood
     *xFood = rng2(0, 4);
     *yFood = rng2(0, 4);
     while ((SearchList(snake, *xFood, *yFood) != NIL) || ((*xFood == xObstacle) && (*yFood == yObstacle))) {
@@ -265,6 +280,7 @@ void addFood(int *xFood, int *yFood, List snake, int xObstacle, int yObstacle) {
 }
 
 boolean isEating(List snake, int xFood, int yFood) {
+    // Mengembalikan nilai true jika kepala snake berada di koordinat xFood dan yFood (snake berhasil makan)
     int xHead = InfoX(First(snake));
     int yHead = InfoY(First(snake));
     if (xHead == xFood && yHead == yFood) {
@@ -275,6 +291,8 @@ boolean isEating(List snake, int xFood, int yFood) {
 }
 
 void eating(List *snake, int xFood, int yFood, boolean *isTailStuck) {
+    // I.S. snake, xFood, yFood, dan isTailStuck terdefinisi 
+    // F.S. menambahkan ekor baru di akhir snake jika masih ada tempat
     int tailX = InfoX(Last(*snake));
     int tailY = InfoY(Last(*snake));
     if (tailX > 0 && SearchList(*snake, tailX-1, tailY) == NIL) {
@@ -291,6 +309,8 @@ void eating(List *snake, int xFood, int yFood, boolean *isTailStuck) {
 }
 
 void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, boolean initMeteor,int xFood, int yFood, int xObstacle, int yObstacle) {
+    // I.S. semua variable input dan output terdefinisi 
+    // F.S. memberikan nilai pada xMeteor dan yMeteor
     if (initMeteor) {
         *prevXMeteor = *xMeteor;
         *prevYMeteor = *yMeteor;
@@ -304,6 +324,8 @@ void addMeteor(int *xMeteor, int *yMeteor, int *prevXMeteor, int *prevYMeteor, b
 }
 
 void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHead) {
+    // I.S. snake, xMeteor, yMeteor, dan isMeteorHitHead terdefinisi
+    // F.S. Jika terkena, tubuh snake dikurangi 1 panjangnya. Jika meteor mengenai kepala, boolean isMeteorHitHead bernilai true. 
     addressNode kena = SearchList(*snake, xMeteor, yMeteor);
     if (kena != NIL) {
         printf("Anda terkena meteor!\n");
@@ -320,6 +342,8 @@ void prosesMeteor(List *snake, int xMeteor, int yMeteor, boolean *isMeteorHitHea
 }
 
 void addObstacle(List snake, int *xObstacle, int *yObstacle) {
+    // I.S. snake, xObstacle, yObstacle terdefinisi 
+    // F.S. Menambahkan obstacle yang tidak bisa dilewati oleh snake
     *xObstacle = rng2(0, 4);
     *yObstacle = rng2(0, 4);
     while (SearchList(snake, *xObstacle, *yObstacle) != NIL) {
@@ -329,6 +353,7 @@ void addObstacle(List snake, int *xObstacle, int *yObstacle) {
 }
 
 boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle, boolean isTailStuck, boolean isHeadStuck) {
+    // Mengembalikan nilai true jika salah satu kondisi kalah terpenuhi 
     if (isMeteorHitHead) {
         printf("Kepala snake terkena meteor!\n");
         printf("GAME OVER\n");
@@ -356,6 +381,7 @@ boolean isLose(List snake, boolean isMeteorHitHead, int xObstacle, int yObstacle
 }
 
 int hitungScore(List snake, boolean isMeteorHitHead, boolean isTailStuck) {
+    // Menghitung score berdasarkan kondisi kalah
     if (isMeteorHitHead) {
         return 2*(listLength(snake)-1);
     } else {
@@ -364,6 +390,7 @@ int hitungScore(List snake, boolean isMeteorHitHead, boolean isTailStuck) {
 }
 
 void snake(Map *MapSnake) {
+    // Program utama
     List snake;
     int xFood;
     int yFood;
