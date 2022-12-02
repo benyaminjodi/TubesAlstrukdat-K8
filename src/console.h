@@ -33,7 +33,7 @@ void QUEUEGAME (Queue *QueueBNMO, ArrayDin GameList);
 
 void LISTGAME(ArrayDin GameBNMO);
 
-void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard);
+void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard, Stack *HistoryBNMO);
 
 void PLAYGAME(Queue *QueueBNMO, Stack *HistoryBNMO, ArrayMap *ScoreBoard, ArrayDin *GameBNMO);
 

@@ -351,14 +351,14 @@ void LISTGAME (ArrayDin GameBNMO)
     }
 }
 
-void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard ) 
+void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard, Stack *HistoryBNMO ) 
 {
     LISTGAME(*GameBNMO);
     printf("Masukkan nomor game yang akan dihapus: ");
     StartCommand();
     int x;
     x = wordtoInt(CurrentCommand);
-    if ((x<=6 && x >=1) || x>(*GameBNMO).Neff) {
+    if ((x<=7 && x >=1) || x>(*GameBNMO).Neff) {
         printf("Game gagal dihapus\n");
     } else {
         boolean found = false;
@@ -371,7 +371,25 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard )
         if (found) {
             printf("Game gagal dihapus\n");
         } else {
-            int i = x-1;
+            int j = x-1;
+            int i=0;
+            int n = Top(*HistoryBNMO);
+            for (i = 0; i<=n; i ++)
+            {
+                if (compareString((*HistoryBNMO).T[i], (*GameBNMO).A[j]))
+                {
+                    int k = i;
+                
+                    while (k < n)
+                    {
+                        (*HistoryBNMO).T[k] = (*HistoryBNMO).T[k+1];
+                        k++;
+                    }
+                    (*HistoryBNMO).T[k] = NULL;
+                    (*HistoryBNMO).TOP--;
+                }
+            }
+            i = x-1;
             while (i<(*GameBNMO).Neff) {
                 (*GameBNMO).A[i] = (*GameBNMO).A[i+1];
                 (*ScoreBoard).AMap[i] = (*ScoreBoard).AMap[i+1];
@@ -379,7 +397,6 @@ void DELETEGAME (ArrayDin *GameBNMO, Queue Q, ArrayMap *ScoreBoard )
             } 
             (*GameBNMO).Neff--;
             (*ScoreBoard).NeffArrayOfMap--;
-
             printf("Game berhasil dihapus\n");
         }
     }

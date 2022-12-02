@@ -133,7 +133,7 @@ int main()
                 ADVCommand();
                 if (compareWord(CurrentCommand, "GAME") == true)
                 {
-                    DELETEGAME (&ArrayGame, QueueGame, &ScoreBoard);
+                    DELETEGAME (&ArrayGame, QueueGame, &ScoreBoard, &StackHistory);
                 }
                 else
                 {
